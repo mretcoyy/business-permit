@@ -133,6 +133,177 @@
                         ></a-col>
                     </a-row>
                     <a-divider />
+                    <a-row :gutter="16">
+                        <a-col span="11">
+                            <p style="text-align: center; font-weight: bold">
+                                Business Address
+                            </p>
+                            <a-form-item label="House No./Bldg. No.">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Building Name">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Unit No.">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Street">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Barangay">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Subdivision">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="City/Municipality">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Province">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Tel. No.">
+                                <a-input type="number" />
+                            </a-form-item>
+                            <a-form-item label="Email Address">
+                                <a-input type="email" />
+                            </a-form-item>
+                        </a-col>
+                        <a-col
+                            span="2"
+                            class="text-center"
+                            style="padding-top: 70px"
+                            ><a-divider type="vertical" style="height: 100vh"
+                        /></a-col>
+                        <a-col span="11">
+                            <p style="text-align: center; font-weight: bold">
+                                Owner's Address
+                            </p>
+                            <a-form-item label="House No./Bldg. No.">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Building Name">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Unit No.">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Street">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Barangay">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Subdivision">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="City/Municipality">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Province">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Tel. No.">
+                                <a-input type="number" />
+                            </a-form-item>
+                            <a-form-item label="Email Address">
+                                <a-input type="email" />
+                            </a-form-item>
+                        </a-col>
+                    </a-row>
+
+                    <a-form-item
+                        type="number"
+                        label="Property Index Number (PIN)"
+                    >
+                        <a-input />
+                    </a-form-item>
+                    <a-row :gutter="16">
+                        <a-col span="8">
+                            <a-form-item label="Business Area (in sq m)">
+                                <a-input type="number" />
+                            </a-form-item>
+                        </a-col>
+                        <a-col span="8">
+                            <a-form-item
+                                label="Total Number of Employees in Establishment"
+                            >
+                                <a-input type="number" />
+                            </a-form-item>
+                        </a-col>
+                        <a-col span="8">
+                            <a-form-item label="# of Employees Residing in LGU">
+                                <a-input type="number" />
+                            </a-form-item>
+                        </a-col>
+                        <p style="padding-left: 9px">
+                            if Place of Business is Rented, please identify the
+                            following: <b>Lessor's name</b>
+                        </p>
+                        <a-col span="6">
+                            <a-form-item label="Last Name">
+                                <a-input />
+                            </a-form-item>
+                        </a-col>
+                        <a-col span="6">
+                            <a-form-item label="First Name">
+                                <a-input />
+                            </a-form-item>
+                        </a-col>
+                        <a-col span="6">
+                            <a-form-item label="Middle Name">
+                                <a-input />
+                            </a-form-item>
+                        </a-col>
+                        <a-col span="6">
+                            <a-form-item label="Monthly Rental">
+                                <a-input type="number" />
+                            </a-form-item>
+                        </a-col>
+
+                        <p style="padding-left: 9px; font-weight: bold">
+                            Lessor's Address
+                        </p>
+
+                        <a-col span="12">
+                            <a-form-item label="House No./Bldg. No.">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Street">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Barangay">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="Tel. No.">
+                                <a-input type="number" />
+                            </a-form-item>
+                        </a-col>
+                        <a-col span="12">
+                            <a-form-item label="Subdivision">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label="City/Municipality">
+                                <a-input />
+                            </a-form-item>
+
+                            <a-form-item label="Province">
+                                <a-input />
+                            </a-form-item>
+
+                            <a-form-item label="Email Address">
+                                <a-input type="email" />
+                            </a-form-item>
+                        </a-col>
+                        <p style="padding-left: 9px; font-weight: bold">
+                            in case of Emergency:
+                        </p>
+                        <a-form-item
+                            label="Contact Person/Tel No./Mobile Phone no./email address"
+                        >
+                            <a-input />
+                        </a-form-item>
+                    </a-row>
                 </a-form>
             </div>
         </a-layout-content>
