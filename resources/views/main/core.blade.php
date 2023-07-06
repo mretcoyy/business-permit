@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-        <view-login/>
+        
     </div>
 </body>
 </html>
