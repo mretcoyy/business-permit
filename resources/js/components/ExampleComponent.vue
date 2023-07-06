@@ -305,6 +305,30 @@
                         </a-form-item>
                     </a-row>
                 </a-form>
+                <a-divider />
+                <p class="text-center" style="font-weight: bold">
+                    Business Activity
+                </p>
+                <a-button
+                    style="margin-bottom: 10px"
+                    @click="handleAddBusinessActivity"
+                >
+                    Add Business Activity
+                </a-button>
+                <a-table :columns="columns" :data-source="data">
+                    <span slot="action" slot-scope="text, record">
+                        <a>Edit</a>
+                        <a-divider type="vertical" />
+                        <a-popconfirm
+                            title="Sure to delete?"
+                            @confirm="
+                                () => onDeleteBusinessActivity(record.key)
+                            "
+                        >
+                            <a>Delete</a>
+                        </a-popconfirm>
+                    </span>
+                </a-table>
             </div>
         </a-layout-content>
         <a-layout-footer style="text-align: center">
@@ -313,11 +337,62 @@
     </a-layout>
 </template>
 <script>
+const columns = [
+    {
+        dataIndex: "code",
+        key: "code",
+        title: "Code",
+    },
+    {
+        dataIndex: "lineOfBusiness",
+        key: "lineOfBusiness",
+        title: "Line of Business",
+    },
+    {
+        title: "No. of Units",
+        dataIndex: "noOfUnits",
+        key: "noOfUnits",
+    },
+    {
+        title: "Capitalization (for new business)",
+        dataIndex: "capitalizaion",
+        key: "capitalizaion",
+    },
+    {
+        title: "Essential (for renewal)",
+        dataIndex: "eseential",
+        key: "eseential",
+    },
+    {
+        title: "Non-essential (for renewal)",
+        dataIndex: "nonEssential",
+        key: "nonEssential",
+    },
+    {
+        title: "Action",
+        key: "action",
+        scopedSlots: { customRender: "action" },
+    },
+];
+
+const data = [
+    {
+        code: "123",
+        lineOfBusiness: "123",
+        noOfUnits: "123",
+        capitalizaion: "123",
+        eseential: "123",
+        nonEssential: "123",
+    },
+];
+
 export default {
     data() {
         return {
             type: "new",
             organization: "single",
+            data,
+            columns,
         };
     },
     methods: {
@@ -325,6 +400,12 @@ export default {
             console.log(`checked = ${e.target.value}`);
         },
         onChangeOrganization(e) {
+            //
+        },
+        handleAddBusinessActivity() {
+            console.log("asd");
+        },
+        onDeleteBusinessActivity() {
             //
         },
     },
