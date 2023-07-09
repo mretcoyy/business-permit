@@ -114,7 +114,8 @@
                                     rules: [
                                         {
                                             required: true,
-                                            message: 'Repeat Password is required',
+                                            message:
+                                                'Repeat Password is required',
                                         },
                                     ],
                                 },
@@ -138,6 +139,14 @@
                             :disabled="loginBtn"
                             >Register</a-button
                         >
+                    </a-form-item>
+
+                    <a-form-item
+                        style="width: 120px !important; margin: auto !important"
+                    >
+                        <a-button href="/login" type="link">
+                            Back to Login
+                        </a-button>
                     </a-form-item>
                 </a-form>
             </div>
