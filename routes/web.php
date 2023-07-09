@@ -25,7 +25,9 @@ Route::get('/', function () {
     return view('page.test');
 });
 
-Route::get('/login', 'BPLOController@index');
+Route::get('/login', 'UserController@index');
+
+Route::get('/register', 'UserController@index');
 
 Route::get('/bplo', 'BPLOController@index');
 
