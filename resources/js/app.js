@@ -28,11 +28,9 @@ Vue.component(
     require("./components/ExampleComponent.vue").default
 );
 
-Vue.component(
-    "view-login",
-    require("./views/Login.vue").default
-);
+Vue.component("view-login", require("./views/Login.vue").default);
 
+Vue.component("view-register", require("./views/Register.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

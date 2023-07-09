@@ -81,8 +81,15 @@
                             class="login-button"
                             :loading="loginBtn"
                             :disabled="loginBtn"
-                            >login</a-button
+                            >Login</a-button
                         >
+                    </a-form-item>
+                    <a-form-item
+                        style="width: 180px !important; margin: auto !important"
+                    >
+                        <a-button href="/register" type="link">
+                            Register a new account
+                        </a-button>
                     </a-form-item>
                 </a-form>
             </div>
