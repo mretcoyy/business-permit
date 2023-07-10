@@ -11,6 +11,7 @@ window.Vue = require("vue");
 import "ant-design-vue/dist/antd.css";
 import Antd from "ant-design-vue";
 Vue.use(Antd);
+import "../sass/app.scss";
 
 /**
  * The following block of code may be used to automatically register your

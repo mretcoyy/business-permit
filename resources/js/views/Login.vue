@@ -90,42 +90,54 @@
                             Register a new account
                         </a-button>
                     </a-form-item>
+
+                    <a-form-item
+                        style="width: 150px !important; margin: auto !important"
+                    >
+                        <a-button @click="openForgotModal" type="link">
+                            Forgot Password!
+                        </a-button>
+                    </a-form-item>
                 </a-form>
             </div>
         </div>
+        <FormForgotModal :modal="formModal" @refresh="refreshTable" />
     </UserLayout>
 </template>
 
 <script>
 import UserLayout from "../layouts/UserLayout.vue";
-
+import FormForgotModal from "../components/FormForgotPassword";
 export default {
     components: {
         UserLayout,
+        FormForgotModal,
     },
     data() {
         return {
-            customActiveKey: "tab1",
+            formModal: { show: false },
+
             loginBtn: false,
 
-            loginType: 0,
             isLoginError: false,
             errorMessage: null,
-            stepCaptchaVisible: false,
-            form: this.$form.createForm(this),
-            state: {
-                time: 60,
-                loginBtn: false,
 
-                loginType: 0,
-                smsSendBtn: false,
-            },
-            requiredGoogleAuth: false,
-            fields: ["username", "password"],
+            form: this.$form.createForm(this),
+
+            fields: ["email", "password"],
         };
     },
 
     methods: {
+        openForgotModal() {
+            this.formModal = { show: true };
+        },
+        refreshTable() {
+            this.formModal = { show: false };
+        },
+        forgotPassword() {
+            //
+        },
         handleSubmit(e) {
             e.preventDefault();
             this.form.validateFields(
