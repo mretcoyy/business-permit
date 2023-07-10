@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 Route::get('/login', 'UserController@index');
 
-Route::get('/register', 'UserController@index');
+Route::get('/register', 'UserController@registration');
 
 Route::get('/bplo', 'BPLOController@index');
 

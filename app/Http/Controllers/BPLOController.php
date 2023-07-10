@@ -10,4 +10,14 @@ class BPLOController extends Controller
     {
         return view('page.BPLO.list');
     }
+
+    public function storeForm()
+    {
+        return;
+    }
+
+    public function viewForm()
+    {
+        return;
+    }
 }

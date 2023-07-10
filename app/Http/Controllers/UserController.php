@@ -11,8 +11,29 @@ class UserController extends Controller
         return view('page.User.login');
     }
 
-    public function register()
+    public function registration()
     {
         return view('page.User.register');
     }
+
+    public function login()
+    {
+        return;
+    }
+
+    public function register()
+    {
+        return;
+    }
+
+    public function forgotPassword()
+    {
+        return;
+    }
+
+    public function changePassword()
+    {
+        return;
+    }
+
 }

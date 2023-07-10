@@ -1,5 +1,5 @@
 @extends('main.core')
  
 @section('content')
-    <example-component></example-component>
+    <view-register></view-register>
 @endsection

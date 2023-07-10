@@ -8,9 +8,9 @@
                 :default-selected-keys="['2']"
                 :style="{ lineHeight: '64px' }"
             >
-                <a-menu-item key="1"> nav 1 </a-menu-item>
-                <a-menu-item key="2"> nav 2 </a-menu-item>
-                <a-menu-item key="3"> nav 3 </a-menu-item>
+                <a-menu-item key="1"> Dashboard </a-menu-item>
+                <a-menu-item key="2"> Business Permit Form </a-menu-item>
+                <a-menu-item key="3"> Logout </a-menu-item>
             </a-menu>
         </a-layout-header>
         <a-layout-content style="padding: 0 50px">
