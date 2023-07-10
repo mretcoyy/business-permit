@@ -35,7 +35,6 @@
                                             required: true,
                                             message: 'Full Name Required',
                                         },
-                                        { validator: handleUsernameOrEmail },
                                     ],
                                 },
                             ]"
@@ -63,7 +62,6 @@
                                             required: true,
                                             message: 'Email Required',
                                         },
-                                        { validator: handleUsernameOrEmail },
                                     ],
                                 },
                             ]"
@@ -155,11 +153,7 @@
 </template>
 
 <script>
-//   import { mapActions } from 'vuex'
-//   import { getSmsCaptcha } from '@/api/login'
 import UserLayout from "../layouts/UserLayout.vue";
-//   import storage from 'store'
-//   import { ACCESS_TOKEN, REFRESH_TOKEN, INITIAL_AUTH } from '@/store/mutation-types'
 
 export default {
     components: {
@@ -167,160 +161,26 @@ export default {
     },
     data() {
         return {
-            customActiveKey: "tab1",
             loginBtn: false,
-            // login type: 0 email, 1 username, 2 telephone
-            loginType: 0,
             isLoginError: false,
             errorMessage: null,
-            stepCaptchaVisible: false,
             form: this.$form.createForm(this),
-            state: {
-                time: 60,
-                loginBtn: false,
-                // login type: 0 email, 1 username, 2 telephone
-                loginType: 0,
-                smsSendBtn: false,
-            },
-            requiredGoogleAuth: false,
-            fields: ["username", "password"],
+            fields: ["fullName", "username", "password", "repeatPassword"],
         };
     },
-    created() {
-        //   const { username, password } = storage.get(INITIAL_AUTH) || []
-        // if (username && password) {
-        //     this.fields.forEach((v) => this.form.getFieldDecorator(v));
-        //     this.form.setFieldsValue({
-        //         username,
-        //         password,
-        //     });
-        // }
-        //   storage.remove(INITIAL_AUTH)
-    },
     methods: {
-        //   ...mapActions(['Login', 'Logout']),
-        // handler
-        handleUsernameOrEmail(rule, value, callback) {
-            // const { state } = this
-            // const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
-            // if (regex.test(value)) {
-            //   state.loginType = 0
-            // } else {
-            //   state.loginType = 1
-        },
-        //     callback()
-
-        handleTabClick(key) {
-            // this.customActiveKey = key
-            // this.form.resetFields()
-        },
         handleSubmit(e) {
-            // e.preventDefault()
-            // this.loginBtn = true
-            // const validateFieldsKey = this.customActiveKey === 'tab1' ? ['username', 'password'] : ['mobile', 'captcha']
-            // this.form.validateFields(validateFieldsKey, { force: true }, async (err, values) => {
-            //   if (!err) {
-            //     try {
-            //       const res = await this.Login(values)
-            //       this.loginSuccess(res, values.username, values.password)
-            //       const initalAuthExpiration = new Date().getTime() + 10000 * 5
-            //       storage.set(INITIAL_AUTH, { username: values.username, password: values.password }, initalAuthExpiration)
-            //     } catch (err) {
-            //       this.requestFailed(err)
-            //     }
-            //     this.loginBtn = false
-            //   }
-            //   this.loginBtn = false
-            // })
+            e.preventDefault();
+            this.form.validateFields(
+                (err, values) => !err && this.registerAction()
+            );
         },
-        getCaptcha(e) {
-            // e.preventDefault()
-            // const {
-            //   form: { validateFields },
-            //   state
-            // } = this
-            // validateFields(['mobile'], { force: true }, (err, values) => {
-            //   if (!err) {
-            //     state.smsSendBtn = true
-            //     const interval = window.setInterval(() => {
-            //       if (state.time-- <= 0) {
-            //         state.time = 60
-            //         state.smsSendBtn = false
-            //         window.clearInterval(interval)
-            //       }
-            //     }, 1000)
-            //     const hide = this.$message.loading('验证码发送中..', 0)
-            //     getSmsCaptcha({ mobile: values.mobile })
-            //       .then((res) => {
-            //         setTimeout(hide, 2500)
-            //         this.$notification['success']({
-            //           message: '提示',
-            //           description: '验证码获取成功，您的验证码为：' + res.result.captcha,
-            //           duration: 8
-            //         })
-            //       })
-            //       .catch((err) => {
-            //         setTimeout(hide, 1)
-            //         clearInterval(interval)
-            //         state.time = 60
-            //         state.smsSendBtn = false
-            //         this.requestFailed(err)
-            //       })
-            //   }
-            // })
-        },
-        stepCaptchaSuccess() {
-            // this.loginSuccess()
-        },
-        stepCaptchaCancel() {
-            // this.Logout().then(() => {
-            //   this.loginBtn = false
-            //   this.stepCaptchaVisible = false
-            // })
-        },
-        setTokens(data) {
-            // return new Promise((resolve) => {
-            //   const { expiresIn, refreshExpiresIn, accessToken: token, refreshToken } = data
-            //   const tokenExpiration = new Date().getTime() + 1000 * expiresIn
-            //   const refreshTokenExp = new Date().getTime() + 1000 * refreshExpiresIn
-            //   storage.set(ACCESS_TOKEN, token, tokenExpiration)
-            //   storage.set(REFRESH_TOKEN, refreshToken, refreshTokenExp)
-            //   this.$store.commit('SET_TOKEN', token)
-            //   resolve()
-            // })
-        },
-        async loginSuccess(res, username, password) {
-            // check res.homePage define, set $router.push name res.homePage
-            // Why not enter onComplete
-            // const { data } = res
-            // const { application } = data || {}
-            // const { oauth2RegisteredClient } = application || {}
-            // const { id } = oauth2RegisteredClient || {}
-            // if (id !== process.env.VUE_APP_ID) {
-            //   this.errorMessage = 'You are not allowed to access this app.'
-            //   this.isLoginError = true
-            // } else if (data?.gaStatus === 'Disable') {
-            //   await this.setTokens(data)
-            //   this.$router.push({ path: '/' })
-            //   this.$message.success(this.$t('notification.login-success'))
-            // } else {
-            //   this.$router.push({
-            //     name: 'qr-verification',
-            //     params: {
-            //       t: data.accessToken,
-            //       rt: data.refreshToken,
-            //       expiresIn: data.expiresIn,
-            //       refreshExpiresIn: data.refreshExpiresIn,
-            //       username,
-            //       password,
-            //       isResetOtp: data.isResetOtp
-            //     }
-            //   })
-            // }
-        },
-        requestFailed(err) {
-            // this.errorMessage = this.$t(err?.response?.data?.code)
-            // this.isLoginError = true
+        registerAction() {
+            alert("call this");
+            console.log(this.form.getFieldValue("fullName"));
+            console.log(this.form.getFieldValue("username"));
+            console.log(this.form.getFieldValue("password"));
+            console.log(this.form.getFieldValue("repeatPassword"));
         },
     },
 };
