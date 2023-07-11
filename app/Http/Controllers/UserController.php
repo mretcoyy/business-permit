@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Entities\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -18,12 +20,24 @@ class UserController extends Controller
 
     public function login()
     {
+        if (Auth::attempt(['email' => $email, 'password' => $password, 'status' => 1])) {
+            return json_encode($Auth::user());
+        } else {
+            return ['message' => 'Invalid Username or Password'];
+        }
+        
         return;
     }
 
-    public function register()
+    public function register(Request $request)
     {
-        return;
+        return $request->all();
+        return User::create([
+            'name' => $data,
+            'email' => $data,
+            'password' => $data
+        ]);
+
     }
 
     public function forgotPassword()

@@ -176,11 +176,24 @@ export default {
             );
         },
         registerAction() {
-            alert("call this");
-            console.log(this.form.getFieldValue("fullName"));
-            console.log(this.form.getFieldValue("username"));
-            console.log(this.form.getFieldValue("password"));
-            console.log(this.form.getFieldValue("repeatPassword"));
+            alert('test');
+            axios({
+                method: 'POST',
+                url: 'user/store',
+                data:{
+                    register: this.form,
+                }
+            }).then(function(response){
+
+            }).catch(error => {
+
+            });
+
+            alert('test again');
+            // console.log(this.form.getFieldValue("fullName"));
+            // console.log(this.form.getFieldValue("username"));
+            // console.log(this.form.getFieldValue("password"));
+            // console.log(this.form.getFieldValue("repeatPassword"));
         },
     },
 };
