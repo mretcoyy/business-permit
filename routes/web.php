@@ -22,7 +22,7 @@ use App\Http\Controllers\BPLOReleasingController;
 */
 
 Route::get('/', function () {
-    return view('page.test');
+    return view('page.BPLO.list');
 });
 
 Route::get('/login', 'UserController@index');
