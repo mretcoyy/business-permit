@@ -145,6 +145,7 @@ export default {
             );
         },
         loginAction() {
+            let self = this;
             axios({
                 method: 'POST',
                 url: 'user/login',
@@ -153,7 +154,12 @@ export default {
                     password: this.form.getFieldValue("password"),
                 }
             }).then(function(response){
-                console.log(response);
+                if(response.data.user != undefined) {
+                    window.location.href= '/dashboard'
+                } else {
+                    self.$message.error('Log in Failed');
+                }
+                
             }).catch(error => {
 
             });

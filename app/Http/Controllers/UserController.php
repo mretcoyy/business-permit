@@ -26,8 +26,14 @@ class UserController extends Controller
         if (Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 1])) {
             return json_encode(['user' => Auth::user()]);
         } else {
-            return ['message' => 'Invalid Username '.$data['email'].' or Password '.$data['password']];
+            return ['message' => 'loginError'];
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        
     }
 
     public function register(Request $request)

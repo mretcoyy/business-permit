@@ -8,6 +8,6 @@ class UserDashboardController extends Controller
 {
     public function index()
     {
-        return view('page.UserDashboard.list');
+        return view('page.Dashboard.list');
     }
 }

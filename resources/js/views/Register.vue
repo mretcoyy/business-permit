@@ -177,6 +177,7 @@ export default {
             );
         },
         registerAction() {
+            let self = this;
             axios({
                 method: 'POST',
                 url: 'user/store',
@@ -186,7 +187,11 @@ export default {
                     password: this.form.getFieldValue("password"),
                 }
             }).then(function(response){
-
+                console.log(response);
+                alert('deasd');
+                self.$message.success('message');
+                self.form.resetFields();
+                window.location.href= '/'
             }).catch(error => {
 
             });

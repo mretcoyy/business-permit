@@ -37,9 +37,9 @@ Route::get('/', 'UserController@index');
 Route::get('/register', 'UserController@registration');
 Route::post('user/store', 'UserController@register');
 Route::post('user/login', 'UserController@login');
+Route::post('user/logout', 'UserController@logout');
 Route::get('/dashboard', 'UserDashboardController@index');
 Route::get('/business-form', 'UserBusinessController@index');
-
 
 //BPLO
 Route::get('/bplo', 'BPLOController@index');
