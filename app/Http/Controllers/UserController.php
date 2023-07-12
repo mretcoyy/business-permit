@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         $data = $request->all();
 
-        if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+        if (Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 1])) {
             return json_encode(Auth::user());
         } else {
             return ['message' => 'Invalid Username '.$data['email'].' or Password '.$data['password']];
