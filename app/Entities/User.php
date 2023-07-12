@@ -3,14 +3,17 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * Class User.
  *
  * @package namespace App\Entities;
  */
-class User extends Model
+class User extends Authenticatable
 {
+    use Notifiable;
 
     protected $table = 'users';
 
@@ -24,6 +27,7 @@ class User extends Model
         'password',
         'full_address',
         'contact_number',
+        'status',
         'barangay',
     ];
 

@@ -16,7 +16,14 @@ class CreateBusinessFilesTable extends Migration
         Schema::create('business_files', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('business_id');
-            $table->string('first_name');
+            $table->string('barangay_clearance');
+            $table->string('zoning_clearance');
+            $table->string('sanitary_clearance');
+            $table->string('occupancy_permit');
+            $table->string('environment_certificate');
+            $table->string('community_tax_certificate');
+            $table->string('real_property_tax_clearance');
+            $table->string('fire_certificate');
             $table->timestamps();
         });
     }

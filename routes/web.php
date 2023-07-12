@@ -36,6 +36,7 @@ Route::get('/', 'UserController@index');
 //Business Owner
 Route::get('/register', 'UserController@registration');
 Route::post('user/store', 'UserController@register');
+Route::post('user/login', 'UserController@login');
 Route::get('/dashboard', 'UserDashboardController@index');
 Route::get('/business-form', 'UserBusinessController@index');
 

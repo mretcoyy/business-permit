@@ -145,9 +145,18 @@ export default {
             );
         },
         loginAction() {
-            alert("call this");
-            console.log(this.form.getFieldValue("email"));
-            console.log(this.form.getFieldValue("password"));
+            axios({
+                method: 'POST',
+                url: 'user/login',
+                data:{
+                    email: this.form.getFieldValue("email"),
+                    password: this.form.getFieldValue("password"),
+                }
+            }).then(function(response){
+                console.log(response);
+            }).catch(error => {
+
+            });
         },
     },
 };
