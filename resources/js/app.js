@@ -34,6 +34,12 @@ Vue.component("view-login", require("./views/Login.vue").default);
 Vue.component("view-register", require("./views/Register.vue").default);
 
 Vue.component("view-user-dashboard", require("./views/Register.vue").default);
+Vue.component(
+    "form-application",
+    require("./components/FormApplication.vue").default
+);
+
+Vue.component("view-dashboard", require("./views/Dashboard.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

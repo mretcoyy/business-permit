@@ -21,11 +21,17 @@ use App\Http\Controllers\BPLOReleasingController;
 |
 */
 
-Route::get('/', function () {
-    return view('page.test');
+Route::get('/application', function () {
+    return view('page.BPLO.list');
 });
 //Universal
 Route::get('/login', 'UserController@index');
+
+Route::get('/dashboard', function () {
+    return view('page.Dashboard.list');
+});
+
+Route::get('/', 'UserController@index');
 
 //Business Owner
 Route::get('/register', 'UserController@registration');
