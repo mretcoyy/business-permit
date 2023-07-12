@@ -31,11 +31,12 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        return $request->all();
+        $data = $request->all();
+
         return User::create([
-            'name' => $data,
-            'email' => $data,
-            'password' => $data
+            'name' => $data['fullName'],
+            'email' => $data['email'],
+            'password' => $data['password'],
         ]);
 
     }

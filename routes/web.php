@@ -24,26 +24,23 @@ use App\Http\Controllers\BPLOReleasingController;
 Route::get('/', function () {
     return view('page.test');
 });
-
+//Universal
 Route::get('/login', 'UserController@index');
 
+//Business Owner
 Route::get('/register', 'UserController@registration');
-Route::get('user/store', 'UserController@register');
+Route::post('user/store', 'UserController@register');
+Route::get('/dashboard', 'UserDashboardController@index');
+Route::get('/business-form', 'UserBusinessController@index');
 
+
+//BPLO
 Route::get('/bplo', 'BPLOController@index');
-
 Route::get('/menro', 'MENROController@index');
-
 Route::get('/mpdc', 'MPDCController@index');
-
 Route::get('/engineering', 'EngineeringController@index');
-
 Route::get('/sanitary', 'SanitaryController@index');
-
 Route::get('/treasurer', 'TreasurerController@index');
-
 Route::get('/bfp', 'BFPController@index');
-
 Route::get('/mayors-office', 'MayorsOfficeController@index');
-
 Route::get('/bplo-releasing', 'BPLOReleasingController@index');

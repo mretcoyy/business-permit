@@ -154,6 +154,7 @@
 
 <script>
 import UserLayout from "../layouts/UserLayout.vue";
+import axios from "axios";
 
 export default {
     components: {
@@ -176,12 +177,13 @@ export default {
             );
         },
         registerAction() {
-            alert('test');
             axios({
                 method: 'POST',
                 url: 'user/store',
                 data:{
-                    register: this.form,
+                    fullName: this.form.getFieldValue("fullName"),
+                    email: this.form.getFieldValue("username"),
+                    password: this.form.getFieldValue("password"),
                 }
             }).then(function(response){
 
@@ -189,7 +191,6 @@ export default {
 
             });
 
-            alert('test again');
             // console.log(this.form.getFieldValue("fullName"));
             // console.log(this.form.getFieldValue("username"));
             // console.log(this.form.getFieldValue("password"));
