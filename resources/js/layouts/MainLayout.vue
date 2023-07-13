@@ -2,6 +2,11 @@
     <a-layout id="components-layout-demo-top" class="layout">
         <a-layout-header>
             <!-- <div class="logo" /> -->
+            <!-- <img 
+                src="/images/dolores.png" 
+                alt="logo"
+                style="height: 25px width: 25px"
+            > -->
             <!-- :default-selected-keys="['1']" -->
             <a-menu
                 theme="dark"

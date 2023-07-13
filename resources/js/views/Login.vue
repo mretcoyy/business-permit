@@ -2,6 +2,13 @@
     <UserLayout>
         <div class="user-layout-content">
             <div class="top">
+                <div>
+                    <img 
+                        src="/images/dolores.png" 
+                        alt="logo"
+                        style="height: 250px"
+                    >
+                </div>
                 <div class="title">Business Permit</div>
             </div>
             <div class="main">
