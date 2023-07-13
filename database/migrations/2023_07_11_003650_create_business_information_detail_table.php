@@ -20,8 +20,8 @@ class CreateBusinessInformationDetailTable extends Migration
             $table->string('line_of_business');
             $table->string('number_of_units');
             $table->decimal('capitalization', 23, 6);
-            $table->decimal('capitalization', 23, 6)->default(0.000000);
-            $table->decimal('capitalization', 23, 6)->default(0.000000);
+            $table->decimal('essential', 23, 6)->default(0.000000);
+            $table->decimal('non_essential', 23, 6)->default(0.000000);
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Entities\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -18,24 +19,31 @@ class UserController extends Controller
         return view('page.User.register');
     }
 
-    public function login()
+    public function login(Request $request)
     {
-        if (Auth::attempt(['email' => $email, 'password' => $password, 'status' => 1])) {
-            return json_encode($Auth::user());
+        $data = $request->all();
+
+        if (Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'status' => 1])) {
+            return json_encode(['user' => Auth::user()]);
         } else {
-            return ['message' => 'Invalid Username or Password'];
+            return ['message' => 'loginError'];
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
         
-        return;
     }
 
     public function register(Request $request)
     {
-        return $request->all();
+        $data = $request->all();
+
         return User::create([
-            'name' => $data,
-            'email' => $data,
-            'password' => $data
+            'name' => $data['fullName'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
         ]);
 
     }

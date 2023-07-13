@@ -145,9 +145,24 @@ export default {
             );
         },
         loginAction() {
-            alert("call this");
-            console.log(this.form.getFieldValue("email"));
-            console.log(this.form.getFieldValue("password"));
+            let self = this;
+            axios({
+                method: 'POST',
+                url: 'user/login',
+                data:{
+                    email: this.form.getFieldValue("email"),
+                    password: this.form.getFieldValue("password"),
+                }
+            }).then(function(response){
+                if(response.data.user != undefined) {
+                    window.location.href= '/dashboard'
+                } else {
+                    self.$message.error('Log in Failed');
+                }
+                
+            }).catch(error => {
+
+            });
         },
     },
 };

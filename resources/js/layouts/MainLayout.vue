@@ -14,7 +14,7 @@
                 <a-menu-item key="2">
                     <a href="/application">Application </a></a-menu-item
                 >
-                <a-menu-item key="3"> <a href="/">Logout </a></a-menu-item>
+                <a-menu-item key="3"> <span @click="logOut">Logout </span></a-menu-item>
             </a-menu>
         </a-layout-header>
         <a-layout-content style="padding: 0 50px">
@@ -31,3 +31,23 @@
         </a-layout-footer>
     </a-layout>
 </template>
+<script>
+    export default {
+    data() {
+    },
+    methods: {
+        
+        logOut() {
+            let self = this;
+            axios({
+                method: 'POST',
+                url: 'user/logout',
+            }).then(function(response){
+                window.location.href= '/'
+            }).catch(error => {
+
+            });
+        },
+    },
+};
+</script>

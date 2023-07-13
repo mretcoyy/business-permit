@@ -177,20 +177,29 @@ export default {
             );
         },
         registerAction() {
+            let self = this;
             axios({
-                method: "POST",
-                url: "user/store",
-                data: {
-                    fullname: this.form.getFieldValue("fullName"),
-                    username: this.form.getFieldValue("username"),
+                method: 'POST',
+                url: 'user/store',
+                data:{
+                    fullName: this.form.getFieldValue("fullName"),
+                    email: this.form.getFieldValue("username"),
                     password: this.form.getFieldValue("password"),
-                    repeatPassword: this.form.getFieldValue("repeatPassword"),
-                },
-            })
-                .then(function (response) {})
-                .catch((error) => {
-                    console.log(error);
-                });
+                }
+            }).then(function(response){
+                console.log(response);
+                alert('deasd');
+                self.$message.success('message');
+                self.form.resetFields();
+                window.location.href= '/'
+            }).catch(error => {
+
+            });
+
+            // console.log(this.form.getFieldValue("fullName"));
+            // console.log(this.form.getFieldValue("username"));
+            // console.log(this.form.getFieldValue("password"));
+            // console.log(this.form.getFieldValue("repeatPassword"));
         },
     },
 };
