@@ -499,7 +499,7 @@
                             </div>
                         </a-upload>
                     </a-col>
-                    <a-col span="3">
+                    <!-- <a-col span="3">
                         <a-upload
                             :multiple="false"
                             name="avatar"
@@ -526,7 +526,7 @@
                                 </div>
                             </div>
                         </a-upload>
-                    </a-col>
+                    </a-col> -->
                     <a-col span="3">
                         <a-upload
                             :multiple="false"
@@ -637,7 +637,7 @@
                             </div>
                         </a-upload>
                     </a-col>
-                    <a-col span="3">
+                    <!-- <a-col span="3">
                         <a-upload
                             :multiple="false"
                             name="avatar"
@@ -664,7 +664,7 @@
                                 </div>
                             </div>
                         </a-upload>
-                    </a-col>
+                    </a-col> -->
                 </a-row>
                 <a-button type="primary" @click="handleSubmit" block
                     >Submit Application</a-button
@@ -685,11 +685,11 @@ function getBase64(img, callback) {
 import MainLayout from "../layouts/MainLayout";
 import FormBusinessActivity from "./FormBusinessActivity";
 const columns = [
-    {
-        dataIndex: "code",
-        key: "code",
-        title: "Code",
-    },
+    // {
+    //     dataIndex: "code",
+    //     key: "code",
+    //     title: "Code",
+    // },
     {
         dataIndex: "lineOfBusiness",
         key: "lineOfBusiness",
@@ -739,12 +739,12 @@ export default {
             file: {
                 barangay: false,
                 zoning: false,
-                sanitary: false,
+                // sanitary: false,
                 occupancy: false,
                 environment: false,
                 community: false,
                 rpt: false,
-                fireSafety: false,
+                // fireSafety: false,
             },
         };
     },
