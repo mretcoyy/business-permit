@@ -40,6 +40,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function business()
+    {
+        return $this->hasMany(Business::class, 'user_id', 'id');
+    }
     
     // public function sendPasswordResetNotification($token)
     // {

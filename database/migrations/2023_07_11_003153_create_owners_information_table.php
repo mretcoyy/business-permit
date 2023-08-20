@@ -22,14 +22,20 @@ class CreateOwnersInformationTable extends Migration
             $table->string('house_number');
             $table->string('building_name')->nullable();
             $table->string('unit_no')->nullable();
-            $table->string('street');
+            $table->string('street')->nullable();
             $table->string('barangay');
-            $table->string('subdivision');
+            $table->string('subdivision')->nullable();
             $table->string('city');
             $table->string('province');
             $table->string('contact_number');
             $table->string('email_address');
             $table->timestamps();
+
+            $table->foreign('business_id')
+                ->references('id')
+                ->on('business')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

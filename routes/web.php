@@ -21,9 +21,9 @@ use App\Http\Controllers\BPLOReleasingController;
 |
 */
 
-Route::get('/application', function () {
-    return view('page.BPLO.list');
-});
+// Route::get('/application', function () {
+//     return view('page.BPLO.list');
+// });
 //Universal
 Route::get('/login', 'UserController@index');
 

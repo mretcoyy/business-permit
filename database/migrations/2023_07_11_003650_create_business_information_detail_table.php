@@ -23,6 +23,12 @@ class CreateBusinessInformationDetailTable extends Migration
             $table->decimal('essential', 23, 6)->default(0.000000);
             $table->decimal('non_essential', 23, 6)->default(0.000000);
             $table->timestamps();
+
+            $table->foreign('business_id')
+                ->references('id')
+                ->on('business')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

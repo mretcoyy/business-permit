@@ -15,14 +15,20 @@ class CreateBusinessTable extends Migration
     {
         Schema::create('business', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable;
             $table->string('reference_number');
             $table->string('dti_registration_no');
             $table->date('dti_date_of_registration');
             $table->tinyInteger('type_of_organization');
             $table->tinyInteger('is_tax_incentive');
             $table->date('date_of_application');
-            $table->date('date_renewed')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

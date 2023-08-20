@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLessorInformationTable extends Migration
+class CreateBusinessDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,12 @@ class CreateLessorInformationTable extends Migration
      */
     public function up()
     {
-        Schema::create('lessor_information', function (Blueprint $table) {
+        Schema::create('business_detail', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('business_id');
-            $table->string('house_number');
-            $table->string('building_name')->nullable();
-            $table->string('unit_no')->nullable();
-            $table->string('street')->nullable();
-            $table->string('barangay');
-            $table->string('subdivision')->nullable();
-            $table->string('city');
-            $table->string('province');
-            $table->string('contact_number');
-            $table->string('email_address');
+            $table->string('bin');
+            $table->tinyInteger('status');
+            $table->date('date_renewed')->nullable();
             $table->timestamps();
 
             $table->foreign('business_id')
@@ -43,6 +36,6 @@ class CreateLessorInformationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lessor_information');
+        Schema::dropIfExists('business_detail');
     }
 }
