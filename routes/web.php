@@ -42,7 +42,9 @@ Route::get('/dashboard', 'UserDashboardController@index');
 Route::get('/business-form', 'UserBusinessController@index');
 
 //BPLO
-Route::get('/bplo', 'BPLOController@index');
+Route::get('bplo', 'BPLOController@index');
+Route::post('bplo/store', 'BPLOController@store');
+
 Route::get('/menro', 'MENROController@index');
 Route::get('/mpdc', 'MPDCController@index');
 Route::get('/engineering', 'EngineeringController@index');

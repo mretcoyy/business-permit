@@ -11,12 +11,12 @@ class BPLOController extends Controller
         return view('page.BPLO.list');
     }
 
-    public function storeForm()
+    public function store(Request $request)
     {
-        return;
+        return $request->all();
     }
 
-    public function viewForm()
+    public function view()
     {
         return;
     }
