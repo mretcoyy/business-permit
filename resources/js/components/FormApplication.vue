@@ -754,9 +754,7 @@ export default {
             self.form.validateFields(async (errors, values) => {
                 if (!errors) {
                     if (self.dataBusinessActivity.length === 0) {
-                        self.$message.error(
-                            "Business Activity is required!"
-                        );
+                        self.$message.error("Business Activity is required!");
                     } else if (self.checkFilesisFalse(self.file)) {
                         self.$message.error(
                             "Please upload all file requirements!"
@@ -765,126 +763,128 @@ export default {
                         var data = {
                             typeOfBusienss:
                                 self.form.getFieldValue("typeOfBusienss"),
-                            business: [
-                                dateOfApplication =
+                            business: {
+                                dateOfApplication:
                                     self.form.getFieldValue(
                                         "dateOfApplication"
                                     ),
-                                referenceNo =
+                                referenceNo:
                                     self.form.getFieldValue("referenceNo"),
-                                dtiSecNo = self.form.getFieldValue("dtiSecNo"),
-                                dtiSecdateofReg =
+                                dtiSecNo: self.form.getFieldValue("dtiSecNo"),
+                                dtiSecdateofReg:
                                     self.form.getFieldValue("dtiSecdateofReg"),
-                                typeOfOrganization =
+                                typeOfOrganization:
                                     self.form.getFieldValue(
                                         "typeOfOrganization"
                                     ),
-                                hasTaxIncentive =
+                                hasTaxIncentive:
                                     self.form.getFieldValue("hasTaxIncentive"),
-                            ],
-                            businessInformation: [
-                                taxPayerLname =
+                            },
+                            businessInformation: {
+                                taxPayerLname:
                                     self.form.getFieldValue("taxPayerLname"),
-                                taxPayerFname =
+                                taxPayerFname:
                                     self.form.getFieldValue("taxPayerFname"),
-                                taxPayerMname =
+                                taxPayerMname:
                                     self.form.getFieldValue("taxPayerMname"),
-                                taxPayerBname =
+                                taxPayerBname:
                                     self.form.getFieldValue("taxPayerBname"),
-                                taxPayerTname =
+                                taxPayerTname:
                                     self.form.getFieldValue("taxPayerTname"),
-                                taxPresidentLname =
+                                taxPresidentLname:
                                     self.form.getFieldValue(
                                         "taxPresidentLname"
                                     ),
-                                taxPresidentFname =
+                                taxPresidentFname:
                                     self.form.getFieldValue(
                                         "taxPresidentFname"
                                     ),
-                                taxPresidentMname =
+                                taxPresidentMname:
                                     self.form.getFieldValue(
                                         "taxPresidentMname"
                                     ),
-                                BAddressHouseNo =
+                                BAddressHouseNo:
                                     self.form.getFieldValue("BAddressHouseNo"),
-                                BAddressBuildingName = self.form.getFieldValue(
+                                BAddressBuildingName: self.form.getFieldValue(
                                     "BAddressBuildingName"
                                 ),
-                                BAddressUnitNo =
+                                BAddressUnitNo:
                                     self.form.getFieldValue("BAddressUnitNo"),
-                                BAddressStreet =
+                                BAddressStreet:
                                     self.form.getFieldValue("BAddressStreet"),
-                                BAddressBarangay =
+                                BAddressBarangay:
                                     self.form.getFieldValue("BAddressBarangay"),
-                                BAddressSubd =
+                                BAddressSubd:
                                     self.form.getFieldValue("BAddressSubd"),
-                                BAddressCity =
+                                BAddressCity:
                                     self.form.getFieldValue("BAddressCity"),
-                                BAddressProvince =
+                                BAddressProvince:
                                     self.form.getFieldValue("BAddressProvince"),
-                                BAddressTelNo =
+                                BAddressTelNo:
                                     self.form.getFieldValue("BAddressTelNo"),
-                                BAddressEmail =
+                                BAddressEmail:
                                     self.form.getFieldValue("BAddressEmail"),
-                                BusinessArea =
+                                BusinessArea:
                                     self.form.getFieldValue("BusinessArea"),
-                                TotalNumberofEmployees = self.form.getFieldValue(
-                                    "TotalNumberofEmployees"),
-                                LGUEmployeeCount =
+                                TotalNumberofEmployees: self.form.getFieldValue(
+                                    "TotalNumberofEmployees"
+                                ),
+                                LGUEmployeeCount:
                                     self.form.getFieldValue("LGUEmployeeCount"),
-                                EmergencyContactPerson = self.form.getFieldValue(
+                                EmergencyContactPerson: self.form.getFieldValue(
                                     "EmergencyContactPerson"
                                 ),
-                            ],
-                            ownerAddress: [
-                                OAddressHouseNo =
+                            },
+                            ownerAddress: {
+                                OAddressHouseNo:
                                     self.form.getFieldValue("OAddressHouseNo"),
-                                OAddressBuildingName = self.form.getFieldValue(
-                                    "OAddressBuildingName"),
-                                OAddressUnitNo =
+                                OAddressBuildingName: self.form.getFieldValue(
+                                    "OAddressBuildingName"
+                                ),
+                                OAddressUnitNo:
                                     self.form.getFieldValue("OAddressUnitNo"),
-                                OAddressStreet =
+                                OAddressStreet:
                                     self.form.getFieldValue("OAddressStreet"),
-                                OAddressBarangay =
+                                OAddressBarangay:
                                     self.form.getFieldValue("OAddressBarangay"),
-                                OAddressSubd =
+                                OAddressSubd:
                                     self.form.getFieldValue("OAddressSubd"),
-                                OAddressCity =
+                                OAddressCity:
                                     self.form.getFieldValue("OAddressCity"),
-                                OAddressProvince =
+                                OAddressProvince:
                                     self.form.getFieldValue("OAddressProvince"),
-                                OAddressTelNo =
+                                OAddressTelNo:
                                     self.form.getFieldValue("OAddressTelNo"),
-                                OAddressEmail =
+                                OAddressEmail:
                                     self.form.getFieldValue("OAddressEmail"),
-                            ],
-                            lessorInformation: [
-                                LessorLname =
+                            },
+                            lessorInformation: {
+                                LessorLname:
                                     self.form.getFieldValue("LessorLname"),
-                                LessorFname =
+                                LessorFname:
                                     self.form.getFieldValue("LessorFname"),
-                                LessorMname =
+                                LessorMname:
                                     self.form.getFieldValue("LessorMname"),
-                                LessorMonthlyRental = self.form.getFieldValue(
+                                LessorMonthlyRental: self.form.getFieldValue(
                                     "LessorMonthlyRental"
                                 ),
-                                LAddressHouseNo =
+                                LAddressHouseNo:
                                     self.form.getFieldValue("LAddressHouseNo"),
-                                LAddressStreet =
+                                LAddressStreet:
                                     self.form.getFieldValue("LAddressStreet"),
-                                LAddressBarangay =
+                                LAddressBarangay:
                                     self.form.getFieldValue("LAddressBarangay"),
-                                LAddressTelNo =
+                                LAddressTelNo:
                                     self.form.getFieldValue("LAddressTelNo"),
-                                LAddressSubd =
+                                LAddressSubd:
                                     self.form.getFieldValue("LAddressSubd"),
-                                LAddressCity =
+                                LAddressCity:
                                     self.form.getFieldValue("LAddressCity"),
-                                LAddressProvince =
+                                LAddressProvince:
                                     self.form.getFieldValue("LAddressProvince"),
-                                LAddressEmail =
+                                LAddressEmail:
                                     self.form.getFieldValue("LAddressEmail"),
-                            ],
+                            },
                             FileUploads: self.file,
                             BusinessActivity: self.dataBusinessActivity,
                         };
@@ -896,16 +896,13 @@ export default {
         },
 
         async submitData(data) {
-            
             return axios({
-                method: 'POST',
-                url: 'bplo/store',
+                method: "POST",
+                url: "bplo/store",
                 data: data,
-            }).then(function(response){
-
-            }).catch((error) => {
-
-            });
+            })
+                .then(function (response) {})
+                .catch((error) => {});
         },
 
         checkFilesisFalse(files) {
@@ -950,7 +947,7 @@ export default {
         },
         refreshTable(data) {
             this.dataBusinessActivity.push(data);
-            this.formModal = { show: true };
+            this.formModal = { show: false };
         },
         onChange(e) {
             console.log(`checked = ${e.target.value}`);
@@ -962,7 +959,7 @@ export default {
             this.formModal = { show: true };
         },
         handleEditBusinessActivity({ data, index }) {
-            this.formModal = { show: true };
+            this.formModal = { show: false };
             this.dataBusinessActivity.splice(index, 1, data);
             this.$message.success("Business Updated Succesfully!");
         },
