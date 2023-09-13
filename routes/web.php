@@ -53,3 +53,6 @@ Route::get('/treasurer', 'TreasurerController@index');
 Route::get('/bfp', 'BFPController@index');
 Route::get('/mayors-office', 'MayorsOfficeController@index');
 Route::get('/bplo-releasing', 'BPLOReleasingController@index');
+
+// Application
+Route::get('application', 'Application@index');
