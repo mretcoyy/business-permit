@@ -22,6 +22,10 @@ class LessorInformation extends Model implements Transformable
      */
     protected $fillable = [
         'business_id',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'monthly_rental',
         'house_number',
         'building_name',
         'unit_no',

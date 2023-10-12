@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\Services\BusinessService;
+use App\Repositories\Eloquent\BusinessRepositoryEloquent;
+use App\Transformers\BusinessTransformer;
 
 class BPLOController extends Controller
 {
@@ -11,13 +14,24 @@ class BPLOController extends Controller
         return view('page.BPLO.list');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, BusinessService $service)
     {
-        return $request->all();
+        $store = $service->store($request->all());
+
+        return $store;
     }
 
-    public function view()
+    public function list(Request $request)
     {
-        return;
+        $business = app()->make(BusinessRepositoryEloquent::class)->list($filters = []);
+
+        return $business;
+    }
+
+    public function changeStatus(Request $request, $id)
+    {
+        $changeStatus = $service->changeStatus($request->all(), $id);
+
+        return $changeStatus;
     }
 }

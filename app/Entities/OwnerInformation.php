@@ -15,6 +15,7 @@ class OwnerInformation extends Model implements Transformable
 {
     use TransformableTrait;
 
+    protected $table = 'owners_information';
     /**
      * The attributes that are mass assignable.
      *

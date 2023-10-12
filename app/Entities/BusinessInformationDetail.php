@@ -15,6 +15,7 @@ class BusinessInformationDetail extends Model implements Transformable
 {
     use TransformableTrait;
 
+    protected $table = 'business_information_detail';
     /**
      * The attributes that are mass assignable.
      *

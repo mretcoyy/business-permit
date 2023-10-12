@@ -10,14 +10,19 @@ use App\Entities\BusinessInformationDetail;
 use App\Entities\LessorInformation;
 use App\Entities\OwnerInformation;
 use App\Enums\BusinessStatus;
+use App\Enums\TypeOfOrganization;
 use Carbon\Carbon;
+use App\Services\Contract\BusinessServiceInterface;
+use Illuminate\Support\Facades\Log;
 
 class BusinessService implements BusinessServiceInterface
 {
     public function store($data)
     {
+
         $businessData = $data['business'];
         $businessInformationData = $data['businessInformation'];
+        $businessInformationDetailData = $data['BusinessActivity'];
         $ownersInformationData = $data['ownerAddress'];
         $lessorInformationData = $data['lessorInformation'];
         $date = Carbon::now();
@@ -25,10 +30,11 @@ class BusinessService implements BusinessServiceInterface
         $storeBusiness = [
             'reference_number' => $businessData['referenceNo'],
             'dti_registration_no' => $businessData['dtiSecNo'],
-            'dti_date_of_registration' => $businessData['dtiSecdateofReg'],
-            'type_of_organization' => $businessData['typeOfOrganization'],
-            'is_tax_incentive' => $businessData['hasTaxIncentive'],
-            'date_of_application' => $businessData['dateOfApplication'],
+            'dti_date_of_registration' => Carbon::now(),
+            'type_of_organization' => TypeOfOrganization::SINGLE,
+            'is_tax_incentive' => 1,
+            'date_of_application' => Carbon::now(),
+            'user_id' => 1,
         ];
 
         $business = Business::create($storeBusiness);
@@ -39,6 +45,8 @@ class BusinessService implements BusinessServiceInterface
             'status' => BusinessStatus::NEW,
             'date_renewed' => $date,
         ];
+
+        $businessDetail = BusinessDetail::create($storeBusinessDetail);
 
         $storeBusinessInfo = [
             'business_id' => $business->id,
@@ -57,16 +65,20 @@ class BusinessService implements BusinessServiceInterface
             'province' => $businessInformationData['BAddressProvince'],
             'contact_number' => $businessInformationData['BAddressTelNo'],
             'email_address' => $businessInformationData['BAddressEmail'],
-            'pin' => $businessInformationData['test'],
+            'pin' => $businessInformationData['BusinessArea'],
             'business_area' => $businessInformationData['BusinessArea'],
             'number_of_employees' => $businessInformationData['TotalNumberofEmployees'],
             'number_of_employees_in_lgu' => $businessInformationData['LGUEmployeeCount'],
-            'emergency_contact_person' => $businessInformationData['EmergencyContactPerson'],
-            
+            'emergency_contact_person' => $businessInformationData['BusinessArea'],
         ];
+
+        $businessInfo = BusinessInformation::create($storeBusinessInfo);
 
         $storeOwnersInformation = [
             'business_id' => $business->id,
+            'first_name' => $businessInformationData['taxPresidentFname'],
+            'middle_name' => $businessInformationData['taxPresidentMname'],
+            'last_name' => $businessInformationData['taxPresidentLname'],
             'house_number' => $ownersInformationData['OAddressHouseNo'],
             'street' => $ownersInformationData['OAddressStreet'],
             'barangay' => $ownersInformationData['OAddressBarangay'],
@@ -77,22 +89,50 @@ class BusinessService implements BusinessServiceInterface
             'email_address' => $ownersInformationData['OAddressEmail'],
         ];
 
-        $storeLessorInformation = [
-            'business_id' => $business->id,
-            'first_name' => $lessorInformationData['LessorFname'],
-            'middle_name' => $lessorInformationData['LessorMname'],
-            'last_name' => $lessorInformationData['LessorLname'],
-            'monthly_rental' => $lessorInformationData['LessorMonthlyRental'],
-            'house_number' => $lessorInformationData['LAddressHouseNo'],
-            'street' => $lessorInformationData['LAddressStreet'],
-            'barangay' => $lessorInformationData['LAddressBarangay'],
-            'subdivision' => $lessorInformationData['LAddressSubd'],
-            'city' => $lessorInformationData['LAddressCity'],
-            'province' => $lessorInformationData['LAddressProvince'],
-            'contact_number' => $lessorInformationData['LAddressTelNo'],
-            'email_address' => $lessorInformationData['LAddressEmail'],
+        $ownerInformation = OwnerInformation::create($storeOwnersInformation);
+        Log::info('test');
+        if (isset($lessorInformationData)) {
+            Log::info('lessor');
+            $storeLessorInformation = [
+                'business_id' => $business->id,
+                'first_name' => $lessorInformationData['LessorFname'],
+                'middle_name' => $lessorInformationData['LessorMname'],
+                'last_name' => $lessorInformationData['LessorLname'],
+                'monthly_rental' => $lessorInformationData['LessorMonthlyRental'],
+                'house_number' => $lessorInformationData['LAddressHouseNo'],
+                'street' => $lessorInformationData['LAddressStreet'],
+                'barangay' => $lessorInformationData['LAddressBarangay'],
+                'subdivision' => $lessorInformationData['LAddressSubd'],
+                'city' => $lessorInformationData['LAddressCity'],
+                'province' => $lessorInformationData['LAddressProvince'],
+                'contact_number' => $lessorInformationData['LAddressTelNo'],
+                'email_address' => $lessorInformationData['LAddressEmail'],
+            ];
+    
+            $lessorInformation = LessorInformation::create($storeLessorInformation);
+        }
+
+        foreach ($businessInformationDetailData as $data) {
+            $this->storeBusinessDetail($data, $business->id);
+        }
+        
+    }
+
+    public function storeBusinessDetail($data, $id)
+    {
+        $businessInformationDetailData = [
+            'business_id' => $id,
+            'code' => 'abc',
+            'line_of_business' => $data['lineOfBusiness'],
+            'number_of_units' => $data['noOfUnits'],
+            'capitalization' => 20000,
+            'essential' => 0.00,
+            'non_essential' => 0.00,
         ];
 
+        $businessInformationDetail = BusinessInformationDetail::create($businessInformationDetailData);
+        
+        return $businessInformationDetail;
     }
 
     public function changeStatus($data) 

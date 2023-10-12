@@ -233,8 +233,8 @@ return [
         'stubsOverridePath' => app()->path(),
         'paths'         => [
             'models'       => 'Entities',
-            'repositories' => 'Eloquent/Repositories',
-            'interfaces'   => 'Contract/Repositories',
+            'repositories' => 'Repositories\Eloquent',
+            'interfaces'   => 'Repositories\Contract',
             'transformers' => 'Transformers',
             'presenters'   => 'Presenters',
             'validators'   => 'Validators',

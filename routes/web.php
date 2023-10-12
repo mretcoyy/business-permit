@@ -35,15 +35,18 @@ Route::get('/', 'UserController@index');
 
 //Business Owner
 Route::get('/register', 'UserController@registration');
-Route::post('user/store', 'UserController@register');
-Route::post('user/login', 'UserController@login');
-Route::post('user/logout', 'UserController@logout');
+Route::post('/user/store', 'UserController@register');
+Route::post('/user/login', 'UserController@login');
+Route::post('/user/logout', 'UserController@logout');
 Route::get('/dashboard', 'UserDashboardController@index');
 Route::get('/business-form', 'UserBusinessController@index');
 
 //BPLO
-Route::get('bplo', 'BPLOController@index');
-Route::post('bplo/store', 'BPLOController@store');
+Route::get('/bplo', 'BPLOController@index');
+Route::post('/bplo/store', 'BPLOController@store');
+Route::get('/bplo/list', 'BPLOController@list');
+//APPROVAL
+Route::patch('/bplo/changeStatus', 'BPLOController@changeStatus');
 
 Route::get('/menro', 'MENROController@index');
 Route::get('/mpdc', 'MPDCController@index');

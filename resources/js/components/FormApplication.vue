@@ -22,12 +22,9 @@
                             },
                         ]"
                     >
-                        <a-radio-button value="new"> New </a-radio-button>
-                        <a-radio-button value="renewal">
+                        <a-radio-button value="1"> New </a-radio-button>
+                        <a-radio-button value="2">
                             Renewal
-                        </a-radio-button>
-                        <a-radio-button value="additional">
-                            Additional
                         </a-radio-button>
                     </a-radio-group>
                 </a-form-item>
@@ -86,16 +83,16 @@
                                     },
                                 ]"
                             >
-                                <a-radio-button value="single">
+                                <a-radio-button value="1">
                                     Single
                                 </a-radio-button>
-                                <a-radio-button value="partnership">
+                                <a-radio-button value="2">
                                     Partnership
                                 </a-radio-button>
-                                <a-radio-button value="corporation">
+                                <a-radio-button value="3">
                                     Corporation
                                 </a-radio-button>
-                                <a-radio-button value="cooperative">
+                                <a-radio-button value="4">
                                     Cooperative
                                 </a-radio-button>
                             </a-radio-group>

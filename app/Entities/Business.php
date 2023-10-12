@@ -15,6 +15,8 @@ class Business extends Model implements Transformable
 {
     use TransformableTrait;
 
+    protected $table = 'business';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -39,27 +41,32 @@ class Business extends Model implements Transformable
 
     public function businessDetail()
     {
-        return $this->hasMany(BusinessDetail::class, 'business_id', 'id');
+        return $this->hasMany(BusinessDetail::class, 'business_id', 'id')
+            ->orderBy('created_at', 'DESC');
     }
 
     public function businessInformation()
     {
-        return $this->hasMany(BusinessInformation::class, 'business_id', 'id');
+        return $this->hasMany(BusinessInformation::class, 'business_id', 'id')
+            ->orderBy('created_at', 'DESC');
     }
 
     public function businessInformationDetail()
     {
-        return $this->hasMany(BusinessInformationDetail::class, 'business_id', 'id');
+        return $this->hasMany(BusinessInformationDetail::class, 'business_id', 'id')
+            ->orderBy('created_at', 'DESC');
     }
 
     public function lessorInformation()
     {
-        return $this->hasMany(LessorInformation::class, 'business_id', 'id');
+        return $this->hasMany(LessorInformation::class, 'business_id', 'id')
+            ->orderBy('created_at', 'DESC');
     }
 
     public function ownerInforamtion()
     {
-        return $this->hasMany(OwnerInformation::class, 'business_id', 'id');
+        return $this->hasMany(OwnerInformation::class, 'business_id', 'id')
+            ->orderBy('created_at', 'DESC');
     }
 
 }
