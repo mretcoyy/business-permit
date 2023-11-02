@@ -24,7 +24,9 @@ class BPLOController extends Controller
     public function list(Request $request)
     {
         $business = app()->make(BusinessRepositoryEloquent::class)->list($filters = []);
-
+        
+        $business = fractal()->collection($business, BusinessTransformer::class);
+        
         return $business;
     }
 

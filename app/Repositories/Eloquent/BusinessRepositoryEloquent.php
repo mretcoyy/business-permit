@@ -8,6 +8,7 @@ use App\Repositories\Contract\BusinessRepository;
 use App\Entities\Business;
 use App\Validators\BusinessValidator;
 use Illuminate\Support\Facades\DB;
+use App\Criteria\BusinessCriteria;
 
 /**
  * Class BusinessRepositoryEloquent.
@@ -83,6 +84,8 @@ class BusinessRepositoryEloquent extends BaseRepository implements BusinessRepos
                 '=',
                 'users.id'
             );
+
+            $this->pushCriteria(new BusinessCriteria($filters))->applyCriteria();
 
             $result = $this->model->get();
 
