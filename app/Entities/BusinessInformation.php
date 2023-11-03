@@ -46,4 +46,25 @@ class BusinessInformation extends Model implements Transformable
         'updated_at',
     ];
 
+    protected $appends = ['fullname','address'];
+
+    protected function getFullNameAttribute()
+    {
+        return $this->first_name . " " . ($this->middle_name == null ? '' : $this->middle_name. " ") . $this->last_name;
+    }
+
+    protected function getAddressAttribute()
+    {
+        return
+        ($this->BAddressHouseNo == null ? '' : $this->BAddressHouseNo. " ") 
+        . ($this->BAddressBuildingName == null ? '' : $this->BAddressBuildingName. " ") 
+        . ($this->BAddressUnitNo == null ? '' : $this->BAddressUnitNo. " ") 
+        . ($this->BAddressStreet == null ? '' : $this->BAddressStreet. " ") 
+        . ($this->BAddressBarangay == null ? '' : $this->BAddressBarangay. " ") 
+        . ($this->BAddressSubd == null ? '' : $this->BAddressSubd. " ") 
+        . ($this->BAddressCity == null ? '' : $this->BAddressCity. " ") 
+        . ($this->BAddressProvince == null ? '' : $this->BAddressProvince. " ");
+    }
+
+
 }

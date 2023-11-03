@@ -454,6 +454,7 @@
                             :show-upload-list="false"
                             :before-upload="beforeUpload"
                             @change="(e) => handleChange(e, 'barangay')"
+                            style="word-break: break-word; max-width: 104px"
                         >
                             <div v-if="file.barangay">
                                 <p>{{ file.barangay.name }}</p>
@@ -479,6 +480,7 @@
                             :show-upload-list="false"
                             :before-upload="beforeUpload"
                             @change="(e) => handleChange(e, 'zoning')"
+                            style="word-break: break-word; max-width: 104px"
                         >
                             <div v-if="file.zoning">
                                 <p>{{ file.zoning.name }}</p>
@@ -532,6 +534,7 @@
                             :show-upload-list="false"
                             :before-upload="beforeUpload"
                             @change="(e) => handleChange(e, 'occupancy')"
+                            style="word-break: break-word; max-width: 104px"
                         >
                             <div v-if="file.occupancy">
                                 <p>{{ file.occupancy.name }}</p>
@@ -558,9 +561,12 @@
                             :show-upload-list="false"
                             :before-upload="beforeUpload"
                             @change="(e) => handleChange(e, 'environment')"
+                            style="word-break: break-word; max-width: 104px"
                         >
                             <div v-if="file.environment">
-                                <p>{{ file.environment.name }}</p>
+                                <p>
+                                    {{ file.environment.name }}
+                                </p>
                                 <b style="font-size: 8px"
                                     >Environment Certificate</b
                                 >
@@ -586,6 +592,7 @@
                             :show-upload-list="false"
                             :before-upload="beforeUpload"
                             @change="(e) => handleChange(e, 'community')"
+                            style="word-break: break-word; max-width: 104px"
                         >
                             <div v-if="file.community">
                                 <p>{{ file.community.name }}</p>
@@ -614,6 +621,7 @@
                             :show-upload-list="false"
                             :before-upload="beforeUpload"
                             @change="(e) => handleChange(e, 'rpt')"
+                            style="word-break: break-word; max-width: 104px"
                         >
                             <div v-if="file.rpt">
                                 <p>{{ file.rpt.name }}</p>

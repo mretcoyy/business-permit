@@ -70,34 +70,34 @@ const columns = [
 ];
 
 const data = [
-    {
-        key: "1",
-        name: "John Brown",
-        age: 32,
-        address: "New York No. 1 Lake Park",
-        Status: "Approved",
-    },
-    {
-        key: "2",
-        name: "Jim Green",
-        age: 42,
-        address: "London No. 1 Lake Park",
-        Status: "For Payment",
-    },
-    {
-        key: "3",
-        name: "Joe Black",
-        age: 32,
-        address: "Sidney No. 1 Lake Park",
-        Status: "For Approval",
-    },
-    {
-        key: "4",
-        name: "Joe Black",
-        age: 32,
-        address: "Sidney No. 1 Lake Park",
-        Status: "Decline",
-    },
+    // {
+    //     key: "1",
+    //     name: "John Brown",
+    //     age: 32,
+    //     address: "New York No. 1 Lake Park",
+    //     Status: "Approved",
+    // },
+    // {
+    //     key: "2",
+    //     name: "Jim Green",
+    //     age: 42,
+    //     address: "London No. 1 Lake Park",
+    //     Status: "For Payment",
+    // },
+    // {
+    //     key: "3",
+    //     name: "Joe Black",
+    //     age: 32,
+    //     address: "Sidney No. 1 Lake Park",
+    //     Status: "For Approval",
+    // },
+    // {
+    //     key: "4",
+    //     name: "Joe Black",
+    //     age: 32,
+    //     address: "Sidney No. 1 Lake Park",
+    //     Status: "Decline",
+    // },
 ];
 
 export default {
@@ -109,6 +109,40 @@ export default {
     },
     components: {
         MainLayout,
+    },
+    methods: {
+        formatData(data) {
+            let map = data.map((item) => {
+                const container = {};
+                container.referenceNo = item.referenceNo;
+                container.name = item.businessInformation.taxPayerBname;
+                container.tax_payer = item.businessInformation.taxPayerFullname;
+                container.address = item.businessInformation.taxPayerFname;
+                container.Status = item.businessDetail.status;
+                container.business_id = item.businessDetail.business_id;
+                return container;
+            });
+            this.data = map;
+        },
+        async getData() {
+            try {
+                let filters = {
+                    user_id: 2,
+                };
+                const res = await axios({
+                    method: "POST",
+                    url: "bplo/list",
+                    data: { filters: filters },
+                });
+
+                this.formatData(res.data.data);
+            } catch (e) {
+            } finally {
+            }
+        },
+    },
+    mounted() {
+        this.getData();
     },
 };
 </script>

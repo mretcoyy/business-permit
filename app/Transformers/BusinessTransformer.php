@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
 use App\Entities\Business;
+use App\Enums\BusinessStatus;
 use App\Enums\TypeOfOrganization;
 
 class BusinessTransformer extends TransformerAbstract
@@ -27,9 +28,9 @@ class BusinessTransformer extends TransformerAbstract
             'createdAt' => $model->created_at,
             'updatedAt' => $model->updated_at,
             // 'businessFiles' => $this->businessFiles($model->businessFiles),
-            // 'businessInformation' => $this->businessInformation($model->businessInformation),
+            'businessInformation' => $this->businessInformation($model->businessInformation),
             // 'businessInformationDetail' => $this->businessInformationDetail($model->businessInformationDetail),
-            // 'businessDetail' => $this->businessDetail($model->businessDetail),
+            'businessDetail' => $this->businessDetail($model->businessDetail),
             // 'lessorInformation' => $this->lessorInformation($model->lessorInformation),
             // 'ownerInformation' => $this->ownerInformation($model->ownerInformation),
         ];
@@ -39,12 +40,11 @@ class BusinessTransformer extends TransformerAbstract
 
     public function businessDetail($data)
     {
-        $data = [];
-
         foreach ($data as $datum) {
            $data = [
+            'business_id' => $datum->business_id,
             'bin' => 'test',
-            'status' => '',
+            'status' => BusinessStatus::getDescription($datum->status),
             'date_renewed' => '',
            ];
         }
@@ -53,17 +53,17 @@ class BusinessTransformer extends TransformerAbstract
 
     public function businessInformation($data)
     {
-        $data = [];
-
         foreach ($data as $datum) {
             $data = [
+                'taxPayerFullname' => $datum->fullname,
                 'taxPayerFname' => $datum->first_name,
                 'taxPayerMname' => $datum->middle_name,
                 'taxPayerLname' => $datum->last_name,
                 'taxPayerBname' => $datum->business_name,
                 'taxPayerTname' => $datum->trade_name,
+                'BAddress' => $datum->address,
                 'BAddressHouseNo' => $datum->business_number,
-                'BAddressBuildingName' => $datum->building_name,
+                'BAddressBuildingName' => $datum->building_name,    
                 'BAddressUnitNo' => $datum->unit_no,
                 'BAddressStreet' => $datum->street,
                 'BAddressBarangay' => $datum->barangay,
