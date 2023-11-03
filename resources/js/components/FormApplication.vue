@@ -23,9 +23,7 @@
                         ]"
                     >
                         <a-radio-button value="1"> New </a-radio-button>
-                        <a-radio-button value="2">
-                            Renewal
-                        </a-radio-button>
+                        <a-radio-button value="2"> Renewal </a-radio-button>
                     </a-radio-group>
                 </a-form-item>
                 <a-divider />
@@ -893,13 +891,37 @@ export default {
         },
 
         async submitData(data) {
-            return axios({
-                method: "POST",
-                url: "bplo/store",
-                data: data,
-            })
-                .then(function (response) {})
-                .catch((error) => {});
+            let formData = new FormData();
+            let files = this.file;
+            for (let properties in files) {
+                formData.append(
+                    "file[" + properties + "]",
+                    this.file[properties]
+                );
+            }
+            formData.append("data", JSON.stringify(data));
+            const config = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            };
+            return (
+                axios(
+                    {
+                        method: "POST",
+                        url: "bplo/store",
+                        data: formData,
+                    },
+                    config
+                )
+                    // return axios({
+                    //     method: "POST",
+                    //     url: "bplo/store",
+                    //     data: data,
+                    // })
+                    .then(function (response) {})
+                    .catch((error) => {})
+            );
         },
 
         checkFilesisFalse(files) {
@@ -922,10 +944,12 @@ export default {
                 this.fileLoading = false;
                 return;
             }
-            if (info.file.status === "done") {
+            // if (info.file.status === "done") {
+            if (Object.keys(info).length !== 0) {
                 console.log(info.file);
                 console.log(actionName);
                 this.file[actionName] = info.file;
+                console.log(this.file);
                 this.fileLoading = false;
             }
         },

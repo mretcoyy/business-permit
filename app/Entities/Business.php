@@ -69,4 +69,9 @@ class Business extends Model implements Transformable
             ->orderBy('created_at', 'DESC');
     }
 
+    public function businessFiles()
+    {
+        return $this->hasMany(BusinessFiles::class, 'business_id', 'id')
+            ->orderBy('created_at', 'DESC');
+    }
 }

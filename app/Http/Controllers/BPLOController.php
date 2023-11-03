@@ -16,13 +16,19 @@ class BPLOController extends Controller
 
     public function store(Request $request, BusinessService $service)
     {
-        $store = $service->store($request->all());
+        $files = [];
+        if ($request->hasFile('file')) {
+            $files = $request->file('file');
+        }
+        $store = $service->store($request->input('data'), $files);
 
         return $store;
     }
 
     public function list(Request $request)
     {
+        $filters = (object) $request->get('filters');
+
         $business = app()->make(BusinessRepositoryEloquent::class)->list($filters = []);
         
         $business = fractal()->collection($business, BusinessTransformer::class);

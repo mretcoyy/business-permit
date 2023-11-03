@@ -17,19 +17,18 @@ use Illuminate\Support\Facades\Log;
 
 class BusinessService implements BusinessServiceInterface
 {
-    public function store($data)
+    public function store($data_field, $files)
     {
-
-        $businessData = $data['business'];
-        $businessInformationData = $data['businessInformation'];
-        $businessInformationDetailData = $data['BusinessActivity'];
-        $ownersInformationData = $data['ownerAddress'];
-        $lessorInformationData = $data['lessorInformation'];
+        $data = json_decode($data_field);
+        $businessData = $data->business;
+        $businessInformationData = $data->businessInformation;
+        $businessInformationDetailData = $data->BusinessActivity;
+        $ownersInformationData = $data->ownerAddress;
+        $lessorInformationData = $data->lessorInformation;
         $date = Carbon::now();
-
         $storeBusiness = [
-            'reference_number' => $businessData['referenceNo'],
-            'dti_registration_no' => $businessData['dtiSecNo'],
+            'reference_number' => $businessData->referenceNo,
+            'dti_registration_no' => $businessData->dtiSecNo,
             'dti_date_of_registration' => Carbon::now(),
             'type_of_organization' => TypeOfOrganization::SINGLE,
             'is_tax_incentive' => 1,
@@ -50,43 +49,43 @@ class BusinessService implements BusinessServiceInterface
 
         $storeBusinessInfo = [
             'business_id' => $business->id,
-            'first_name' => $businessInformationData['taxPayerLname'],
-            'middle_name' => $businessInformationData['taxPayerMname'],
-            'last_name' => $businessInformationData['taxPayerFname'],
-            'business_name' => $businessInformationData['taxPayerBname'],
-            'trade_name' => $businessInformationData['taxPayerTname'],
-            'business_number' => $businessInformationData['BAddressHouseNo'],
-            'building_name' => $businessInformationData['BAddressBuildingName'],
-            'unit_no' => $businessInformationData['BAddressUnitNo'],
-            'street' => $businessInformationData['BAddressStreet'],
-            'barangay' => $businessInformationData['BAddressBarangay'],
-            'subdivision' => $businessInformationData['BAddressSubd'],
-            'city' => $businessInformationData['BAddressCity'],
-            'province' => $businessInformationData['BAddressProvince'],
-            'contact_number' => $businessInformationData['BAddressTelNo'],
-            'email_address' => $businessInformationData['BAddressEmail'],
-            'pin' => $businessInformationData['BusinessArea'],
-            'business_area' => $businessInformationData['BusinessArea'],
-            'number_of_employees' => $businessInformationData['TotalNumberofEmployees'],
-            'number_of_employees_in_lgu' => $businessInformationData['LGUEmployeeCount'],
-            'emergency_contact_person' => $businessInformationData['BusinessArea'],
+            'first_name' => $businessInformationData->taxPayerLname,
+            'middle_name' => $businessInformationData->taxPayerMname,
+            'last_name' => $businessInformationData->taxPayerFname,
+            'business_name' => $businessInformationData->taxPayerBname,
+            'trade_name' => $businessInformationData->taxPayerTname,
+            'business_number' => $businessInformationData->BAddressHouseNo,
+            'building_name' => $businessInformationData->BAddressBuildingName,
+            'unit_no' => $businessInformationData->BAddressUnitNo,
+            'street' => $businessInformationData->BAddressStreet,
+            'barangay' => $businessInformationData->BAddressBarangay,
+            'subdivision' => $businessInformationData->BAddressSubd,
+            'city' => $businessInformationData->BAddressCity,
+            'province' => $businessInformationData->BAddressProvince,
+            'contact_number' => $businessInformationData->BAddressTelNo,
+            'email_address' => $businessInformationData->BAddressEmail,
+            'pin' => $businessInformationData->BusinessArea,
+            'business_area' => $businessInformationData->BusinessArea,
+            'number_of_employees' => $businessInformationData->TotalNumberofEmployees,
+            'number_of_employees_in_lgu' => $businessInformationData->LGUEmployeeCount,
+            'emergency_contact_person' => $businessInformationData->BusinessArea,
         ];
 
         $businessInfo = BusinessInformation::create($storeBusinessInfo);
 
         $storeOwnersInformation = [
             'business_id' => $business->id,
-            'first_name' => $businessInformationData['taxPresidentFname'],
-            'middle_name' => $businessInformationData['taxPresidentMname'],
-            'last_name' => $businessInformationData['taxPresidentLname'],
-            'house_number' => $ownersInformationData['OAddressHouseNo'],
-            'street' => $ownersInformationData['OAddressStreet'],
-            'barangay' => $ownersInformationData['OAddressBarangay'],
-            'subdivision' => $ownersInformationData['OAddressSubd'],
-            'city' => $ownersInformationData['OAddressCity'],
-            'province' => $ownersInformationData['OAddressProvince'],
-            'contact_number' => $ownersInformationData['OAddressTelNo'],
-            'email_address' => $ownersInformationData['OAddressEmail'],
+            'first_name' => $businessInformationData->taxPresidentFname,
+            'middle_name' => $businessInformationData->taxPresidentMname,
+            'last_name' => $businessInformationData->taxPresidentLname,
+            'house_number' => $ownersInformationData->OAddressHouseNo,
+            'street' => $ownersInformationData->OAddressStreet,
+            'barangay' => $ownersInformationData->OAddressBarangay,
+            'subdivision' => $ownersInformationData->OAddressSubd,
+            'city' => $ownersInformationData->OAddressCity,
+            'province' => $ownersInformationData->OAddressProvince,
+            'contact_number' => $ownersInformationData->OAddressTelNo,
+            'email_address' => $ownersInformationData->OAddressEmail,
         ];
 
         $ownerInformation = OwnerInformation::create($storeOwnersInformation);
@@ -95,22 +94,73 @@ class BusinessService implements BusinessServiceInterface
             Log::info('lessor');
             $storeLessorInformation = [
                 'business_id' => $business->id,
-                'first_name' => $lessorInformationData['LessorFname'],
-                'middle_name' => $lessorInformationData['LessorMname'],
-                'last_name' => $lessorInformationData['LessorLname'],
-                'monthly_rental' => $lessorInformationData['LessorMonthlyRental'],
-                'house_number' => $lessorInformationData['LAddressHouseNo'],
-                'street' => $lessorInformationData['LAddressStreet'],
-                'barangay' => $lessorInformationData['LAddressBarangay'],
-                'subdivision' => $lessorInformationData['LAddressSubd'],
-                'city' => $lessorInformationData['LAddressCity'],
-                'province' => $lessorInformationData['LAddressProvince'],
-                'contact_number' => $lessorInformationData['LAddressTelNo'],
-                'email_address' => $lessorInformationData['LAddressEmail'],
+                'first_name' => $lessorInformationData->LessorFname,
+                'middle_name' => $lessorInformationData->LessorMname,
+                'last_name' => $lessorInformationData->LessorLname,
+                'monthly_rental' => $lessorInformationData->LessorMonthlyRental,
+                'house_number' => $lessorInformationData->LAddressHouseNo,
+                'street' => $lessorInformationData->LAddressStreet,
+                'barangay' => $lessorInformationData->LAddressBarangay,
+                'subdivision' => $lessorInformationData->LAddressSubd,
+                'city' => $lessorInformationData->LAddressCity,
+                'province' => $lessorInformationData->LAddressProvince,
+                'contact_number' => $lessorInformationData->LAddressTelNo,
+                'email_address' => $lessorInformationData->LAddressEmail,
             ];
     
             $lessorInformation = LessorInformation::create($storeLessorInformation);
         }
+
+        $barangay_clearance = null;
+        $zoning_clearance = null;
+        $sanitary_clearance = null;
+        $occupancy_permit = null;
+        $environment_certificate = null;
+        $community_tax_certificate = null;
+        $real_property_tax_clearance = null;
+        $fire_certificate = null;
+        foreach ($files as $key => $file) 
+        {
+            $extension = $file->getClientOriginalExtension();
+            $filename = $key.'.'.$extension;
+            $file->storeAs('/'.$businessData->referenceNo , $filename, 'requirements');
+            
+            switch ($key) {
+                case 'barangay':
+                    $barangay_clearance = $key;
+                    break;
+                case 'community':
+                    $community_tax_certificate = $key;
+                    break;
+                case 'environment':
+                    $environment_certificate = $key;
+                    break;
+                case 'occupancy':
+                    $occupancy_permit = $key;
+                    break;
+                case 'rpt':
+                    $real_property_tax_clearance = $key;
+                    break;
+                case 'zoning':
+                    $zoning_clearance = $key;
+                    break;
+                default:
+                    break;
+            }
+        }
+        $storeBusinessFiles = [
+            'business_id' => $business->id,
+            'barangay_clearance' => $barangay_clearance, 
+            'zoning_clearance' => $zoning_clearance, 
+            'sanitary_clearance' => $sanitary_clearance, 
+            'occupancy_permit' => $occupancy_permit, 
+            'environment_certificate' => $environment_certificate, 
+            'community_tax_certificate' => $community_tax_certificate, 
+            'real_property_tax_clearance' => $real_property_tax_clearance, 
+            'fire_certificate' => $fire_certificate, 
+        ];
+        $businessFiles = BusinessFiles::create($storeBusinessFiles);
+
 
         foreach ($businessInformationDetailData as $data) {
             $this->storeBusinessDetail($data, $business->id);
@@ -123,8 +173,8 @@ class BusinessService implements BusinessServiceInterface
         $businessInformationDetailData = [
             'business_id' => $id,
             'code' => 'abc',
-            'line_of_business' => $data['lineOfBusiness'],
-            'number_of_units' => $data['noOfUnits'],
+            'line_of_business' => $data->lineOfBusiness,
+            'number_of_units' => $data->noOfUnits,
             'capitalization' => 20000,
             'essential' => 0.00,
             'non_essential' => 0.00,
