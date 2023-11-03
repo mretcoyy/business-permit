@@ -35,7 +35,7 @@ class BusinessCriteria implements CriteriaInterface
         $filters = $this->filters;
 
         if (isset($filters->business_id) && $filters->business_id != '') {
-            $model->where('business.id', $filters->id);
+            $model->where('business.id', $filters->business_id);
         }
 
         if (isset($filters->user_id) && $filters->user_id != '') {

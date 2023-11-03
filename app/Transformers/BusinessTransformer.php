@@ -27,12 +27,12 @@ class BusinessTransformer extends TransformerAbstract
             'dateOfApplication' => $model->date_of_application,
             'createdAt' => $model->created_at,
             'updatedAt' => $model->updated_at,
-            // 'businessFiles' => $this->businessFiles($model->businessFiles),
+            'businessFiles' => $this->businessFiles($model->businessFiles),
             'businessInformation' => $this->businessInformation($model->businessInformation),
-            // 'businessInformationDetail' => $this->businessInformationDetail($model->businessInformationDetail),
+            'businessInformationDetail' => $this->businessInformationDetail($model->businessInformationDetail),
             'businessDetail' => $this->businessDetail($model->businessDetail),
-            // 'lessorInformation' => $this->lessorInformation($model->lessorInformation),
-            // 'ownerInformation' => $this->ownerInformation($model->ownerInformation),
+            'lessorInformation' => $this->lessorInformation($model->lessorInformation),
+            'ownerInformation' => $this->ownerInformation($model->ownerInformation),
         ];
 
         return$data;
@@ -85,8 +85,6 @@ class BusinessTransformer extends TransformerAbstract
 
     public function businessInformationDetail($data)
     {
-        $data = [];
-
         foreach ($data as $datum) {
             $data = [
                 'code' => $datum->code,
@@ -103,8 +101,6 @@ class BusinessTransformer extends TransformerAbstract
 
     public function lessorInformation($data)
     {
-        $data = [];
-
         foreach ($data as $datum) {
             $data = [
                 'LessorFname' => $datum->first_name,
@@ -127,8 +123,6 @@ class BusinessTransformer extends TransformerAbstract
 
     public function ownerInformation($data)
     {
-        $data = [];
-
         foreach ($data as $datum) {
             $data = [
                 'OAddressHouseNo' => $datum->house_number,
@@ -147,8 +141,6 @@ class BusinessTransformer extends TransformerAbstract
 
     public function businessFiles($data)
     {
-        $data = [];
-
         foreach ($data as $datum) {
             $data = [
                 'barangay_clearance',

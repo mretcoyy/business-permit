@@ -63,7 +63,7 @@ class Business extends Model implements Transformable
             ->orderBy('created_at', 'DESC');
     }
 
-    public function ownerInforamtion()
+    public function OwnerInformation()
     {
         return $this->hasMany(OwnerInformation::class, 'business_id', 'id')
             ->orderBy('created_at', 'DESC');

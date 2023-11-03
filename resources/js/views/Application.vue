@@ -2,7 +2,11 @@
     <MainLayout>
         <a-card>
             <h1>Business Applications</h1>
-            <a-table :columns="columns" :data-source="data">
+            <a-table
+                :columns="columns"
+                :data-source="data"
+                rowKey="business_id"
+            >
                 <span slot="Status" slot-scope="Status">
                     <a-tag
                         :color="
@@ -141,19 +145,18 @@ export default {
                 return container;
             });
             this.data = map;
+            return map;
         },
         async getData() {
-            try {
-                const res = await axios({
-                    method: "POST",
-                    url: "bplo/list",
-                    data: { filters: "" },
-                });
-
-                this.formatData(res.data.data);
-            } catch (e) {
-            } finally {
-            }
+            let filters = {};
+            const res = await axios.get("/bplo/list", {
+                params: {
+                    filters: filters,
+                },
+            });
+            // .then(function (response) {})
+            // .catch(function (error) {});
+            this.formatData(res.data.data);
         },
     },
     mounted() {

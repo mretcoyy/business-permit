@@ -2,7 +2,11 @@
     <MainLayout>
         <a-card>
             <h1>My Application</h1>
-            <a-table :columns="columns" :data-source="data">
+            <a-table
+                :columns="columns"
+                :data-source="data"
+                rowKey="business_id"
+            >
                 <span slot="Status" slot-scope="Status">
                     <a-tag
                         :color="
@@ -31,13 +35,15 @@
                     </a-tag> -->
                 </span>
                 <span slot="action" slot-scope="text, record">
-                    <a>View</a>
+                    <a @click="view(text.business_id)">View </a>
                 </span>
             </a-table>
         </a-card>
+        <FormBusinessView :modal="formModal" @refresh="refreshTable" />
     </MainLayout>
 </template>
 <script>
+import FormBusinessView from "../components/FormBusinessView.vue";
 import MainLayout from "../layouts/MainLayout";
 
 const columns = [
@@ -46,11 +52,6 @@ const columns = [
         dataIndex: "name",
         key: "name",
     },
-    // {
-    //     title: "Age",
-    //     dataIndex: "age",
-    //     key: "age",
-    // },
     {
         title: "Address",
         dataIndex: "address",
@@ -69,48 +70,26 @@ const columns = [
     },
 ];
 
-const data = [
-    // {
-    //     key: "1",
-    //     name: "John Brown",
-    //     age: 32,
-    //     address: "New York No. 1 Lake Park",
-    //     Status: "Approved",
-    // },
-    // {
-    //     key: "2",
-    //     name: "Jim Green",
-    //     age: 42,
-    //     address: "London No. 1 Lake Park",
-    //     Status: "For Payment",
-    // },
-    // {
-    //     key: "3",
-    //     name: "Joe Black",
-    //     age: 32,
-    //     address: "Sidney No. 1 Lake Park",
-    //     Status: "For Approval",
-    // },
-    // {
-    //     key: "4",
-    //     name: "Joe Black",
-    //     age: 32,
-    //     address: "Sidney No. 1 Lake Park",
-    //     Status: "Decline",
-    // },
-];
+const data = [];
 
 export default {
     data() {
         return {
             data,
             columns,
+            view_data: [],
+            formModal: { show: false },
         };
     },
     components: {
         MainLayout,
+        FormBusinessView,
     },
     methods: {
+        refreshTable() {
+            this.getData();
+            this.formModal = { show: false };
+        },
         formatData(data) {
             let map = data.map((item) => {
                 const container = {};
@@ -122,21 +101,28 @@ export default {
                 container.business_id = item.businessDetail.business_id;
                 return container;
             });
-            this.data = map;
+            return map;
         },
         async getData() {
-            let filters = {
-                user_id: 2
-            }
-            return axios.get('/bplo/list', {
+            let filters = { user_id: 1 };
+            const res = await axios.get("/bplo/list", {
                 params: {
                     filters: filters,
-                }
-            }).then(function(response){
-
-            }).catch(function(error){
-
+                },
             });
+            // .then(function (response) {})
+            // .catch(function (error) {});
+            this.data = this.formatData(res.data.data);
+        },
+        async view(business_id) {
+            let filters = { business_id: business_id };
+            const res = await axios.get("/bplo/list", {
+                params: {
+                    filters: filters,
+                },
+            });
+            let data = res.data.data;
+            this.formModal = { show: true, data };
         },
     },
     mounted() {
