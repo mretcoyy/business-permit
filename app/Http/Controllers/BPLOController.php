@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\Services\BusinessService;
 use App\Repositories\Eloquent\BusinessRepositoryEloquent;
 use App\Transformers\BusinessTransformer;
+use Illuminate\Support\Facades\Log;
 
 class BPLOController extends Controller
 {
@@ -27,9 +28,9 @@ class BPLOController extends Controller
 
     public function list(Request $request)
     {
-        $filters = (object) $request->get('filters');
+        $filters =  (object) $request->get('filters');
 
-        $business = app()->make(BusinessRepositoryEloquent::class)->list($filters = []);
+        $business = app()->make(BusinessRepositoryEloquent::class)->list($filters);
         
         $business = fractal()->collection($business, BusinessTransformer::class);
         

@@ -89,9 +89,8 @@ class BusinessService implements BusinessServiceInterface
         ];
 
         $ownerInformation = OwnerInformation::create($storeOwnersInformation);
-        Log::info('test');
         if (isset($lessorInformationData)) {
-            Log::info('lessor');
+  
             $storeLessorInformation = [
                 'business_id' => $business->id,
                 'first_name' => $lessorInformationData->LessorFname,

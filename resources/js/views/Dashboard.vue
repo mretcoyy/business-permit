@@ -125,20 +125,18 @@ export default {
             this.data = map;
         },
         async getData() {
-            try {
-                let filters = {
-                    user_id: 2,
-                };
-                const res = await axios({
-                    method: "POST",
-                    url: "bplo/list",
-                    data: { filters: filters },
-                });
-
-                this.formatData(res.data.data);
-            } catch (e) {
-            } finally {
+            let filters = {
+                user_id: 2
             }
+            return axios.get('/bplo/list', {
+                params: {
+                    filters: filters,
+                }
+            }).then(function(response){
+
+            }).catch(function(error){
+
+            });
         },
     },
     mounted() {

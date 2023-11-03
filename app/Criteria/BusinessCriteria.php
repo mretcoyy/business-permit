@@ -4,6 +4,7 @@ namespace App\Criteria;
 
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class BusinessCriteriaCriteria.
@@ -31,13 +32,14 @@ class BusinessCriteria implements CriteriaInterface
 
     public function apply($model, RepositoryInterface $repository)
     {
-        $filters = (object) $this->filters;
+        $filters = $this->filters;
 
         if (isset($filters->business_id) && $filters->business_id != '') {
             $model->where('business.id', $filters->id);
         }
 
         if (isset($filters->user_id) && $filters->user_id != '') {
+            log::info('test');
             $model->where('business.user_id', $filters->user_id);
         }
 

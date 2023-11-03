@@ -44,7 +44,7 @@ Route::get('/business-form', 'UserBusinessController@index');
 //BPLO
 Route::get('/bplo', 'BPLOController@index');
 Route::post('/bplo/store', 'BPLOController@store');
-Route::post('/bplo/list', 'BPLOController@list');
+Route::get('/bplo/list', 'BPLOController@list');
 //APPROVAL
 Route::patch('/bplo/changeStatus', 'BPLOController@changeStatus');
 
