@@ -2,8 +2,8 @@
     <a-layout id="components-layout-demo-top" class="layout">
         <a-layout-header>
             <!-- <div class="logo" /> -->
-            <!-- <img 
-                src="/images/dolores.png" 
+            <!-- <img
+                src="/images/dolores.png"
                 alt="logo"
                 style="height: 25px width: 25px"
             > -->
@@ -14,13 +14,13 @@
                 :style="{ lineHeight: '64px' }"
             >
                 <a-menu-item key="1">
-                    <a href="/dashboard">Dashboard </a></a-menu-item
+                    <a href="/admin/dashboard">Dashboard </a></a-menu-item
                 >
                 <a-menu-item key="2">
-                    <a href="/application">Application </a></a-menu-item
+                    <a href="/admin/application">Application </a></a-menu-item
                 >
                 <a-menu-item key="3">
-                    <a href="/amendment">Amendment </a></a-menu-item
+                    <a href="/admin/amendment">Amendment </a></a-menu-item
                 >
                 <a-menu-item key="4">
                     <span @click="logOut">Logout </span></a-menu-item

@@ -1,7 +1,7 @@
 <template>
     <MainLayout>
         <a-card>
-            <h1>My Application</h1>
+            <h1>Business Applications</h1>
             <a-table
                 :columns="columns"
                 :data-source="data"
@@ -37,7 +37,28 @@
                     </a-tag> -->
                 </span>
                 <span slot="action" slot-scope="text, record">
-                    <a @click="view(text.business_id)">View </a>
+                    <a @click="view(text.business_id)">View</a> |
+                    <a-popconfirm
+                        title="Sure to Approve Application?"
+                        @confirm="
+                            () => {
+                                confirm(text.business_id, 5);
+                            }
+                        "
+                    >
+                        <a>Approve</a>
+                    </a-popconfirm>
+                    |
+                    <a-popconfirm
+                        title="Sure to Decline Application?"
+                        @confirm="
+                            () => {
+                                confirm(text.business_id, 6);
+                            }
+                        "
+                    >
+                        <a>Decline</a>
+                    </a-popconfirm>
                 </span>
             </a-table>
         </a-card>
@@ -45,14 +66,24 @@
     </MainLayout>
 </template>
 <script>
-import FormBusinessView from "../components/FormBusinessView.vue";
-import MainLayout from "../layouts/MainLayout";
+import FormBusinessView from "../../components/FormBusinessView.vue";
+import MainLayout from "../../layouts/MainLayout";
 
 const columns = [
     {
         title: "Business Name",
         dataIndex: "name",
         key: "name",
+    },
+    // {
+    //     title: "Age",
+    //     dataIndex: "age",
+    //     key: "age",
+    // },
+    {
+        title: "Owner Name",
+        dataIndex: "tax_payer",
+        key: "tax_payer",
     },
     {
         title: "Address",
@@ -82,9 +113,6 @@ export default {
             formModal: { show: false },
         };
     },
-    props: {
-        id: { type: Number, default: () => 0 },
-    },
     components: {
         MainLayout,
         FormBusinessView,
@@ -105,10 +133,11 @@ export default {
                 container.business_id = item.businessDetail.business_id;
                 return container;
             });
+
             return map;
         },
         async getData() {
-            let filters = { user_id: this.id };
+            let filters = {};
             const res = await axios.get("/bplo/list", {
                 params: {
                     filters: filters,
@@ -127,6 +156,12 @@ export default {
             });
             let data = res.data.data;
             this.formModal = { show: true, data };
+        },
+        async confirm(id, status) {
+            const res = await axios.patch("/bplo/changeStatus/" + id, {
+                status: status,
+            });
+            this.getData();
         },
     },
     mounted() {

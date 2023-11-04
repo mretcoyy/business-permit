@@ -61,11 +61,11 @@ class UserController extends Controller
     // JAN NEW ROUTES
 
     public function viewDashboard(){
-        return view('user.dashboard');
+        return view('user.Dashboard.index');
     }
 
     public function viewApplication(){
-        return view('user.application');
+        return view('user.Application.index');
     }
 
 }

@@ -1,5 +1,5 @@
 @extends('main.core')
- 
+
 @section('content')
-    <view-application></view-application>
+    <view-admin-amendment></view-admin-amendment>
 @endsection

@@ -45,8 +45,8 @@
     </MainLayout>
 </template>
 <script>
-import FormAmendment from "../components/FormAmendment.vue";
-import MainLayout from "../layouts/MainLayout";
+import FormAmendment from "../../components/FormAmendment.vue";
+import MainLayout from "../../layouts/MainLayout";
 
 const columns = [
     {
