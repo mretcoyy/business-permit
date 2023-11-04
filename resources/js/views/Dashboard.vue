@@ -80,6 +80,9 @@ export default {
             formModal: { show: false },
         };
     },
+    props: {
+        id: { type: Number, default: () => 0 },
+    },
     components: {
         MainLayout,
         FormBusinessView,
@@ -103,7 +106,7 @@ export default {
             return map;
         },
         async getData() {
-            let filters = { user_id: 1 };
+            let filters = { user_id: this.id };
             const res = await axios.get("/bplo/list", {
                 params: {
                     filters: filters,

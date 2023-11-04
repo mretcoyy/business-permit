@@ -5,6 +5,7 @@
         :width="1000"
         @cancel="closeModal()"
         :maskClosable="false"
+        :okButtonProps="{ style: { display: 'none' } }"
     >
         <div
             :style="{

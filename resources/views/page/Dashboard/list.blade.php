@@ -1,5 +1,5 @@
 @extends('main.core')
  
 @section('content')
-    <view-dashboard></view-dashboard>
+    <view-dashboard :id = {{$id}}></view-dashboard>
 @endsection
