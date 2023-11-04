@@ -1,5 +1,5 @@
 <template>
-    <UserLayout>
+    <Default>
         <div class="user-layout-content">
             <div class="top">
                 <div class="title">Register</div>
@@ -149,16 +149,16 @@
                 </a-form>
             </div>
         </div>
-    </UserLayout>
+    </Default>
 </template>
 
 <script>
-import UserLayout from "../layouts/UserLayout.vue";
+import Default from "../layouts/Default.vue";
 import axios from "axios";
 
 export default {
     components: {
-        UserLayout,
+        Default,
     },
     data() {
         return {
@@ -179,22 +179,22 @@ export default {
         registerAction() {
             let self = this;
             axios({
-                method: 'POST',
-                url: 'user/store',
-                data:{
+                method: "POST",
+                url: "user/store",
+                data: {
                     fullName: this.form.getFieldValue("fullName"),
                     email: this.form.getFieldValue("username"),
                     password: this.form.getFieldValue("password"),
-                }
-            }).then(function(response){
-                console.log(response);
-                alert('deasd');
-                self.$message.success('message');
-                self.form.resetFields();
-                window.location.href= '/'
-            }).catch(error => {
-
-            });
+                },
+            })
+                .then(function (response) {
+                    console.log(response);
+                    alert("deasd");
+                    self.$message.success("message");
+                    self.form.resetFields();
+                    window.location.href = "/";
+                })
+                .catch((error) => {});
 
             // console.log(this.form.getFieldValue("fullName"));
             // console.log(this.form.getFieldValue("username"));

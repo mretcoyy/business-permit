@@ -1,10 +1,10 @@
 <template>
-    <UserLayout>
+    <Default>
         <div class="user-layout-content">
             <div class="top">
                 <div>
-                    <img 
-                        src="/images/dolores.png" 
+                    <img
+                        src="/images/dolores.png"
                         alt="logo"
                         style="height: 250px"
                     >
@@ -109,15 +109,15 @@
             </div>
         </div>
         <FormForgotModal :modal="formModal" @refresh="refreshTable" />
-    </UserLayout>
+    </Default>
 </template>
 
 <script>
-import UserLayout from "../layouts/UserLayout.vue";
+import Default from "../layouts/Default.vue";
 import FormForgotModal from "../components/FormForgotPassword";
 export default {
     components: {
-        UserLayout,
+        Default,
         FormForgotModal,
     },
     data() {
@@ -166,7 +166,7 @@ export default {
                 } else {
                     self.$message.error('Log in Failed');
                 }
-                
+
             }).catch(error => {
 
             });
