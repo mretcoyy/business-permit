@@ -51,7 +51,7 @@ Route::post('/bplo/view-requirement', 'BPLOController@viewRequirement');
 Route::patch('/bplo/changeStatus/{id}', 'BPLOController@changeStatus');
 //AMENDMENT
 Route::get('/admin/amendment', 'AmendmentController@index');
-Route::patch('/amendment/update-data/{id}', 'AmendmentController@updateData');
+Route::post('/amendment/update-data', 'AmendmentController@updateData');
 
 Route::get('/menro', 'MENROController@index');
 Route::get('/mpdc', 'MPDCController@index');

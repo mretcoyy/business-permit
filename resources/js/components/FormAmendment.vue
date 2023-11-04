@@ -750,18 +750,18 @@ const columns = [
     },
     {
         title: "Capitalization (for new business)",
-        dataIndex: "capitalization_format",
-        key: "capitalization_format",
+        dataIndex: "capitalization",
+        key: "capitalization",
     },
     {
         title: "Essential (for renewal)",
-        dataIndex: "essential_format",
-        key: "essential_format",
+        dataIndex: "essential",
+        key: "essential",
     },
     {
         title: "Non-essential (for renewal)",
-        dataIndex: "nonEssential_format",
-        key: "nonEssential_format",
+        dataIndex: "nonEssential",
+        key: "nonEssential",
     },
     {
         title: "Action",
@@ -992,8 +992,8 @@ export default {
                                     self.form.getFieldValue(
                                         "typeOfOrganization"
                                     ),
-                                hasTaxIncentive:
-                                    self.form.getFieldValue("hasTaxIncentive"),
+                                isTaxIncentive:
+                                    self.form.getFieldValue("isTaxIncentive"),
                             },
                             businessInformation: {
                                 taxPayerLname:
@@ -1053,11 +1053,7 @@ export default {
                             ownerAddress: {
                                 OAddressHouseNo:
                                     self.form.getFieldValue("OAddressHouseNo"),
-                                OAddressBuildingName: self.form.getFieldValue(
-                                    "OAddressBuildingName"
-                                ),
-                                OAddressUnitNo:
-                                    self.form.getFieldValue("OAddressUnitNo"),
+
                                 OAddressStreet:
                                     self.form.getFieldValue("OAddressStreet"),
                                 OAddressBarangay:
@@ -1072,6 +1068,11 @@ export default {
                                     self.form.getFieldValue("OAddressTelNo"),
                                 OAddressEmail:
                                     self.form.getFieldValue("OAddressEmail"),
+                                OAddressBuildingName: self.form.getFieldValue(
+                                    "OAddressBuildingName"
+                                ),
+                                OAddressUnitNo:
+                                    self.form.getFieldValue("OAddressUnitNo"),
                             },
                             lessorInformation: {
                                 LessorLname:
@@ -1120,6 +1121,7 @@ export default {
                 );
             }
             formData.append("data", JSON.stringify(data));
+            formData.append("business_id", this.business_id);
             const config = {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -1127,8 +1129,8 @@ export default {
             };
             return axios(
                 {
-                    method: "PATCH",
-                    url: "amendment/update-data/" + this.business_id,
+                    method: "POST",
+                    url: "amendment/update-data",
                     data: formData,
                 },
                 config
@@ -1303,7 +1305,7 @@ export default {
                     BAddressTelNo,
                     BAddressEmail,
                     BusinessArea,
-                    pin: pin,
+                    pin,
                     TotalNumberofEmployees,
                     LGUEmployeeCount,
                     EmergencyContactPerson,
@@ -1338,7 +1340,6 @@ export default {
                     data["businessFiles"]
                 );
                 this.business_id = data["businessDetail"]["business_id"];
-
                 console.log(businessActivities);
                 console.log(businessFiles);
                 this.dataBusinessActivity = businessActivities;
