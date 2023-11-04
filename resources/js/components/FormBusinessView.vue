@@ -15,18 +15,9 @@
             }"
         >
             <a-form :form="form">
-                <a-row :gutter="16">
-                    <a-col :span="12">
-                        <a-form-item label="Business Type:">
-                            <a-input
-                                :readOnly="true"
-                                type="text"
-                                v-decorator="['typeOfBusienss']"
-                            />
-                        </a-form-item>
-                    </a-col>
-                </a-row>
-                <!-- <a-radio-group
+                <a-form-item label="Business Type:">
+                    <a-radio-group
+                        :disabled="true"
                         v-decorator="[
                             'typeOfBusienss',
                             {
@@ -41,8 +32,8 @@
                     >
                         <a-radio-button value="1"> New </a-radio-button>
                         <a-radio-button value="2"> Renewal </a-radio-button>
-                    </a-radio-group> -->
-
+                    </a-radio-group>
+                </a-form-item>
                 <a-divider />
 
                 <a-row :gutter="16">
@@ -81,31 +72,56 @@
                                 v-decorator="['dtiSecNo']"
                             />
                         </a-form-item>
-                        <a-form-item
-                            label="DTI/SEC/CDA Date of registration"
-                            v-decorator="['dtiSecdateofReg']"
-                        >
-                            <a-date-picker style="width: 100%" />
+                        <a-form-item label="DTI/SEC/CDA Date of registration">
+                            <a-date-picker
+                                style="width: 100%"
+                                v-decorator="['dtiSecdateofReg']"
+                            />
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
                         <a-form-item label="Type of Organization:">
-                            <a-input
-                                :readOnly="true"
-                                type="text"
-                                v-decorator="['typeOfOrganization']"
-                            />
+                            <a-radio-group
+                                :disabled="true"
+                                v-decorator="[
+                                    'typeOfOrganization',
+                                    {
+                                        rules: [
+                                            {
+                                                required: false,
+                                                message:
+                                                    'Type of Organization is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            >
+                                <a-radio-button value="1">
+                                    Single
+                                </a-radio-button>
+                                <a-radio-button value="2">
+                                    Partnership
+                                </a-radio-button>
+                                <a-radio-button value="3">
+                                    Corporation
+                                </a-radio-button>
+                                <a-radio-button value="4">
+                                    Cooperative
+                                </a-radio-button>
+                            </a-radio-group>
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
                         <a-form-item
                             label="Are you enjoying tax incentive from any Goverment Entity:"
                         >
-                            <a-input
-                                :readOnly="true"
-                                type="text"
-                                v-decorator="['hasTaxIncentive']"
-                            />
+                            <a-radio-group
+                                v-decorator="['isTaxIncentive']"
+                                :disabled="true"
+                            >
+                                <a-radio value="1"> Yes </a-radio>
+                                <a-radio value="0"> No </a-radio>
+                            </a-radio-group>
                         </a-form-item>
                     </a-col>
                 </a-row>
@@ -363,7 +379,7 @@
                 </a-row>
 
                 <a-form-item type="number" label="Property Index Number (PIN)">
-                    <a-input :readOnly="true" v-decorator="['PIN']" />
+                    <a-input :readOnly="true" v-decorator="['pin']" />
                 </a-form-item>
                 <a-row :gutter="16">
                     <a-col span="8">
@@ -660,7 +676,7 @@ export default {
                 "dtiSecNo",
                 "dtiSecdateofReg",
                 "typeOfOrganization",
-                "hasTaxIncentive",
+                "isTaxIncentive",
                 "taxPayerLname",
                 "taxPayerFname",
                 "taxPayerMname",
@@ -679,7 +695,7 @@ export default {
                 "BAddressProvince",
                 "BAddressTelNo",
                 "BAddressEmail",
-                "PIN",
+                "pin",
                 "BusinessArea",
                 "TotalNumberofEmployees",
                 "LGUEmployeeCount",
@@ -712,6 +728,7 @@ export default {
     methods: {
         closeModal() {
             this.dataBusinessActivity = [];
+            this.dataBusinessFiles = [];
             this.form.resetFields();
         },
 
@@ -803,77 +820,115 @@ export default {
                     referenceNo,
                     dtiSecNo,
                     dtiSecdateofReg,
+                    typeOfOrganization,
+                    typeOfBusienss,
+                    isTaxIncentive,
+                    businessDetail: { status, status_val },
+                    businessInformation: {
+                        taxPayerLname,
+                        taxPayerFname,
+                        taxPayerMname,
+                        taxPayerBname,
+                        taxPayerTname,
+                        BAddressHouseNo,
+                        BAddressBuildingName,
+                        BAddressUnitNo,
+                        BAddressStreet,
+                        BAddressBarangay,
+                        BAddressSubd,
+                        BAddressCity,
+                        BAddressProvince,
+                        BAddressTelNo,
+                        BAddressEmail,
+                        BusinessArea,
+                        pin,
+                        TotalNumberofEmployees,
+                        LGUEmployeeCount,
+                        EmergencyContactPerson,
+                    },
+                    ownerInformation: {
+                        OLname,
+                        OFname,
+                        OMname,
+                        OAddressHouseNo,
+                        OAddressBuildingName,
+                        OAddressUnitNo,
+                        OAddressStreet,
+                        OAddressBarangay,
+                        OAddressSubd,
+                        OAddressCity,
+                        OAddressProvince,
+                        OAddressTelNo,
+                        OAddressEmail,
+                    },
+                    lessorInformation: {
+                        LessorLname,
+                        LessorFname,
+                        LessorMname,
+                        LessorMonthlyRental,
+                        LAddressHouseNo,
+                        LAddressStreet,
+                        LAddressBarangay,
+                        LAddressTelNo,
+                        LAddressSubd,
+                        LAddressCity,
+                        LAddressProvince,
+                        LAddressEmail,
+                    },
                 } = data;
                 this.form.setFieldsValue({
                     dateOfApplication,
                     referenceNo,
                     dtiSecNo,
                     dtiSecdateofReg,
-                    typeOfBusienss: data["businessDetail"]["status"],
-                    typeOfOrganization: data["typeOfOrganizationLabel"],
-                    hasTaxIncentive: data["isTaxIncentive"] == 1 ? "Yes" : "No",
-                    taxPayerLname: data["businessInformation"]["taxPayerLname"],
-                    taxPayerFname: data["businessInformation"]["taxPayerFname"],
-                    taxPayerMname: data["businessInformation"]["taxPayerMname"],
-                    taxPayerBname: data["businessInformation"]["taxPayerBname"],
-                    taxPayerTname: data["businessInformation"]["taxPayerTname"],
-                    taxPresidentLname: data["ownerInformation"]["OLname"],
-                    taxPresidentFname: data["ownerInformation"]["OFname"],
-                    taxPresidentMname: data["ownerInformation"]["OMname"],
-                    BAddressHouseNo:
-                        data["businessInformation"]["BAddressHouseNo"],
-                    BAddressBuildingName:
-                        data["businessInformation"]["BAddressBuildingName"],
-                    BAddressUnitNo:
-                        data["businessInformation"]["BAddressUnitNo"],
-                    BAddressStreet:
-                        data["businessInformation"]["BAddressStreet"],
-                    BAddressBarangay:
-                        data["businessInformation"]["BAddressBarangay"],
-                    BAddressSubd: data["businessInformation"]["BAddressSubd"],
-                    BAddressCity: data["businessInformation"]["BAddressCity"],
-                    BAddressProvince:
-                        data["businessInformation"]["BAddressProvince"],
-                    BAddressTelNo: data["businessInformation"]["BAddressTelNo"],
-                    BAddressEmail: data["businessInformation"]["BAddressEmail"],
-                    BusinessArea: data["businessInformation"]["BusinessArea"],
-                    PIN: data["businessInformation"]["pin"],
-                    TotalNumberofEmployees:
-                        data["businessInformation"]["TotalNumberofEmployees"],
-                    LGUEmployeeCount:
-                        data["businessInformation"]["LGUEmployeeCount"],
-                    EmergencyContactPerson:
-                        data["businessInformation"]["EmergencyContactPerson"],
-                    OAddressHouseNo:
-                        data["ownerInformation"]["OAddressHouseNo"],
-                    OAddressBuildingName:
-                        data["ownerInformation"]["OAddressBuildingName"],
-                    OAddressUnitNo: data["ownerInformation"]["OAddressUnitNo"],
-                    OAddressStreet: data["ownerInformation"]["OAddressStreet"],
-                    OAddressBarangay:
-                        data["ownerInformation"]["OAddressBarangay"],
-                    OAddressSubd: data["ownerInformation"]["OAddressSubd"],
-                    OAddressCity: data["ownerInformation"]["OAddressCity"],
-                    OAddressProvince:
-                        data["ownerInformation"]["OAddressProvince"],
-                    OAddressTelNo: data["ownerInformation"]["OAddressTelNo"],
-                    OAddressEmail: data["ownerInformation"]["OAddressEmail"],
-                    LessorLname: data["lessorInformation"]["LessorLname"],
-                    LessorFname: data["lessorInformation"]["LessorFname"],
-                    LessorMname: data["lessorInformation"]["LessorMname"],
-                    LessorMonthlyRental:
-                        data["lessorInformation"]["LessorMonthlyRental"],
-                    LAddressHouseNo:
-                        data["lessorInformation"]["LAddressHouseNo"],
-                    LAddressStreet: data["lessorInformation"]["LAddressStreet"],
-                    LAddressBarangay:
-                        data["lessorInformation"]["LAddressBarangay"],
-                    LAddressTelNo: data["lessorInformation"]["LAddressTelNo"],
-                    LAddressSubd: data["lessorInformation"]["LAddressSubd"],
-                    LAddressCity: data["lessorInformation"]["LAddressCity"],
-                    LAddressProvince:
-                        data["lessorInformation"]["LAddressProvince"],
-                    LAddressEmail: data["lessorInformation"]["LAddressEmail"],
+                    typeOfBusienss: typeOfBusienss.toString(),
+                    typeOfOrganization: typeOfOrganization.toString(),
+                    isTaxIncentive: isTaxIncentive.toString(),
+                    taxPayerLname,
+                    taxPayerFname,
+                    taxPayerMname,
+                    taxPayerBname,
+                    taxPayerTname,
+                    taxPresidentLname: OLname,
+                    taxPresidentFname: OFname,
+                    taxPresidentMname: OMname,
+                    BAddressHouseNo,
+                    BAddressBuildingName,
+                    BAddressUnitNo,
+                    BAddressStreet,
+                    BAddressBarangay,
+                    BAddressSubd,
+                    BAddressCity,
+                    BAddressProvince,
+                    BAddressTelNo,
+                    BAddressEmail,
+                    BusinessArea,
+                    pin: pin,
+                    TotalNumberofEmployees,
+                    LGUEmployeeCount,
+                    EmergencyContactPerson,
+                    OAddressHouseNo,
+                    OAddressBuildingName,
+                    OAddressUnitNo,
+                    OAddressStreet,
+                    OAddressBarangay,
+                    OAddressSubd,
+                    OAddressCity,
+                    OAddressProvince,
+                    OAddressTelNo,
+                    OAddressEmail,
+                    LessorLname,
+                    LessorFname,
+                    LessorMname,
+                    LessorMonthlyRental,
+                    LAddressHouseNo,
+                    LAddressStreet,
+                    LAddressBarangay,
+                    LAddressTelNo,
+                    LAddressSubd,
+                    LAddressCity,
+                    LAddressProvince,
+                    LAddressEmail,
                 });
 
                 let businessActivities = this.formatBusinessActivity(

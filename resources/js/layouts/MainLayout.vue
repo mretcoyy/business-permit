@@ -20,6 +20,9 @@
                     <a href="/application">Application </a></a-menu-item
                 >
                 <a-menu-item key="3">
+                    <a href="/amendment">Amendment </a></a-menu-item
+                >
+                <a-menu-item key="4">
                     <span @click="logOut">Logout </span></a-menu-item
                 >
             </a-menu>

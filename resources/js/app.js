@@ -42,6 +42,8 @@ Vue.component("view-dashboard", require("./views/Dashboard.vue").default);
 
 Vue.component("view-application", require("./views/Application.vue").default);
 
+Vue.component("view-amendment", require("./views/Amendment.vue").default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

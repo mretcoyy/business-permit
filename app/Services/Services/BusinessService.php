@@ -80,6 +80,8 @@ class BusinessService implements BusinessServiceInterface
             'middle_name' => $businessInformationData->taxPresidentMname,
             'last_name' => $businessInformationData->taxPresidentLname,
             'house_number' => $ownersInformationData->OAddressHouseNo,
+            'building_name' => $ownersInformationData->OAddressBuildingName,
+            'unit_no' => $ownersInformationData->OAddressUnitNo,
             'street' => $ownersInformationData->OAddressStreet,
             'barangay' => $ownersInformationData->OAddressBarangay,
             'subdivision' => $ownersInformationData->OAddressSubd,

@@ -20,11 +20,12 @@ class BusinessTransformer extends TransformerAbstract
         $data = [
             'referenceNo' => $model->reference_number,
             'dtiSecNo' => $model->dti_registration_no,
-            'dtiDateOfRedti_date_of_registrationgistration' => $model->dti_date_of_registration,
+            'dtiSecdateofReg' => $model->dti_date_of_registration,
             'typeOfOrganizationLabel' => TypeOfOrganization::getDescription($model->type_of_organization),
             'typeOfOrganization' => $model->type_of_organization,
             'isTaxIncentive' => $model->is_tax_incentive,
             'dateOfApplication' => $model->date_of_application,
+            'typeOfBusienss' => Date('Y',strtotime($model->date_of_application)) == Date('Y') ? 1 : 0,
             'createdAt' => $model->created_at,
             'updatedAt' => $model->updated_at,
             'businessFiles' => $this->businessFiles($model->businessFiles),
@@ -45,6 +46,7 @@ class BusinessTransformer extends TransformerAbstract
             'business_id' => $datum->business_id,
             'bin' => 'test',
             'status' => BusinessStatus::getDescription($datum->status),
+            'status_val' => $datum->status,
             'date_renewed' => '',
            ];
         }
