@@ -14,6 +14,7 @@ use App\Enums\TypeOfOrganization;
 use Carbon\Carbon;
 use App\Services\Contract\BusinessServiceInterface;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class BusinessService implements BusinessServiceInterface
 {
@@ -122,26 +123,26 @@ class BusinessService implements BusinessServiceInterface
         {
             $extension = $file->getClientOriginalExtension();
             $filename = $key.'.'.$extension;
-            $file->storeAs('/'.$businessData->referenceNo , $filename, 'requirements');
+            $file->storeAs('/'. $business->id , $filename, 'requirements');
             
             switch ($key) {
                 case 'barangay':
-                    $barangay_clearance = $key;
+                    $barangay_clearance = $filename;
                     break;
                 case 'community':
-                    $community_tax_certificate = $key;
+                    $community_tax_certificate = $filename;
                     break;
                 case 'environment':
-                    $environment_certificate = $key;
+                    $environment_certificate = $filename;
                     break;
                 case 'occupancy':
-                    $occupancy_permit = $key;
+                    $occupancy_permit = $filename;
                     break;
                 case 'rpt':
-                    $real_property_tax_clearance = $key;
+                    $real_property_tax_clearance = $filename;
                     break;
                 case 'zoning':
-                    $zoning_clearance = $key;
+                    $zoning_clearance = $filename;
                     break;
                 default:
                     break;
@@ -208,4 +209,25 @@ class BusinessService implements BusinessServiceInterface
 
         $business = BusinessDetail::create($insertDatra);
     }
+
+    public function viewRequirement($data)
+    {
+        $r = $data['data'];
+        $id = $r['business_file_id'];
+        $column = $r['type'];
+        $result = BusinessFiles::select('business_id',$column)->where('id', $id)->first();
+        $filepath = $result->business_id.'/'.$result[$column];
+        try {
+          if (Storage::disk('requirements')->exists($filepath)) {
+            return response(Storage::disk('requirements')->get($filepath), 200)->header('Content-Type', 'application/pdf');
+          } else {
+            return response()->json(['message' => 'File not Found', "status" => '422'], 422);
+          }
+        } catch (\Error $th) {
+          return response()->json(['message' => $th->getMessage()], 422);
+        }
+    }
+
+
+    
 }

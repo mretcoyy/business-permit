@@ -146,14 +146,15 @@ class BusinessTransformer extends TransformerAbstract
     {
         foreach ($data as $datum) {
             $data = [
-                'barangay_clearance',
-                'zoning_clearance',
-                'sanitary_clearance',
-                'occupancy_permit',
-                'environment_certificate',
-                'community_tax_certificate',
-                'real_property_tax_clearance',
-                'fire_certificate',
+                'business_file_id' => $datum->id,
+                'barangay_clearance' => $datum->barangay_clearance,
+                'zoning_clearance' => $datum->zoning_clearance,
+                'sanitary_clearance' => $datum->sanitary_clearance,
+                'occupancy_permit' => $datum->occupancy_permit,
+                'environment_certificate' => $datum->environment_certificate,
+                'community_tax_certificate' => $datum->community_tax_certificate,
+                'real_property_tax_clearance' => $datum->real_property_tax_clearance,
+                'fire_certificate' => $datum->fire_certificate,
             ];
         }
 

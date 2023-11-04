@@ -43,4 +43,11 @@ class BPLOController extends Controller
 
         return $changeStatus;
     }
+
+    public function viewRequirement(Request $request, BusinessService $service)
+    {
+        $requirement = $service->viewRequirement($request->all());
+
+        return $requirement;
+    }
 }

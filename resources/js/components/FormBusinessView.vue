@@ -522,6 +522,48 @@
                     rowKey="index"
                 >
                 </a-table>
+                <a-divider />
+                <p class="text-center" style="font-weight: bold">
+                    Business Files
+                </p>
+                <a-table
+                    :columns="columnsFile"
+                    :data-source="dataBusinessFiles"
+                >
+                    <span slot="action" slot-scope="text, record">
+                        <a @click="viewFile(text)">View </a>
+                    </span>
+                </a-table>
+
+                <a-modal
+                    title="
+                        Show File
+                    "
+                    v-model="modalFile"
+                    :width="600"
+                    @cancel="closeModalFile()"
+                    :maskClosable="false"
+                    :okButtonProps="{ style: { display: 'none' } }"
+                >
+                    <div v-if="filetype == 'pdf'">
+                        <iframe
+                            class="frame-file"
+                            id="pdf_frame"
+                            height="500"
+                            width="100%"
+                            :src="pdfsrc"
+                            frameborder="0"
+                            scrolling="auto"
+                        ></iframe>
+                    </div>
+                    <div v-else>
+                        <img
+                            v-bind:src="image_url"
+                            id="image"
+                            style="max-width: 600px"
+                        />
+                    </div>
+                </a-modal>
             </a-form>
         </div>
     </a-modal>
@@ -561,6 +603,23 @@ const columns = [
         key: "nonEssential",
     },
 ];
+const columnsFile = [
+    {
+        dataIndex: "type_label",
+        key: "type_label",
+        title: "Type",
+    },
+    {
+        dataIndex: "filename",
+        key: "filename",
+        title: "Filename",
+    },
+    {
+        title: "Action",
+        key: "action",
+        scopedSlots: { customRender: "action" },
+    },
+];
 
 export default {
     components: {
@@ -576,8 +635,14 @@ export default {
             type: "new",
             organization: "single",
             dataBusinessActivity: [],
+            dataBusinessFiles: [],
+            filetype: "",
+            pdfsrc: null,
+            image_url: null,
             columns,
+            columnsFile,
             fileLoading: false,
+            modalFile: false,
             file: {
                 barangay: false,
                 zoning: false,
@@ -650,6 +715,39 @@ export default {
             this.form.resetFields();
         },
 
+        viewFile(data) {
+            this.filetype = /[^.]+$/.exec(data.filename);
+            this.modalFile = true;
+
+            axios
+                .post(
+                    "bplo/view-requirement",
+                    { data },
+                    {
+                        responseType: "blob",
+                    }
+                )
+                .then((res) => {
+                    let ext = this.filetype;
+                    if (ext == "jpg" || ext == "jpeg" || ext == "png") {
+                        var objectURL = URL.createObjectURL(res.data);
+                        this.image_url = objectURL;
+                    } else if (ext == "pdf") {
+                        const file = new Blob([res.data], {
+                            type: "application/pdf",
+                        });
+                        const fileURL = URL.createObjectURL(file);
+                        this.pdfsrc = fileURL;
+                    }
+                })
+                .catch((error) => {
+                    console.log("error");
+                    console.log(error);
+                });
+        },
+        closeModalFile() {
+            this.modalFile = false;
+        },
         refreshTable(data) {
             this.dataBusinessActivity.push(data);
             this.formModal = { show: false };
@@ -664,7 +762,6 @@ export default {
 
             let map = data.map((item, i) => {
                 const container = {};
-                console.log(i);
                 container.index = i;
                 container.lineOfBusiness = item.line_of_business;
                 container.noOfUnits = item.number_of_units;
@@ -677,11 +774,28 @@ export default {
             });
             return map;
         },
+        formatBusinessFile(data) {
+            const keys = Object.keys(data);
+            let result = [];
+            let id = data["business_file_id"];
+            for (const key of keys) {
+                const value = data[key];
+                if (key != "business_file_id" && value != null) {
+                    result.push({
+                        business_file_id: id,
+                        type_label: key.replace(/_/g, " ").toUpperCase(),
+                        type: key,
+                        filename: value,
+                    });
+                }
+            }
+            console.log(result);
+            return result;
+        },
     },
     watch: {
         modal(params) {
             if (params.show) {
-                console.log(this.fields);
                 let data = params.data[0];
                 this.fields.forEach((v) => this.form.getFieldDecorator(v));
                 const {
@@ -765,7 +879,11 @@ export default {
                 let businessActivities = this.formatBusinessActivity(
                     data["businessInformationDetail"]
                 );
+                let businessFiles = this.formatBusinessFile(
+                    data["businessFiles"]
+                );
                 this.dataBusinessActivity = businessActivities;
+                this.dataBusinessFiles = businessFiles;
             }
         },
     },
