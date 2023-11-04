@@ -16,8 +16,8 @@
                         display: block;
                     "
                 />
+                <p style="color: white; text-align: center">User@gmail.com</p>
             </div>
-
             <a-menu theme="dark" mode="inline" :default-selected-keys="['0']">
                 <a-menu-item @click="viewPage(`/user/dashboard`)" key="1">
                     <a-icon type="dashboard" />

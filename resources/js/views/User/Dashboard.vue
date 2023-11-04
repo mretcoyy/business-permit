@@ -1,7 +1,17 @@
 <template>
     <UserLayout>
         <a-card>
-            <h1>My Application</h1>
+            <div style="margin-bottom: 10px; display: flex">
+                <h1>My Application</h1>
+                <a-button
+                    style="margin-left: 20px"
+                    type="primary"
+                    @click="viewPage('/user/application')"
+                >
+                    <a-icon type="plus" />
+                    New Application</a-button
+                >
+            </div>
             <a-table
                 :columns="columns"
                 :data-source="data"
@@ -65,11 +75,6 @@ const columns = [
         dataIndex: "Status",
         scopedSlots: { customRender: "Status" },
     },
-    {
-        title: "Action",
-        key: "action",
-        scopedSlots: { customRender: "action" },
-    },
 ];
 
 const data = [];
@@ -90,6 +95,9 @@ export default {
         FormBusinessView,
     },
     methods: {
+        viewPage(url) {
+            if (url) window.location.href = url;
+        },
         refreshTable() {
             this.getData();
             this.formModal = { show: false };
