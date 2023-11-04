@@ -77,7 +77,6 @@ export default {
         return {
             data,
             columns,
-            view_data: [],
             formModal: { show: false },
         };
     },

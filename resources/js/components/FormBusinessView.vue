@@ -14,8 +14,18 @@
             }"
         >
             <a-form :form="form">
-                <a-form-item label="Business Type:">
-                    <a-radio-group
+                <a-row :gutter="16">
+                    <a-col :span="12">
+                        <a-form-item label="Business Type:">
+                            <a-input
+                                :readOnly="true"
+                                type="text"
+                                v-decorator="['typeOfBusienss']"
+                            />
+                        </a-form-item>
+                    </a-col>
+                </a-row>
+                <!-- <a-radio-group
                         v-decorator="[
                             'typeOfBusienss',
                             {
@@ -30,8 +40,8 @@
                     >
                         <a-radio-button value="1"> New </a-radio-button>
                         <a-radio-button value="2"> Renewal </a-radio-button>
-                    </a-radio-group>
-                </a-form-item>
+                    </a-radio-group> -->
+
                 <a-divider />
 
                 <a-row :gutter="16">
@@ -79,43 +89,22 @@
                     </a-col>
                     <a-col :span="12">
                         <a-form-item label="Type of Organization:">
-                            <a-radio-group
-                                v-decorator="[
-                                    'typeOfOrganization',
-                                    {
-                                        rules: [
-                                            {
-                                                required: false,
-                                                message:
-                                                    'Type of Organization is required',
-                                            },
-                                        ],
-                                    },
-                                ]"
-                            >
-                                <a-radio-button value="1">
-                                    Single
-                                </a-radio-button>
-                                <a-radio-button value="2">
-                                    Partnership
-                                </a-radio-button>
-                                <a-radio-button value="3">
-                                    Corporation
-                                </a-radio-button>
-                                <a-radio-button value="4">
-                                    Cooperative
-                                </a-radio-button>
-                            </a-radio-group>
+                            <a-input
+                                :readOnly="true"
+                                type="text"
+                                v-decorator="['typeOfOrganization']"
+                            />
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
                         <a-form-item
                             label="Are you enjoying tax incentive from any Goverment Entity:"
                         >
-                            <a-radio-group v-decorator="['hasTaxIncentive']">
-                                <a-radio value="yes"> Yes </a-radio>
-                                <a-radio value="No"> No </a-radio>
-                            </a-radio-group>
+                            <a-input
+                                :readOnly="true"
+                                type="text"
+                                v-decorator="['hasTaxIncentive']"
+                            />
                         </a-form-item>
                     </a-col>
                 </a-row>
@@ -127,6 +116,7 @@
                     <a-col :span="8">
                         <a-form-item label="Last Name">
                             <a-input
+                                :readOnly="true"
                                 v-decorator="[
                                     'taxPayerLname',
                                     {
@@ -144,6 +134,7 @@
                     <a-col :span="8">
                         <a-form-item label="First Name">
                             <a-input
+                                :readOnly="true"
                                 v-decorator="[
                                     'taxPayerFname',
                                     {
@@ -161,6 +152,7 @@
                     <a-col :span="8">
                         <a-form-item label="Middle Name">
                             <a-input
+                                :readOnly="true"
                                 v-decorator="[
                                     'taxPayerMname',
                                     {
@@ -178,6 +170,7 @@
                     <a-col :span="24">
                         <a-form-item label="Business Name">
                             <a-input
+                                :readOnly="true"
                                 v-decorator="[
                                     'taxPayerBname',
                                     {
@@ -193,7 +186,10 @@
                             />
                         </a-form-item>
                         <a-form-item label="Trade name/Franchise">
-                            <a-input v-decorator="['taxPayerTname']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['taxPayerTname']"
+                            />
                         </a-form-item>
                     </a-col>
                     <p style="padding-left: 9px; font-weight: bold">
@@ -202,18 +198,21 @@
                     <a-col :span="8">
                         <a-form-item label="Last Name">
                             <a-input
+                                :readOnly="true"
                                 v-decorator="['taxPresidentLname']"
                             /> </a-form-item
                     ></a-col>
                     <a-col :span="8">
                         <a-form-item label="First Name">
                             <a-input
+                                :readOnly="true"
                                 v-decorator="['taxPresidentFname']"
                             /> </a-form-item
                     ></a-col>
                     <a-col :span="8">
                         <a-form-item label="Middle Name">
                             <a-input
+                                :readOnly="true"
                                 v-decorator="['taxPresidentMname']"
                             /> </a-form-item
                     ></a-col>
@@ -225,37 +224,63 @@
                             Business Address
                         </p>
                         <a-form-item label="House No./Bldg. No.">
-                            <a-input v-decorator="['BAddressHouseNo']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['BAddressHouseNo']"
+                            />
                         </a-form-item>
                         <a-form-item label="Building Name">
-                            <a-input v-decorator="['BAddressBuildingName']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['BAddressBuildingName']"
+                            />
                         </a-form-item>
                         <a-form-item label="Unit No.">
-                            <a-input v-decorator="['BAddressUnitNo']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['BAddressUnitNo']"
+                            />
                         </a-form-item>
                         <a-form-item label="Street">
-                            <a-input v-decorator="['BAddressStreet']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['BAddressStreet']"
+                            />
                         </a-form-item>
                         <a-form-item label="Barangay">
-                            <a-input v-decorator="['BAddressBarangay']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['BAddressBarangay']"
+                            />
                         </a-form-item>
                         <a-form-item label="Subdivision">
-                            <a-input v-decorator="['BAddressSubd']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['BAddressSubd']"
+                            />
                         </a-form-item>
                         <a-form-item label="City/Municipality">
-                            <a-input v-decorator="['BAddressCity']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['BAddressCity']"
+                            />
                         </a-form-item>
                         <a-form-item label="Province">
-                            <a-input v-decorator="['BAddressProvince']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['BAddressProvince']"
+                            />
                         </a-form-item>
                         <a-form-item label="Tel. No.">
                             <a-input
+                                :readOnly="true"
                                 type="number"
                                 v-decorator="['BAddressTelNo']"
                             />
                         </a-form-item>
                         <a-form-item label="Email Address">
                             <a-input
+                                :readOnly="true"
                                 type="email"
                                 v-decorator="['BAddressEmail']"
                             />
@@ -272,37 +297,63 @@
                             Owner's Address
                         </p>
                         <a-form-item label="House No./Bldg. No.">
-                            <a-input v-decorator="['OAddressHouseNo']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['OAddressHouseNo']"
+                            />
                         </a-form-item>
                         <a-form-item label="Building Name">
-                            <a-input v-decorator="['OAddressBuildingName']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['OAddressBuildingName']"
+                            />
                         </a-form-item>
                         <a-form-item label="Unit No.">
-                            <a-input v-decorator="['OAddressUnitNo']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['OAddressUnitNo']"
+                            />
                         </a-form-item>
                         <a-form-item label="Street">
-                            <a-input v-decorator="['OAddressStreet']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['OAddressStreet']"
+                            />
                         </a-form-item>
                         <a-form-item label="Barangay">
-                            <a-input v-decorator="['OAddressBarangay']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['OAddressBarangay']"
+                            />
                         </a-form-item>
                         <a-form-item label="Subdivision">
-                            <a-input v-decorator="['OAddressSubd']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['OAddressSubd']"
+                            />
                         </a-form-item>
                         <a-form-item label="City/Municipality">
-                            <a-input v-decorator="['OAddressCity']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['OAddressCity']"
+                            />
                         </a-form-item>
                         <a-form-item label="Province">
-                            <a-input v-decorator="['OAddressProvince']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['OAddressProvince']"
+                            />
                         </a-form-item>
                         <a-form-item label="Tel. No.">
                             <a-input
+                                :readOnly="true"
                                 type="number"
                                 v-decorator="['OAddressTelNo']"
                             />
                         </a-form-item>
                         <a-form-item label="Email Address">
                             <a-input
+                                :readOnly="true"
                                 type="email"
                                 v-decorator="['OAddressEmail']"
                             />
@@ -310,17 +361,14 @@
                     </a-col>
                 </a-row>
 
-                <a-form-item
-                    type="number"
-                    v-decorator="['PIN']"
-                    label="Property Index Number (PIN)"
-                >
-                    <a-input />
+                <a-form-item type="number" label="Property Index Number (PIN)">
+                    <a-input :readOnly="true" v-decorator="['PIN']" />
                 </a-form-item>
                 <a-row :gutter="16">
                     <a-col span="8">
                         <a-form-item label="Business Area (in sq m)">
                             <a-input
+                                :readOnly="true"
                                 type="number"
                                 v-decorator="['BusinessArea']"
                             />
@@ -331,6 +379,7 @@
                             label="Total Number of Employees in Establishment"
                         >
                             <a-input
+                                :readOnly="true"
                                 type="number"
                                 v-decorator="['TotalNumberofEmployees']"
                             />
@@ -339,6 +388,7 @@
                     <a-col span="8">
                         <a-form-item label="# of Employees Residing in LGU">
                             <a-input
+                                :readOnly="true"
                                 type="number"
                                 v-decorator="['LGUEmployeeCount']"
                             />
@@ -350,22 +400,32 @@
                     </p>
                     <a-col span="6">
                         <a-form-item label="Last Name">
-                            <a-input v-decorator="['LessorLname']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['LessorLname']"
+                            />
                         </a-form-item>
                     </a-col>
                     <a-col span="6">
                         <a-form-item label="First Name">
-                            <a-input v-decorator="['LessorFname']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['LessorFname']"
+                            />
                         </a-form-item>
                     </a-col>
                     <a-col span="6">
                         <a-form-item label="Middle Name">
-                            <a-input v-decorator="['LessorMname']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['LessorMname']"
+                            />
                         </a-form-item>
                     </a-col>
                     <a-col span="6">
                         <a-form-item label="Monthly Rental">
                             <a-input
+                                :readOnly="true"
                                 type="number"
                                 v-decorator="['LessorMonthlyRental']"
                             />
@@ -378,16 +438,26 @@
 
                     <a-col span="12">
                         <a-form-item label="House No./Bldg. No.">
-                            <a-input v-decorator="['LAddressHouseNo']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['LAddressHouseNo']"
+                            />
                         </a-form-item>
                         <a-form-item label="Street">
-                            <a-input v-decorator="['LAddressStreet']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['LAddressStreet']"
+                            />
                         </a-form-item>
                         <a-form-item label="Barangay">
-                            <a-input v-decorator="['LAddressBarangay']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['LAddressBarangay']"
+                            />
                         </a-form-item>
                         <a-form-item label="Tel. No.">
                             <a-input
+                                :readOnly="true"
                                 type="number"
                                 v-decorator="['LAddressTelNo']"
                             />
@@ -395,18 +465,28 @@
                     </a-col>
                     <a-col span="12">
                         <a-form-item label="Subdivision">
-                            <a-input v-decorator="['LAddressSubd']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['LAddressSubd']"
+                            />
                         </a-form-item>
                         <a-form-item label="City/Municipality">
-                            <a-input v-decorator="['LAddressCity']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['LAddressCity']"
+                            />
                         </a-form-item>
 
                         <a-form-item label="Province">
-                            <a-input v-decorator="['LAddressProvince']" />
+                            <a-input
+                                :readOnly="true"
+                                v-decorator="['LAddressProvince']"
+                            />
                         </a-form-item>
 
                         <a-form-item label="Email Address">
                             <a-input
+                                :readOnly="true"
                                 type="email"
                                 v-decorator="['LAddressEmail']"
                             />
@@ -417,9 +497,11 @@
                     </p>
                     <a-form-item
                         label="Contact Person/Tel No./Mobile Phone no./email address"
-                        v-decorator="['EmergencyContactPerson']"
                     >
-                        <a-input />
+                        <a-input
+                            :readOnly="true"
+                            v-decorator="['EmergencyContactPerson']"
+                        />
                     </a-form-item>
                 </a-row>
 
@@ -433,21 +515,11 @@
                     @onEdit="handleEditBusinessActivity"
                 /> -->
 
-                <a-table :columns="columns" :data-source="dataBusinessActivity">
-                    <span slot="action" slot-scope="text, record, index">
-                        <a-button
-                            type="link"
-                            @click="onEditBusinessActivity(record, index)"
-                            >Edit</a-button
-                        >
-                        <a-divider type="vertical" />
-                        <a-popconfirm
-                            title="Sure to delete?"
-                            @confirm="() => onDeleteBusinessActivity(index)"
-                        >
-                            <a>Delete</a>
-                        </a-popconfirm>
-                    </span>
+                <a-table
+                    :columns="columns"
+                    :data-source="dataBusinessActivity"
+                    rowKey="index"
+                >
                 </a-table>
             </a-form>
         </div>
@@ -487,11 +559,6 @@ const columns = [
         dataIndex: "nonEssential",
         key: "nonEssential",
     },
-    {
-        title: "Action",
-        key: "action",
-        scopedSlots: { customRender: "action" },
-    },
 ];
 
 export default {
@@ -521,6 +588,7 @@ export default {
                 // fireSafety: false,
             },
             fields: [
+                "typeOfBusienss",
                 "dateOfApplication",
                 "referenceNo",
                 "dtiSecNo",
@@ -545,6 +613,7 @@ export default {
                 "BAddressProvince",
                 "BAddressTelNo",
                 "BAddressEmail",
+                "PIN",
                 "BusinessArea",
                 "TotalNumberofEmployees",
                 "LGUEmployeeCount",
@@ -576,12 +645,36 @@ export default {
     },
     methods: {
         closeModal() {
+            this.dataBusinessActivity = [];
             this.form.resetFields();
         },
 
         refreshTable(data) {
             this.dataBusinessActivity.push(data);
             this.formModal = { show: false };
+        },
+
+        formatBusinessActivity(data) {
+            var formatter = new Intl.NumberFormat("fil-PH", {
+                style: "currency",
+                currency: "PHP",
+            });
+            console.log(data);
+
+            let map = data.map((item, i) => {
+                const container = {};
+                console.log(i);
+                container.index = i;
+                container.lineOfBusiness = item.line_of_business;
+                container.noOfUnits = item.number_of_units;
+                container.capitalization = formatter.format(
+                    item.capitalization
+                );
+                container.essential = formatter.format(item.essential);
+                container.nonEssential = item.non_essential;
+                return container;
+            });
+            return map;
         },
     },
     watch: {
@@ -595,27 +688,23 @@ export default {
                     referenceNo,
                     dtiSecNo,
                     dtiSecdateofReg,
-                    typeOfOrganization,
-                    hasTaxIncentive,
                 } = data;
                 this.form.setFieldsValue({
                     dateOfApplication,
                     referenceNo,
                     dtiSecNo,
                     dtiSecdateofReg,
-                    typeOfOrganization,
-                    hasTaxIncentive,
+                    typeOfBusienss: data["businessDetail"]["status"],
+                    typeOfOrganization: data["typeOfOrganizationLabel"],
+                    hasTaxIncentive: data["isTaxIncentive"] == 1 ? "Yes" : "No",
                     taxPayerLname: data["businessInformation"]["taxPayerLname"],
                     taxPayerFname: data["businessInformation"]["taxPayerFname"],
                     taxPayerMname: data["businessInformation"]["taxPayerMname"],
                     taxPayerBname: data["businessInformation"]["taxPayerBname"],
                     taxPayerTname: data["businessInformation"]["taxPayerTname"],
-                    taxPresidentLname:
-                        data["businessInformation"]["taxPresidentLname"],
-                    taxPresidentFname:
-                        data["businessInformation"]["taxPresidentFname"],
-                    taxPresidentMname:
-                        data["businessInformation"]["taxPresidentMname"],
+                    taxPresidentLname: data["ownerInformation"]["OLname"],
+                    taxPresidentFname: data["ownerInformation"]["OFname"],
+                    taxPresidentMname: data["ownerInformation"]["OMname"],
                     BAddressHouseNo:
                         data["businessInformation"]["BAddressHouseNo"],
                     BAddressBuildingName:
@@ -633,6 +722,7 @@ export default {
                     BAddressTelNo: data["businessInformation"]["BAddressTelNo"],
                     BAddressEmail: data["businessInformation"]["BAddressEmail"],
                     BusinessArea: data["businessInformation"]["BusinessArea"],
+                    PIN: data["businessInformation"]["pin"],
                     TotalNumberofEmployees:
                         data["businessInformation"]["TotalNumberofEmployees"],
                     LGUEmployeeCount:
@@ -670,6 +760,11 @@ export default {
                         data["lessorInformation"]["LAddressProvince"],
                     LAddressEmail: data["lessorInformation"]["LAddressEmail"],
                 });
+
+                let businessActivities = this.formatBusinessActivity(
+                    data["businessInformationDetail"]
+                );
+                this.dataBusinessActivity = businessActivities;
             }
         },
     },

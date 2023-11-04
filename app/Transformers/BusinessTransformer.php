@@ -86,7 +86,7 @@ class BusinessTransformer extends TransformerAbstract
     public function businessInformationDetail($data)
     {
         foreach ($data as $datum) {
-            $data = [
+            $data[] = [
                 'code' => $datum->code,
                 'line_of_business' => $datum->line_of_business,
                 'number_of_units' => $datum->number_of_units,
@@ -125,6 +125,9 @@ class BusinessTransformer extends TransformerAbstract
     {
         foreach ($data as $datum) {
             $data = [
+                'OFname' => $datum->first_name,
+                'OMname' => $datum->middle_name,
+                'OLname' => $datum->last_name,
                 'OAddressHouseNo' => $datum->house_number,
                 'OAddressStreet' => $datum->street,
                 'OAddressBarangay' => $datum->barangay,
