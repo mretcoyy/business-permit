@@ -184,9 +184,8 @@ class BusinessService implements BusinessServiceInterface
         return $businessInformationDetail;
     }
 
-    public function changeStatus($data) 
+    public function changeStatus($data, $id) 
     {
-        $id = $data['id'];
 
         $updateData = [
             'status' => $data['status']

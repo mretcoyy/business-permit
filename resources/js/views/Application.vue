@@ -12,13 +12,15 @@
                         :color="
                             Status === 'Approved'
                                 ? 'green'
-                                : Status === 'For Approval'
+                                : Status === 'Forapproval'
                                 ? 'yellow'
-                                : Status === 'Decline'
+                                : Status === 'Declined'
                                 ? 'volcano'
                                 : 'blue'
                         "
-                        >{{ Status }}</a-tag
+                        >{{
+                            Status == "Forapproval" ? "For Approval" : Status
+                        }}</a-tag
                     >
                     <!-- <a-tag
                         v-for="tag in Status"
@@ -38,14 +40,22 @@
                     <a @click="view(text.business_id)">View</a> |
                     <a-popconfirm
                         title="Sure to Approve Application?"
-                        @confirm="() => {}"
+                        @confirm="
+                            () => {
+                                confirm(text.business_id, 5);
+                            }
+                        "
                     >
                         <a>Approve</a>
                     </a-popconfirm>
                     |
                     <a-popconfirm
                         title="Sure to Decline Application?"
-                        @confirm="() => {}"
+                        @confirm="
+                            () => {
+                                confirm(text.business_id, 6);
+                            }
+                        "
                     >
                         <a>Decline</a>
                     </a-popconfirm>
@@ -123,7 +133,7 @@ export default {
                 container.business_id = item.businessDetail.business_id;
                 return container;
             });
-            this.data = map;
+
             return map;
         },
         async getData() {
@@ -135,7 +145,7 @@ export default {
             });
             // .then(function (response) {})
             // .catch(function (error) {});
-            this.formatData(res.data.data);
+            this.data = this.formatData(res.data.data);
         },
         async view(business_id) {
             let filters = { business_id: business_id };
@@ -146,6 +156,12 @@ export default {
             });
             let data = res.data.data;
             this.formModal = { show: true, data };
+        },
+        async confirm(id, status) {
+            const res = await axios.patch("/bplo/changeStatus/" + id, {
+                status: status,
+            });
+            this.getData();
         },
     },
     mounted() {

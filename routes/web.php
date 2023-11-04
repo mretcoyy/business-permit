@@ -46,7 +46,7 @@ Route::get('/bplo', 'BPLOController@index');
 Route::post('/bplo/store', 'BPLOController@store');
 Route::get('/bplo/list', 'BPLOController@list');
 //APPROVAL
-Route::patch('/bplo/changeStatus', 'BPLOController@changeStatus');
+Route::patch('/bplo/changeStatus/{id}', 'BPLOController@changeStatus');
 
 Route::get('/menro', 'MENROController@index');
 Route::get('/mpdc', 'MPDCController@index');

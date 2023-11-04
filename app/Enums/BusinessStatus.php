@@ -18,4 +18,7 @@ final class BusinessStatus extends Enum
     const TAXCOMPUTATION = 13;
     const PAYMENT = 14;
     const MAYORSPERMIT = 3;
+    const FORAPPROVAL = 4;
+    const APPROVED = 5;
+    const DECLINED = 6;
 }

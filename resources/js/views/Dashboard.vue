@@ -12,13 +12,15 @@
                         :color="
                             Status === 'Approved'
                                 ? 'green'
-                                : Status === 'For Approval'
+                                : Status === 'Forapproval'
                                 ? 'yellow'
-                                : Status === 'Decline'
+                                : Status === 'Declined'
                                 ? 'volcano'
                                 : 'blue'
                         "
-                        >{{ Status }}</a-tag
+                        >{{
+                            Status == "Forapproval" ? "For Approval" : Status
+                        }}</a-tag
                     >
                     <!-- <a-tag
                         v-for="tag in Status"

@@ -672,7 +672,7 @@ export default {
                     item.capitalization
                 );
                 container.essential = formatter.format(item.essential);
-                container.nonEssential = item.non_essential;
+                container.nonEssential = formatter.format(item.non_essential);
                 return container;
             });
             return map;
