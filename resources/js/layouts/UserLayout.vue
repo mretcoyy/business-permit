@@ -1,150 +1,62 @@
 <template>
-    <div id="userLayout" :class="['user-layout-wrapper', isMobile && 'mobile']">
-        <div class="container">
+    <a-layout id="components-layout-demo-top" class="layout">
+        <a-layout-header>
+            <!-- <div class="logo" /> -->
+            <!-- <img
+                src="/images/dolores.png"
+                alt="logo"
+                style="height: 25px width: 25px"
+            > -->
+            <!-- :default-selected-keys="['1']" -->
+            <a-menu
+                theme="dark"
+                mode="horizontal"
+                :style="{ lineHeight: '64px' }"
+            >
+                <a-menu-item key="1">
+                    <a href="/user/dashboard">Dashboard </a></a-menu-item
+                >
+                <a-menu-item key="2">
+                    <a href="/user/application">Application </a></a-menu-item
+                >
+                <a-menu-item key="4">
+                    <span @click="logOut">Logout </span></a-menu-item
+                >
+            </a-menu>
+        </a-layout-header>
+        <a-layout-content style="padding: 0 50px">
+            <!-- <a-breadcrumb style="margin: 16px 0">
+                <a-breadcrumb-item>Home</a-breadcrumb-item>
+                <a-breadcrumb-item>List</a-breadcrumb-item>
+                <a-breadcrumb-item>App</a-breadcrumb-item>
+            </a-breadcrumb> -->
             <slot></slot>
-        </div>
-    </div>
-</template>
+        </a-layout-content>
 
+        <a-layout-footer style="text-align: center">
+            Ant Design ©2018 Created by Ant UED
+        </a-layout-footer>
+    </a-layout>
+</template>
 <script>
 export default {
     data() {
         return {
-            isMobile: false,
+            //
         };
     },
-    name: "UserLayout",
-    mounted() {
-        document.body.classList.add("userLayout");
-    },
-    beforeDestroy() {
-        document.body.classList.remove("userLayout");
+    methods: {
+        logOut() {
+            let self = this;
+            axios({
+                method: "POST",
+                url: "user/logout",
+            })
+                .then(function (response) {
+                    window.location.href = "/";
+                })
+                .catch((error) => {});
+        },
     },
 };
 </script>
-
-<style lang="scss">
-#userLayout.user-layout-wrapper {
-    height: 100%;
-
-    &.mobile {
-        .container {
-            .main {
-                max-width: 368px;
-                width: 98%;
-            }
-        }
-    }
-
-    .container {
-        width: 100% !important;
-        max-width: 100% !important;
-        height: 100vh;
-        min-height: 100%;
-        background: #f0f2f5 url(../assets/background.svg) no-repeat 50%;
-        background-size: 100%;
-        //padding: 50px 0 84px;
-        position: relative;
-        display: flex;
-        .user-layout-lang {
-            position: absolute;
-            right: 0;
-            height: 40px;
-            line-height: 44px;
-            text-align: right;
-
-            .select-lang-trigger {
-                cursor: pointer;
-                padding: 12px;
-                margin-right: 24px;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 18px;
-                vertical-align: middle;
-            }
-        }
-
-        .user-layout-content {
-            padding: 32px 0 24px;
-            margin: auto;
-            .top {
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                align-content: center;
-
-                .header {
-                    justify-content: center;
-                    width: max-content;
-                    .badge {
-                        position: absolute;
-                        display: inline-block;
-                        line-height: 1;
-                        vertical-align: middle;
-                        margin-left: -12px;
-                        margin-top: -10px;
-                        opacity: 0.8;
-                    }
-
-                    .logo {
-                        margin-right: 16px;
-                    }
-                }
-                .title {
-                    font-size: 45px;
-                    color: rgba(0, 0, 0, 0.85);
-                    font-family: Avenir, "Helvetica Neue", Arial, Helvetica,
-                        sans-serif;
-                    font-weight: 600;
-                    position: relative;
-                    top: 12px;
-                    margin-bottom: 50px;
-                }
-            }
-
-            .main {
-                min-width: 260px;
-                width: 368px;
-                margin: 0 auto;
-            }
-
-            .footer {
-                // position: absolute;
-                width: 100%;
-                bottom: 0;
-                padding: 0 16px;
-                margin: 48px 0 24px;
-                text-align: center;
-
-                .links {
-                    margin-bottom: 8px;
-                    font-size: 14px;
-                    a {
-                        color: rgba(0, 0, 0, 0.45);
-                        transition: all 0.3s;
-                        &:not(:last-child) {
-                            margin-right: 40px;
-                        }
-                    }
-                }
-                .copyright {
-                    color: rgba(0, 0, 0, 0.45);
-                    font-size: 14px;
-                }
-            }
-        }
-
-        a {
-            text-decoration: none;
-        }
-    }
-}
-
-@media (max-width: 960px) {
-    .header {
-        padding: 30px;
-    }
-}
-</style>

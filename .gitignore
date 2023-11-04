@@ -8,9 +8,9 @@
 /public/js/app.js
 composer.lock
 package-lock.json
-composer.json
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+yarn.lock

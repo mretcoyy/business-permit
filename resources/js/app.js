@@ -32,7 +32,9 @@ Vue.component("view-login", require("./views/Login.vue").default);
 
 Vue.component("view-register", require("./views/Register.vue").default);
 
-Vue.component("view-user-dashboard", require("./views/Register.vue").default);
+Vue.component("view-user-dashboard", require("./views/User/Dashboard.vue").default);
+Vue.component("view-user-application", require("./views/User/Application.vue").default);
+
 Vue.component(
     "form-application",
     require("./components/FormApplication.vue").default
