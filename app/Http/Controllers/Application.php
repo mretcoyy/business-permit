@@ -8,6 +8,6 @@ class Application extends Controller
 {
     public function index()
     {
-        return view('page.Application.list');
+        return view('admin.Application.list');
     }
 }

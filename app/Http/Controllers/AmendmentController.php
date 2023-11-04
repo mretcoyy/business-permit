@@ -8,6 +8,6 @@ class AmendmentController extends Controller
 {
     public function index()
     {
-        return view('page.Amendment.list');
+        return view('admin.Amendment.list');
     }
 }

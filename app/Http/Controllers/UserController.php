@@ -33,7 +33,7 @@ class UserController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        
+
     }
 
     public function register(Request $request)
@@ -56,6 +56,16 @@ class UserController extends Controller
     public function changePassword()
     {
         return;
+    }
+
+    // JAN NEW ROUTES
+
+    public function viewDashboard(){
+        return view('user.Dashboard.index');
+    }
+
+    public function viewApplication(){
+        return view('user.Application.index');
     }
 
 }
