@@ -16,7 +16,9 @@
                         display: block;
                     "
                 />
-                <p style="color: white; text-align: center">User@gmail.com</p>
+                <p style="color: white; text-align: center">
+                    {{ email }}
+                </p>
             </div>
             <a-menu theme="dark" mode="inline" :default-selected-keys="['0']">
                 <a-menu-item @click="viewPage(`/user/dashboard`)" key="1">
@@ -59,6 +61,7 @@ export default {
     data() {
         return {
             collapsed: false,
+            email: "",
         };
     },
     methods: {
@@ -68,13 +71,24 @@ export default {
         logOut() {
             axios({
                 method: "POST",
-                url: "user/logout",
+                url: "/user/logout",
             })
                 .then(function (response) {
                     window.location.href = "/";
                 })
                 .catch((error) => {});
         },
+        async getUser() {
+            const res = await axios({
+                method: "GET",
+                url: "/user/get-user",
+            });
+            console.log(res);
+            this.email = res.data.email;
+        },
+    },
+    mounted() {
+        this.getUser();
     },
 };
 </script>

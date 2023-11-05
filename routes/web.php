@@ -35,18 +35,23 @@ Route::get('/', 'UserController@index');
 
 //Business Owner
 Route::get('/register', 'UserController@registration');
-Route::post('/user/store', 'UserController@register');
 Route::post('/user/login', 'UserController@login');
+Route::post('/user/store', 'UserController@register');
 Route::post('/user/logout', 'UserController@logout');
-Route::get('/user/dashboard', 'UserController@viewDashboard');
-Route::get('/user/application', 'UserController@viewApplication');
-Route::get('/business-form', 'UserBusinessController@index');
+Route::get('/user/get-user', 'UserController@getUser');
 
+Route::middleware(['role:Admin,User'])->group(function () {
+    Route::get('/user/dashboard', 'UserController@viewDashboard');
+    Route::get('/user/application', 'UserController@viewApplication');
+    Route::get('/business-form', 'UserBusinessController@index');
+    Route::get('/bplo/list', 'BPLOController@list');
+    Route::post('/bplo/view-requirement', 'BPLOController@viewRequirement');
+});
+
+Route::middleware(['role:Admin'])->group(function () {
 //BPLO
 Route::get('/bplo', 'BPLOController@index');
 Route::post('/bplo/store', 'BPLOController@store');
-Route::get('/bplo/list', 'BPLOController@list');
-Route::post('/bplo/view-requirement', 'BPLOController@viewRequirement');
 //APPROVAL
 Route::patch('/bplo/changeStatus/{id}', 'BPLOController@changeStatus');
 //AMENDMENT
@@ -64,3 +69,4 @@ Route::get('/bplo-releasing', 'BPLOReleasingController@index');
 
 // Application
 Route::get('/admin/application', 'Application@index');
+});

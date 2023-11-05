@@ -53,7 +53,7 @@ export default {
             let self = this;
             axios({
                 method: "POST",
-                url: "user/logout",
+                url: "/user/logout",
             })
                 .then(function (response) {
                     window.location.href = "/";
