@@ -44,7 +44,7 @@ class BusinessTransformer extends TransformerAbstract
     {   
         $result = [];
         foreach ($data as $datum) {
-           $result[] = [
+           $result = [
             'business_id' => $datum->business_id,
             'bin' => 'test',
             'status' => BusinessStatus::getDescription($datum->status),
@@ -59,7 +59,7 @@ class BusinessTransformer extends TransformerAbstract
     {
         $result = [];
         foreach ($data as $datum) {
-            $result[] = [
+            $result = [
                 'taxPayerFullname' => $datum->fullname,
                 'taxPayerFname' => $datum->first_name,
                 'taxPayerMname' => $datum->middle_name,
@@ -110,7 +110,7 @@ class BusinessTransformer extends TransformerAbstract
     {
         $result = [];
         foreach ($data as $datum) {
-            $result[] = [
+            $result = [
                 'LessorFname' => $datum->first_name,
                 'LessorMname' => $datum->middle_name,
                 'LessorLname' => $datum->last_name,
@@ -133,7 +133,7 @@ class BusinessTransformer extends TransformerAbstract
     {
         $result = [];
         foreach ($data as $datum) {
-            $result[] = [
+            $result = [
                 'OFname' => $datum->first_name,
                 'OMname' => $datum->middle_name,
                 'OLname' => $datum->last_name,
@@ -157,7 +157,7 @@ class BusinessTransformer extends TransformerAbstract
     {
         $result = [];
         foreach ($data as $datum) {
-            $result[] = [
+            $result = [
                 'business_file_id' => $datum->id,
                 'barangay_clearance' => $datum->barangay_clearance,
                 'zoning_clearance' => $datum->zoning_clearance,
