@@ -1,13 +1,13 @@
 <template>
-    <UserLayout>
+    <Default>
         <div class="user-layout-content">
             <div class="top">
                 <div>
-                    <img 
-                        src="/images/dolores.png" 
+                    <img
+                        src="/images/dolores.png"
                         alt="logo"
                         style="height: 250px"
-                    >
+                    />
                 </div>
                 <div class="title">Business Permit</div>
             </div>
@@ -109,15 +109,15 @@
             </div>
         </div>
         <FormForgotModal :modal="formModal" @refresh="refreshTable" />
-    </UserLayout>
+    </Default>
 </template>
 
 <script>
-import UserLayout from "../layouts/UserLayout.vue";
+import Default from "../layouts/Default.vue";
 import FormForgotModal from "../components/FormForgotPassword";
 export default {
     components: {
-        UserLayout,
+        Default,
         FormForgotModal,
     },
     data() {
@@ -154,22 +154,26 @@ export default {
         loginAction() {
             let self = this;
             axios({
-                method: 'POST',
-                url: 'user/login',
-                data:{
+                method: "POST",
+                url: "user/login",
+                data: {
                     email: this.form.getFieldValue("email"),
                     password: this.form.getFieldValue("password"),
-                }
-            }).then(function(response){
-                if(response.data.user != undefined) {
-                    window.location.href= '/dashboard'
-                } else {
-                    self.$message.error('Log in Failed');
-                }
-                
-            }).catch(error => {
-
-            });
+                },
+            })
+                .then(function (response) {
+                    console.log(response);
+                    if (response.data.user != undefined) {
+                        if (response.data.user.role == 1) {
+                            window.location.href = "/admin/application";
+                        } else {
+                            window.location.href = "/user/dashboard";
+                        }
+                    } else {
+                        self.$message.error("Log in Failed");
+                    }
+                })
+                .catch((error) => {});
         },
     },
 };
