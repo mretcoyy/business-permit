@@ -39,7 +39,6 @@ class BusinessCriteria implements CriteriaInterface
         }
 
         if (isset($filters->user_id) && $filters->user_id != '') {
-            log::info('test');
             $model->where('business.user_id', $filters->user_id);
         }
 

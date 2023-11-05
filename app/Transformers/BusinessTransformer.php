@@ -6,6 +6,7 @@ use League\Fractal\TransformerAbstract;
 use App\Entities\Business;
 use App\Enums\BusinessStatus;
 use App\Enums\TypeOfOrganization;
+use Illuminate\Support\Facades\Log;
 
 class BusinessTransformer extends TransformerAbstract
 {
@@ -36,13 +37,14 @@ class BusinessTransformer extends TransformerAbstract
             'ownerInformation' => $this->ownerInformation($model->ownerInformation),
         ];
 
-        return$data;
+        return $data;
     }
 
     public function businessDetail($data)
-    {
+    {   
+        $result = [];
         foreach ($data as $datum) {
-           $data = [
+           $result[] = [
             'business_id' => $datum->business_id,
             'bin' => 'test',
             'status' => BusinessStatus::getDescription($datum->status),
@@ -50,13 +52,14 @@ class BusinessTransformer extends TransformerAbstract
             'date_renewed' => '',
            ];
         }
-        return $data;
+        return $result;
     }
 
     public function businessInformation($data)
     {
+        $result = [];
         foreach ($data as $datum) {
-            $data = [
+            $result[] = [
                 'taxPayerFullname' => $datum->fullname,
                 'taxPayerFname' => $datum->first_name,
                 'taxPayerMname' => $datum->middle_name,
@@ -82,13 +85,14 @@ class BusinessTransformer extends TransformerAbstract
             ];
         }
 
-        return $data;
+        return $result;
     }
 
     public function businessInformationDetail($data)
     {
+        $result = [];
         foreach ($data as $datum) {
-            $data[] = [
+            $result[] = [
                 'id' => $datum->id,
                 'code' => $datum->code,
                 'line_of_business' => $datum->line_of_business,
@@ -99,13 +103,14 @@ class BusinessTransformer extends TransformerAbstract
             ];
         }
 
-        return $data;
+        return $result;
     }
 
     public function lessorInformation($data)
     {
+        $result = [];
         foreach ($data as $datum) {
-            $data = [
+            $result[] = [
                 'LessorFname' => $datum->first_name,
                 'LessorMname' => $datum->middle_name,
                 'LessorLname' => $datum->last_name,
@@ -121,13 +126,14 @@ class BusinessTransformer extends TransformerAbstract
             ];
         }
 
-        return $data;
+        return $result;
     }
 
     public function ownerInformation($data)
     {
+        $result = [];
         foreach ($data as $datum) {
-            $data = [
+            $result[] = [
                 'OFname' => $datum->first_name,
                 'OMname' => $datum->middle_name,
                 'OLname' => $datum->last_name,
@@ -144,13 +150,14 @@ class BusinessTransformer extends TransformerAbstract
             ];
         }
 
-        return $data;
+        return $result;
     }
 
     public function businessFiles($data)
     {
+        $result = [];
         foreach ($data as $datum) {
-            $data = [
+            $result[] = [
                 'business_file_id' => $datum->id,
                 'barangay_clearance' => $datum->barangay_clearance,
                 'zoning_clearance' => $datum->zoning_clearance,
@@ -163,6 +170,6 @@ class BusinessTransformer extends TransformerAbstract
             ];
         }
 
-        return $data;
+        return $result;
     }
 }
