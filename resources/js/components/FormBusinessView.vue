@@ -615,8 +615,8 @@ const columns = [
     },
     {
         title: "Non-essential (for renewal)",
-        dataIndex: "nonEssential",
-        key: "nonEssential",
+        dataIndex: "non_essential",
+        key: "non_essential",
     },
 ];
 const columnsFile = [
@@ -786,7 +786,7 @@ export default {
                     item.capitalization
                 );
                 container.essential = formatter.format(item.essential);
-                container.nonEssential = formatter.format(item.non_essential);
+                container.non_essential = formatter.format(item.non_essential);
                 return container;
             });
             return map;

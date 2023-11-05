@@ -677,8 +677,8 @@ const columns = [
     },
     {
         title: "Non-essential (for renewal)",
-        dataIndex: "nonEssential",
-        key: "nonEssential",
+        dataIndex: "non_essential",
+        key: "non_essential",
     },
     {
         title: "Action",

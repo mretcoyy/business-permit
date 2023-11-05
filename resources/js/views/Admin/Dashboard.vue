@@ -82,13 +82,12 @@ export default {
             formModal: { show: false },
         };
     },
-    props: {
-        id: { type: Number, default: () => 0 },
-    },
+
     components: {
         MainLayout,
         FormBusinessView,
     },
+
     methods: {
         refreshTable() {
             this.getData();
@@ -108,14 +107,11 @@ export default {
             return map;
         },
         async getData() {
-            let filters = { user_id: this.id };
             const res = await axios.get("/bplo/list", {
                 params: {
-                    filters: filters,
+                    filters: this.filters,
                 },
             });
-            // .then(function (response) {})
-            // .catch(function (error) {});
             this.data = this.formatData(res.data.data);
         },
         async view(business_id) {

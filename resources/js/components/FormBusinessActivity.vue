@@ -83,7 +83,7 @@
                 <a-input
                     type="number"
                     placeholder="Non-essential (for renewal)"
-                    v-decorator="['nonEssential']"
+                    v-decorator="['non_essential']"
                 />
             </a-form-item>
         </a-form>
@@ -105,7 +105,7 @@ export default {
                 "noOfUnits",
                 "capitalization",
                 "essential",
-                "nonEssential",
+                "non_essential",
             ],
         };
     },
@@ -119,7 +119,7 @@ export default {
                     noOfUnits,
                     capitalization,
                     essential,
-                    nonEssential,
+                    non_essential,
                 } = params.data;
                 this.selectedIndex = params.index;
                 this.form.setFieldsValue({
@@ -128,7 +128,7 @@ export default {
                     noOfUnits,
                     capitalization,
                     essential,
-                    nonEssential,
+                    non_essential,
                 });
             }
         },
@@ -150,8 +150,8 @@ export default {
                             capitalization:
                                 this.form.getFieldValue("capitalization"),
                             essential: this.form.getFieldValue("essential"),
-                            nonEssential:
-                                this.form.getFieldValue("nonEssential"),
+                            non_essential:
+                                this.form.getFieldValue("non_essential"),
                         };
 
                         if (this.modal.action == "edit") {

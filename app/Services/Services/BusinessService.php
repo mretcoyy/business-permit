@@ -405,7 +405,7 @@ class BusinessService implements BusinessServiceInterface
             'number_of_units' => $data->noOfUnits,
             'capitalization' => isset($data->capitalization) ? $data->capitalization : 0,
             'essential' => isset($data->essential) ? $data->essential : 0,
-            'non_essential' => isset($data->nonEssential) ? $data->nonEssential : 0,
+            'non_essential' => isset($data->non_essential) ? $data->non_essential : 0,
         ];
         if(isset($data->id))
         {

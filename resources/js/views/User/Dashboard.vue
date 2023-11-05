@@ -86,10 +86,14 @@ export default {
             columns,
             formModal: { show: false },
             userId: this.$root.$children[0].user.id,
+            filters: {
+                user_id: "",
+                business_id: "",
+            },
         };
     },
-    props: {
-        id: { type: Number, default: () => 0 },
+    created() {
+        this.filters.user_id = this.$store.state.user.id;
     },
     components: {
         UserLayout,
@@ -97,7 +101,7 @@ export default {
     },
     mounted() {
         console.log(this.$root.$children[0].user);
-    },  
+    },
     methods: {
         viewPage(url) {
             if (url) window.location.href = url;
@@ -120,21 +124,18 @@ export default {
             return map;
         },
         async getData() {
-            let filters = { user_id: this.id };
             const res = await axios.get("/bplo/list", {
                 params: {
-                    filters: filters,
+                    filters: this.filters,
                 },
             });
-            // .then(function (response) {})
-            // .catch(function (error) {});
             this.data = this.formatData(res.data.data);
         },
         async view(business_id) {
-            let filters = { business_id: business_id };
+            this.filters.business_id = business_id;
             const res = await axios.get("/bplo/list", {
                 params: {
-                    filters: filters,
+                    filters: this.filters,
                 },
             });
             let data = res.data.data;

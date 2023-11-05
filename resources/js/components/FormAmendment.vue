@@ -750,18 +750,18 @@ const columns = [
     },
     {
         title: "Capitalization (for new business)",
-        dataIndex: "capitalization",
-        key: "capitalization",
+        dataIndex: "capitalization_format",
+        key: "capitalization_format",
     },
     {
         title: "Essential (for renewal)",
-        dataIndex: "essential",
-        key: "essential",
+        dataIndex: "essential_format",
+        key: "essential_format",
     },
     {
         title: "Non-essential (for renewal)",
-        dataIndex: "nonEssential",
-        key: "nonEssential",
+        dataIndex: "non_essential_format",
+        key: "non_essential_format",
     },
     {
         title: "Action",
@@ -920,28 +920,33 @@ export default {
             this.dataBusinessActivity.push(data);
             this.formModal = { show: false };
         },
-        formatBusinessActivity(data) {
+        formatMoney(num) {
             var formatter = new Intl.NumberFormat("fil-PH", {
                 style: "currency",
                 currency: "PHP",
             });
-            console.log(data);
-
+            if (num != undefined) {
+                return formatter.format(num);
+            } else {
+                return formatter.format(0);
+            }
+        },
+        formatBusinessActivity(data) {
             let map = data.map((item, i) => {
                 const container = {};
                 container.index = i;
                 container.lineOfBusiness = item.line_of_business;
                 container.noOfUnits = item.number_of_units;
-                container.capitalization_format = formatter.format(
+                container.capitalization_format = this.formatMoney(
                     item.capitalization
                 );
-                container.essential_format = formatter.format(item.essential);
-                container.nonEssential_format = formatter.format(
+                container.essential_format = this.formatMoney(item.essential);
+                container.non_essential_format = this.formatMoney(
                     item.non_essential
                 );
                 container.capitalization = item.capitalization;
                 container.essential = item.essential;
-                container.nonEssential = item.non_essential;
+                container.non_essential = item.non_essential;
                 return container;
             });
             return map;
@@ -970,7 +975,7 @@ export default {
                 if (!errors) {
                     if (self.dataBusinessActivity.length === 0) {
                         self.$message.error("Business Activity is required!");
-                    } else if (self.checkFilesisFalse(self.file)) {
+                    } else if (!self.checkFilesisFalse(self.file)) {
                         self.$message.error(
                             "Please upload all file requirements!"
                         );
@@ -1135,7 +1140,10 @@ export default {
                 },
                 config
             )
-                .then(function (response) {})
+                .then(function (response) {
+                    this.$emit("onSubmit", false);
+                    this.$message.success("Updated Succesfully");
+                })
                 .catch((error) => {});
         },
 
@@ -1182,6 +1190,11 @@ export default {
             return false;
         },
         refreshTable(data) {
+            console.log("essential - " + data.essential);
+            console.log("non_essential - " + data.non_essential);
+            data.capitalization_format = this.formatMoney(data.capitalization);
+            data.essential_format = this.formatMoney(data.essential);
+            data.non_essential_format = this.formatMoney(data.non_essential);
             this.dataBusinessActivity.push(data);
             this.formModal = { show: false };
         },
@@ -1196,6 +1209,9 @@ export default {
         },
         handleEditBusinessActivity({ data, index }) {
             this.formModal = { show: false };
+            data.capitalization_format = this.formatMoney(data.capitalization);
+            data.essential_format = this.formatMoney(data.essential);
+            data.non_essential_format = this.formatMoney(data.non_essential);
             this.dataBusinessActivity.splice(index, 1, data);
             this.$message.success("Business Updated Succesfully!");
         },
@@ -1204,7 +1220,8 @@ export default {
             this.$message.success("Business Deleted Succesfully!");
         },
         onEditBusinessActivity(data, index) {
-            data.capitalization = this.formModal = {
+            console.log(data);
+            this.formModal = {
                 show: true,
                 action: "edit",
                 data,
