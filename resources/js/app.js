@@ -29,6 +29,7 @@ Vue.component(
 );
 
 Vue.component("view-login", require("./views/Login.vue").default);
+Vue.component("core", require("./layouts/Core.vue").default);
 
 Vue.component("view-register", require("./views/Register.vue").default);
 

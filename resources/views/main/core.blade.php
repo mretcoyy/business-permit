@@ -21,6 +21,10 @@
 </head>
 <body>
     <div id="app">
+        <core
+        :user='{!! json_encode(app()->get("request")->session()->get("user")) !!}'
+        >
+        </core>
         @yield('content')
     </div>
 </body>

@@ -85,6 +85,7 @@ export default {
             data,
             columns,
             formModal: { show: false },
+            userId: this.$root.$children[0].user.id,
         };
     },
     props: {

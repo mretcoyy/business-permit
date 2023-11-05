@@ -6,11 +6,11 @@
 export default {
     props: {
         user: {
-            type: String,
+            type: Object,
         }
     },
     mounted() {
-        console.log(this.user);
+
     },
     method:{
     
