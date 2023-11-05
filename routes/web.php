@@ -54,6 +54,12 @@ Route::get('/bplo', 'BPLOController@index');
 Route::post('/bplo/store', 'BPLOController@store');
 //APPROVAL
 Route::patch('/bplo/changeStatus/{id}', 'BPLOController@changeStatus');
+Route::patch('/bplo/update-gross/{id}', 'BPLOController@updateGross');
+
+//APPROVAL
+Route::get('/admin/certificate-approval', 'CertificateApprovalController@index');
+Route::get('/admin/clearance-approval', 'ClearanceApprovalController@index');
+
 //AMENDMENT
 Route::get('/admin/amendment', 'AmendmentController@index');
 Route::post('/amendment/update-data', 'AmendmentController@updateData');

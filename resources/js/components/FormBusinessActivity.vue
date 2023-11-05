@@ -13,7 +13,7 @@
         :maskClosable="false"
     >
         <a-form :form="form">
-            <!-- <a-form-item label="Code" labelAlign="left">
+            <a-form-item label="Code" labelAlign="left">
                 <a-input
                     placeholder="Code"
                     v-decorator="[
@@ -28,7 +28,7 @@
                         },
                     ]"
                 />
-            </a-form-item> -->
+            </a-form-item>
             <a-form-item label="Line of Business" labelAlign="left">
                 <a-input
                     placeholder="Line of Business"
@@ -99,6 +99,7 @@ export default {
         return {
             form: this.$form.createForm(this),
             selectedIndex: null,
+            selectedId: null,
             fields: [
                 "code",
                 "lineOfBusiness",
@@ -122,6 +123,7 @@ export default {
                     non_essential,
                 } = params.data;
                 this.selectedIndex = params.index;
+                this.selectedId = params.data.id;
                 this.form.setFieldsValue({
                     code,
                     lineOfBusiness,
@@ -143,6 +145,7 @@ export default {
                 if (!errors) {
                     try {
                         var data = {
+                            id: this.selectedId,
                             code: this.form.getFieldValue("code"),
                             lineOfBusiness:
                                 this.form.getFieldValue("lineOfBusiness"),

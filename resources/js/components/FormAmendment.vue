@@ -733,11 +733,11 @@ function getBase64(img, callback) {
 }
 import FormBusinessActivity from "./FormBusinessActivity";
 const columns = [
-    // {
-    //     dataIndex: "code",
-    //     key: "code",
-    //     title: "Code",
-    // },
+    {
+        dataIndex: "code",
+        key: "code",
+        title: "Code",
+    },
     {
         dataIndex: "lineOfBusiness",
         key: "lineOfBusiness",
@@ -810,6 +810,16 @@ export default {
             fileLoading: false,
             modalFile: false,
             file: {
+                barangay: false,
+                zoning: false,
+                // sanitary: false,
+                occupancy: false,
+                environment: false,
+                community: false,
+                rpt: false,
+                // fireSafety: false,
+            },
+            file_default: {
                 barangay: false,
                 zoning: false,
                 // sanitary: false,
@@ -935,6 +945,8 @@ export default {
             let map = data.map((item, i) => {
                 const container = {};
                 container.index = i;
+                container.id = item.id;
+                container.code = item.code;
                 container.lineOfBusiness = item.line_of_business;
                 container.noOfUnits = item.number_of_units;
                 container.capitalization_format = this.formatMoney(
@@ -975,7 +987,7 @@ export default {
                 if (!errors) {
                     if (self.dataBusinessActivity.length === 0) {
                         self.$message.error("Business Activity is required!");
-                    } else if (!self.checkFilesisFalse(self.file)) {
+                    } else if (self.checkFilesisFalse(self.file)) {
                         self.$message.error(
                             "Please upload all file requirements!"
                         );
@@ -1132,26 +1144,28 @@ export default {
                     "Content-Type": "multipart/form-data",
                 },
             };
-            return axios(
+            await axios(
                 {
                     method: "POST",
-                    url: "amendment/update-data",
+                    url: "/amendment/update-data",
                     data: formData,
                 },
                 config
-            )
-                .then(function (response) {
-                    this.$emit("onSubmit", false);
-                    this.$message.success("Updated Succesfully");
-                })
-                .catch((error) => {});
+            );
+            this.$emit("onSubmit", false);
+            this.$message.success("Updated Succesfully");
         },
 
         checkFilesisFalse(files) {
-            var result = false;
-            for (var i in files) {
-                if (files[i] === false) {
-                    result = false;
+            let result = false;
+            let data = this.dataBusinessFiles;
+            console.log("checkFilesisFalse");
+            console.log(data);
+            const keys = Object.keys(data);
+            for (const key of keys) {
+                const value = data[key];
+                if (key != "business_file_id" && value === null) {
+                    result = true;
                     break;
                 }
             }
@@ -1231,6 +1245,7 @@ export default {
     },
     watch: {
         modal(params) {
+            this.file = Object.assign({}, this.file_default);
             if (params.show) {
                 let data = params.data[0];
                 this.fields.forEach((v) => this.form.getFieldDecorator(v));

@@ -175,12 +175,12 @@ class BusinessService implements BusinessServiceInterface
     {
         $businessInformationDetailData = [
             'business_id' => $id,
-            'code' => 'abc',
+            'code' => $data->code,
             'line_of_business' => $data->lineOfBusiness,
             'number_of_units' => $data->noOfUnits,
-            'capitalization' => 20000,
-            'essential' => 0.00,
-            'non_essential' => 0.00,
+            'capitalization' => isset($data->capitalization) ? $data->capitalization : 0,
+            'essential' => isset($data->essential) ? $data->essential : 0,
+            'non_essential' => isset($data->non_essential) ? $data->non_essential : 0,
         ];
 
         $businessInformationDetail = BusinessInformationDetail::create($businessInformationDetailData);
@@ -200,6 +200,7 @@ class BusinessService implements BusinessServiceInterface
 
         return $businessDetail;
     }
+   
 
     public function renewBusiness($id)
     {
@@ -401,6 +402,7 @@ class BusinessService implements BusinessServiceInterface
     {
         $businessInformationDetailData = [
             'business_id' => $id,
+            'code' => $data->code,
             'line_of_business' => $data->lineOfBusiness,
             'number_of_units' => $data->noOfUnits,
             'capitalization' => isset($data->capitalization) ? $data->capitalization : 0,
@@ -422,6 +424,35 @@ class BusinessService implements BusinessServiceInterface
        
         
         // return $businessInformationDetail;
+    }
+
+    public function updateGross($data, $id) 
+    {
+      $request =  $data['data'];
+      foreach ($request as $datum) {
+        $businessInformationDetailData = [
+            'business_id' => $id,
+            'code' => $datum['code'],
+            'line_of_business' => $datum['lineOfBusiness'],
+            'number_of_units' => $datum['noOfUnits'],
+            'capitalization' => isset($datum['capitalization']) ? $datum['capitalization'] : 0,
+            'essential' => isset($datum['essential']) ? $datum['essential'] : 0,
+            'non_essential' => isset($datum['non_essential']) ? $datum['non_essential'] : 0,
+        ];
+        if(isset($datum['id']))
+        {
+            $businessDetail = BusinessInformationDetail::find($datum['id']);
+            if($businessDetail)
+            {
+                $businessDetail->update($businessInformationDetailData);
+            }else{
+                BusinessInformationDetail::create($businessInformationDetailData);
+            }
+        }else{
+            BusinessInformationDetail::create($businessInformationDetailData);
+        }
+      }
+      return 'Success';
     }
     
 }

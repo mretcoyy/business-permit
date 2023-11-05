@@ -780,6 +780,8 @@ export default {
             let map = data.map((item, i) => {
                 const container = {};
                 container.index = i;
+                container.id = item.id;
+                container.code = item.code;
                 container.lineOfBusiness = item.line_of_business;
                 container.noOfUnits = item.number_of_units;
                 container.capitalization = formatter.format(
