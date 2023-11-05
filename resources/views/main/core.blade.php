@@ -22,7 +22,7 @@
 <body>
     <div id="app">
         <core
-        :user='{!! json_encode(app()->get("request")->session()->get("user")) !!}'
+        :user='{!! json_encode(Auth::user()) !!}'
         >
         </core>
         @yield('content')

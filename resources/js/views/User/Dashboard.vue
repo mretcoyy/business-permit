@@ -95,6 +95,9 @@ export default {
         UserLayout,
         FormBusinessView,
     },
+    mounted() {
+        console.log(this.$root.$children[0].user);
+    },  
     methods: {
         viewPage(url) {
             if (url) window.location.href = url;

@@ -83,7 +83,6 @@ export default {
                 method: "GET",
                 url: "/user/get-user",
             });
-            console.log(res);
             this.email = res.data.email;
         },
     },
