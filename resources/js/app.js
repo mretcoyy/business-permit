@@ -11,6 +11,7 @@ import "ant-design-vue/dist/antd.css";
 import Antd from "ant-design-vue";
 Vue.use(Antd);
 import "../sass/app.scss";
+import store from "./vuex/index";
 
 /**
  * The following block of code may be used to automatically register your
@@ -33,19 +34,34 @@ Vue.component("core", require("./layouts/Core.vue").default);
 
 Vue.component("view-register", require("./views/Register.vue").default);
 
-Vue.component("view-user-dashboard", require("./views/User/Dashboard.vue").default);
-Vue.component("view-user-application", require("./views/User/Application.vue").default);
+Vue.component(
+    "view-user-dashboard",
+    require("./views/User/Dashboard.vue").default
+);
+Vue.component(
+    "view-user-application",
+    require("./views/User/Application.vue").default
+);
 
 Vue.component(
     "form-application",
     require("./components/FormApplication.vue").default
 );
 
-Vue.component("view-admin-dashboard", require("./views/Admin/Dashboard.vue").default);
+Vue.component(
+    "view-admin-dashboard",
+    require("./views/Admin/Dashboard.vue").default
+);
 
-Vue.component("view-admin-application", require("./views/Admin/Application.vue").default);
+Vue.component(
+    "view-admin-application",
+    require("./views/Admin/Application.vue").default
+);
 
-Vue.component("view-admin-amendment", require("./views/Admin/Amendment.vue").default);
+Vue.component(
+    "view-admin-amendment",
+    require("./views/Admin/Amendment.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -53,6 +69,9 @@ Vue.component("view-admin-amendment", require("./views/Admin/Amendment.vue").def
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+
 const app = new Vue({
+    store,
     el: "#app",
 });

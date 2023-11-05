@@ -120,6 +120,9 @@ export default {
         Default,
         FormForgotModal,
     },
+    mounted() {
+        console.log(this.$store.state);
+    },
     data() {
         return {
             formModal: { show: false },
