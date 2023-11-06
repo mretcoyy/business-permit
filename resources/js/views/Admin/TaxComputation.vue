@@ -2,16 +2,18 @@
     <MainLayout>
         <a-card>
             <h1>Tax Computations</h1>
-
-            <!-- <a-form :form="form">
-                <a-row :gutter="16">
-                    <a-col :span="8">
-                        <a-form-item label="Search">
-                            <a-input v-decorator="['search']" /> </a-form-item
-                    ></a-col>
-                </a-row>
-            </a-form> -->
-
+            <a-row :gutter="16">
+                <a-col :span="8">
+                    <a-input-search
+                        v-model="search"
+                        placeholder="Input BIN"
+                        enter-button="Search"
+                        size="large"
+                        @search="onSearch"
+                    />
+                </a-col>
+            </a-row>
+            <br />
             <a-table
                 :columns="columns"
                 :data-source="data"
@@ -38,7 +40,6 @@
                 </span>
             </a-table>
         </a-card>
-
         <FormFees
             :modal="formModal"
             @refresh="refreshTable"
@@ -84,14 +85,16 @@ const data = [];
 export default {
     data() {
         return {
+            form: this.$form.createForm(this),
+            fields: ["search"],
             data,
             columns,
             formModal: { show: false },
-            form: {},
             filters: {
                 business_id: "",
                 status: 1,
             },
+            search: "",
         };
     },
     components: {
@@ -146,6 +149,10 @@ export default {
             // .then(function (response) {})
             // .catch(function (error) {});
             this.data = this.formatData(res.data.data);
+        },
+        async onSearch() {
+            this.filters = { bin: this.search };
+            this.getData();
         },
         async select(business_id) {
             this.filters.business_id = business_id;

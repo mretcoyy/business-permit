@@ -2,6 +2,18 @@
     <MainLayout>
         <a-card>
             <h1>Mayor`s Permit</h1>
+            <a-row :gutter="16">
+                <a-col :span="8">
+                    <a-input-search
+                        v-model="search"
+                        placeholder="Input BIN"
+                        enter-button="Search"
+                        size="large"
+                        @search="onSearch"
+                    />
+                </a-col>
+            </a-row>
+            <br />
             <a-table
                 :columns="columns"
                 :data-source="data"
@@ -136,6 +148,10 @@ export default {
             // .then(function (response) {})
             // .catch(function (error) {});
             this.data = this.formatData(res.data.data);
+        },
+        async onSearch() {
+            this.filters = { bin: this.search };
+            this.getData();
         },
         async print(business_id) {
             this.filters.business_id = business_id;

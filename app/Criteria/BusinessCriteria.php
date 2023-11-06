@@ -50,6 +50,10 @@ class BusinessCriteria implements CriteriaInterface
             }
         }
 
+        if (isset($filters->bin) && $filters->bin != '') {
+            $model->where('business_detail.bin','like','%'. $filters->bin .'%');
+        }
+
 
         return $model;
     }
