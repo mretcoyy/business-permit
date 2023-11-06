@@ -114,6 +114,7 @@ export default {
         formatDataSelect(data) {
             let map = data.map((item) => {
                 const container = {};
+                container.business_id = item.businessDetail.business_id;
                 container.bin = item.businessDetail.bin;
                 container.date_renewed = item.businessDetail.date_renewed;
                 container.organization_type = item.typeOfOrganizationLabel;
