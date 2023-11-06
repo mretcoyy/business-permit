@@ -20,9 +20,19 @@
                     <a href="/admin/application">Application </a></a-menu-item
                 >
                 <a-menu-item key="3">
-                    <a href="/admin/amendment">Amendment </a></a-menu-item
+                    <a href="/admin/certificate-approval"
+                        >Certificate Approval
+                    </a></a-menu-item
                 >
                 <a-menu-item key="4">
+                    <a href="/admin/clearance-approval"
+                        >Clearance Approval
+                    </a></a-menu-item
+                >
+                <a-menu-item key="5">
+                    <a href="/admin/amendment">Amendment </a></a-menu-item
+                >
+                <a-menu-item key="6">
                     <span @click="logOut">Logout </span></a-menu-item
                 >
             </a-menu>

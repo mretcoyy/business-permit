@@ -677,8 +677,8 @@ const columns = [
     },
     {
         title: "Non-essential (for renewal)",
-        dataIndex: "nonEssential",
-        key: "nonEssential",
+        dataIndex: "non_essential",
+        key: "non_essential",
     },
     {
         title: "Action",
@@ -719,7 +719,7 @@ export default {
                 if (!errors) {
                     if (self.dataBusinessActivity.length === 0) {
                         self.$message.error("Business Activity is required!");
-                    } else if (!self.checkFilesisFalse(self.file)) {
+                    } else if (self.checkFilesisFalse(self.file)) {
                         self.$message.error(
                             "Please upload all file requirements!"
                         );
@@ -897,7 +897,7 @@ export default {
             var result = false;
             for (var i in files) {
                 if (files[i] === false) {
-                    result = false;
+                    result = true;
                     break;
                 }
             }

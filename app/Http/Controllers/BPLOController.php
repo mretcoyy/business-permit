@@ -50,4 +50,11 @@ class BPLOController extends Controller
 
         return $requirement;
     }
+
+    public function updateGross(Request $request,BusinessService $service, $id)
+    {
+        $updateGross = $service->updateGross($request->all(), $id);
+
+        return $updateGross;
+    }
 }

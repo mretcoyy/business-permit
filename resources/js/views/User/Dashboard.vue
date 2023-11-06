@@ -85,14 +85,22 @@ export default {
             data,
             columns,
             formModal: { show: false },
+<<<<<<< HEAD
             filters : {
                 user_id: '',
                 business_id: '',
             }
+=======
+            userId: this.$root.$children[0].user.id,
+            filters: {
+                user_id: "",
+                business_id: "",
+            },
+>>>>>>> 3a9e4e009ee3562e50d61ed80934e5488332c65f
         };
     },
-    props: {
-        id: { type: Number, default: () => 0 },
+    created() {
+        this.filters.user_id = this.$store.state.user.id;
     },
     components: {
         UserLayout,

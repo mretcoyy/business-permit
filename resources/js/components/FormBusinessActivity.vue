@@ -13,7 +13,7 @@
         :maskClosable="false"
     >
         <a-form :form="form">
-            <!-- <a-form-item label="Code" labelAlign="left">
+            <a-form-item label="Code" labelAlign="left">
                 <a-input
                     placeholder="Code"
                     v-decorator="[
@@ -28,7 +28,7 @@
                         },
                     ]"
                 />
-            </a-form-item> -->
+            </a-form-item>
             <a-form-item label="Line of Business" labelAlign="left">
                 <a-input
                     placeholder="Line of Business"
@@ -83,7 +83,7 @@
                 <a-input
                     type="number"
                     placeholder="Non-essential (for renewal)"
-                    v-decorator="['nonEssential']"
+                    v-decorator="['non_essential']"
                 />
             </a-form-item>
         </a-form>
@@ -99,13 +99,14 @@ export default {
         return {
             form: this.$form.createForm(this),
             selectedIndex: null,
+            selectedId: null,
             fields: [
                 "code",
                 "lineOfBusiness",
                 "noOfUnits",
                 "capitalization",
                 "essential",
-                "nonEssential",
+                "non_essential",
             ],
         };
     },
@@ -119,16 +120,17 @@ export default {
                     noOfUnits,
                     capitalization,
                     essential,
-                    nonEssential,
+                    non_essential,
                 } = params.data;
                 this.selectedIndex = params.index;
+                this.selectedId = params.data.id;
                 this.form.setFieldsValue({
                     code,
                     lineOfBusiness,
                     noOfUnits,
                     capitalization,
                     essential,
-                    nonEssential,
+                    non_essential,
                 });
             }
         },
@@ -143,6 +145,7 @@ export default {
                 if (!errors) {
                     try {
                         var data = {
+                            id: this.selectedId,
                             code: this.form.getFieldValue("code"),
                             lineOfBusiness:
                                 this.form.getFieldValue("lineOfBusiness"),
@@ -150,8 +153,8 @@ export default {
                             capitalization:
                                 this.form.getFieldValue("capitalization"),
                             essential: this.form.getFieldValue("essential"),
-                            nonEssential:
-                                this.form.getFieldValue("nonEssential"),
+                            non_essential:
+                                this.form.getFieldValue("non_essential"),
                         };
 
                         if (this.modal.action == "edit") {

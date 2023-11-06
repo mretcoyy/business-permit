@@ -41,7 +41,11 @@
                 </span>
             </a-table>
         </a-card>
-        <FormAmendment :modal="formModal" @refresh="refreshTable" />
+        <FormAmendment
+            :modal="formModal"
+            @refresh="refreshTable"
+            @onSubmit="handleSubmitAmendment($event)"
+        />
     </MainLayout>
 </template>
 <script>
@@ -100,6 +104,10 @@ export default {
         refreshTable() {
             this.getData();
             this.formModal = { show: false };
+        },
+        handleSubmitAmendment(e) {
+            this.getData();
+            this.formModal.show = e;
         },
         formatData(data) {
             let map = data.map((item) => {

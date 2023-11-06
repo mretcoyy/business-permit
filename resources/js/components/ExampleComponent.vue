@@ -48,8 +48,8 @@ const columns = [
     },
     {
         title: "Non-essential (for renewal)",
-        dataIndex: "nonEssential",
-        key: "nonEssential",
+        dataIndex: "non_essential",
+        key: "non_essential",
     },
     {
         title: "Action",
@@ -65,7 +65,7 @@ const data = [
         noOfUnits: "123",
         capitalizaion: "123",
         eseential: "123",
-        nonEssential: "123",
+        non_essential: "123",
     },
 ];
 

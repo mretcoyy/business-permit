@@ -1,7 +1,7 @@
 <template>
     <MainLayout>
         <a-card>
-            <h1>My Application</h1>
+            <h1>Certificate Approval</h1>
             <a-table
                 :columns="columns"
                 :data-source="data"
@@ -22,22 +22,30 @@
                             Status == "Forapproval" ? "For Approval" : Status
                         }}</a-tag
                     >
-                    <!-- <a-tag
-                        v-for="tag in Status"
-                        :key="tag"
-                        :color="
-                            tag === 'approval'
-                                ? 'volcano'
-                                : tag === 'for approval'
-                                ? 'geekblue'
-                                : 'green'
-                        "
-                    >
-                        {{ tag.toUpperCase() }}
-                    </a-tag> -->
                 </span>
                 <span slot="action" slot-scope="text, record">
-                    <a @click="view(text.business_id)">View </a>
+                    <a @click="view(text.business_id)">View</a> |
+                    <a-popconfirm
+                        title="Sure to Approve Application?"
+                        @confirm="
+                            () => {
+                                confirm(text.business_id, 5);
+                            }
+                        "
+                    >
+                        <a>Approve</a>
+                    </a-popconfirm>
+                    |
+                    <a-popconfirm
+                        title="Sure to Decline Application?"
+                        @confirm="
+                            () => {
+                                confirm(text.business_id, 6);
+                            }
+                        "
+                    >
+                        <a>Decline</a>
+                    </a-popconfirm>
                 </span>
             </a-table>
         </a-card>
@@ -53,6 +61,16 @@ const columns = [
         title: "Business Name",
         dataIndex: "name",
         key: "name",
+    },
+    // {
+    //     title: "Age",
+    //     dataIndex: "age",
+    //     key: "age",
+    // },
+    {
+        title: "Owner Name",
+        dataIndex: "tax_payer",
+        key: "tax_payer",
     },
     {
         title: "Address",
@@ -80,10 +98,8 @@ export default {
             data,
             columns,
             formModal: { show: false },
-            
         };
     },
-
     components: {
         MainLayout,
         FormBusinessView,
@@ -102,16 +118,21 @@ export default {
                 container.address = item.businessInformation.taxPayerFname;
                 container.Status = item.businessDetail.status;
                 container.business_id = item.businessDetail.business_id;
+                container.dataBusinessActivity = item.businessInformationDetail;
                 return container;
             });
+
             return map;
         },
         async getData() {
+            let filters = {};
             const res = await axios.get("/bplo/list", {
                 params: {
-                    filters: this.filters,
+                    filters: filters,
                 },
             });
+            // .then(function (response) {})
+            // .catch(function (error) {});
             this.data = this.formatData(res.data.data);
         },
         async view(business_id) {
@@ -123,6 +144,12 @@ export default {
             });
             let data = res.data.data;
             this.formModal = { show: true, data };
+        },
+        async confirm(id, status) {
+            const res = await axios.patch("/bplo/changeStatus/" + id, {
+                status: status,
+            });
+            this.getData();
         },
     },
     mounted() {
