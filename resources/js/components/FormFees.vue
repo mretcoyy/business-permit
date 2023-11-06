@@ -8,6 +8,7 @@
         @cancel="closeModal()"
         :maskClosable="false"
         okText="Submit"
+        @ok="handleSubmit()"
     >
         <div
             :style="{
@@ -138,6 +139,7 @@ export default {
             form: this.$form.createForm(this),
             selectedIndex: null,
             selectedId: null,
+            business_id: "",
             fields: [
                 "business_tax",
                 "mayors_permit",
@@ -159,6 +161,7 @@ export default {
             self.form.validateFields(async (errors, values) => {
                 if (!errors) {
                     var data = {
+                        business_id: this.business_id,
                         business_tax: self.form.getFieldValue("business_tax"),
                         mayors_permit: self.form.getFieldValue("mayors_permit"),
                         occupational_permit: self.form.getFieldValue(
@@ -190,9 +193,11 @@ export default {
     },
     watch: {
         modal(params) {
+            this.info = {};
             if (params.show) {
                 let data = params.data[0];
                 this.info = data;
+                this.business_id = data.business_id;
                 this.fields.forEach((v) => this.form.getFieldDecorator(v));
             }
             const {

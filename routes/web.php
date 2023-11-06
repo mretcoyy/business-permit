@@ -70,7 +70,7 @@ Route::post('/amendment/update-data', 'AmendmentController@updateData');
 
 //TAX COMPUTATION
 Route::get('/admin/tax-computation', 'TaxComputationController@index');
-Route::get('/tax-computation/store', 'TaxComputationController@store');
+Route::post('/tax-computation/store', 'TaxComputationController@store');
 
 Route::get('/menro', 'MENROController@index');
 Route::get('/mpdc', 'MPDCController@index');

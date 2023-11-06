@@ -22,6 +22,7 @@ class BusinessFees extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
+        'business_id',
         'business_tax',
         'mayors_permit',
         'occupational_permit',
@@ -29,6 +30,8 @@ class BusinessFees extends Model implements Transformable
         'environmental_clearance',
         'sanitary_permit_fee',
         'zoning_fee',
+        'user_id',
+        'status',
     ];
 
 }

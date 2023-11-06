@@ -16,13 +16,15 @@ class CreateBusinessFeesTable extends Migration
         Schema::create('business_fees', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('business_id');
-            $table->decimal('business_tax',23,6);
+            $table->decimal('business_tax',23,6)->default(0.000000);
             $table->decimal('mayors_permit',23,6);
             $table->decimal('occupational_permit',23,6);
             $table->decimal('subscription_other',23,6)->default(0.000000);
             $table->decimal('environmental_clearance',23,6)->default(0.000000);
             $table->decimal('sanitary_permit_fee',23,6)->default(0.000000);
             $table->decimal('zoning_fee',23,6)->default(0.000000);
+            $table->string('status');
+            $table->string('user_id');
             $table->timestamps();
 
             $table->foreign('business_id')

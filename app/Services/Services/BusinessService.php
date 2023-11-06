@@ -4,6 +4,7 @@ namespace App\Services\Services;
 
 use App\Entities\Business;
 use App\Entities\BusinessDetail;
+use App\Entities\BusinessFees;
 use App\Entities\BusinessFiles;
 use App\Entities\BusinessInformation;
 use App\Entities\BusinessInformationDetail;
@@ -458,7 +459,21 @@ class BusinessService implements BusinessServiceInterface
 
     public function submitBusinessFees($data)
     {
-        return '';
+        $storeBusinessFees = [
+            'business_id' => $data['business_id'],
+            'business_tax' => $data['business_tax'],
+            'mayors_permit' => $data['mayors_permit'],
+            'occupational_permit' => $data['occupational_permit'],
+            'subscription_other' => $data['subscription_other'],
+            'environmental_clearance' => $data['environmental_clearance'],
+            'sanitary_permit_fee' => $data['sanitary_permit_fee'],
+            'zoning_fee' => $data['zoning_fee'],
+            // 'user_id' => $data->user_id,
+            // 'status' => $data->status,
+        ];
+
+        $business = BusinessFees::create($storeBusinessFees);
+        return $business;
     }
     
 }
