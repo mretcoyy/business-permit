@@ -29,7 +29,7 @@
             </a-table>
         </a-card>
 
-        <FormMayorPermit
+        <FormMayorsPermit
             :modal="formModal"
             @refresh="refreshTable"
             @onSubmit="handleSubmit($event)"
@@ -37,7 +37,7 @@
     </MainLayout>
 </template>
 <script>
-import FormMayorPermit from "../../components/FormMayorPermit.vue";
+import FormMayorsPermit from "../../components/FormMayorsPermit.vue";
 import MainLayout from "../../layouts/MainLayout";
 
 const columns = [
@@ -86,7 +86,7 @@ export default {
     },
     components: {
         MainLayout,
-        FormFees,
+        FormMayorsPermit,
     },
     methods: {
         refreshTable() {

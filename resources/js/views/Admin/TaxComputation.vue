@@ -2,6 +2,16 @@
     <MainLayout>
         <a-card>
             <h1>Tax Computations</h1>
+
+            <!-- <a-form :form="form">
+                <a-row :gutter="16">
+                    <a-col :span="8">
+                        <a-form-item label="Search">
+                            <a-input v-decorator="['search']" /> </a-form-item
+                    ></a-col>
+                </a-row>
+            </a-form> -->
+
             <a-table
                 :columns="columns"
                 :data-source="data"
