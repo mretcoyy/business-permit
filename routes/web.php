@@ -9,6 +9,7 @@ use App\Http\Controllers\MPDCController;
 use App\Http\Controllers\EngineeringController;
 use App\Http\Controllers\SanitaryController;
 use App\Http\Controllers\BPLOReleasingController;
+use App\Http\Controllers\AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +28,11 @@ use App\Http\Controllers\BPLOReleasingController;
 //Universal
 Route::get('/login', 'UserController@index');
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.Dashboard.list');
-});
+// Route::get('/admin/dashboard', function () {
+//     return view('admin.Dashboard.list');
+// });
+
+Route::get('/admin/dashboard', 'AdminDashboardController@index');
 
 Route::get('/', 'UserController@index');
 
