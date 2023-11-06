@@ -1,7 +1,7 @@
 <template>
     <MainLayout>
         <a-card>
-            <h1>Clearance Approval</h1>
+            <h1>Tax Computations</h1>
             <a-table
                 :columns="columns"
                 :data-source="data"
@@ -24,36 +24,20 @@
                     >
                 </span>
                 <span slot="action" slot-scope="text, record">
-                    <a @click="view(text.business_id)">View</a> |
-                    <a-popconfirm
-                        title="Sure to Approve Application?"
-                        @confirm="
-                            () => {
-                                confirm(text.business_id, 5);
-                            }
-                        "
-                    >
-                        <a>Approve</a>
-                    </a-popconfirm>
-                    |
-                    <a-popconfirm
-                        title="Sure to Decline Application?"
-                        @confirm="
-                            () => {
-                                confirm(text.business_id, 6);
-                            }
-                        "
-                    >
-                        <a>Decline</a>
-                    </a-popconfirm>
+                    <a @click="select(text.business_id)">Select</a>
                 </span>
             </a-table>
         </a-card>
-        <FormBusinessView :modal="formModal" @refresh="refreshTable" />
+
+        <FormFees
+            :modal="formModal"
+            @refresh="refreshTable"
+            @onSubmit="handleSubmit($event)"
+        />
     </MainLayout>
 </template>
 <script>
-import FormBusinessView from "../../components/FormBusinessView.vue";
+import FormFees from "../../components/FormFees.vue";
 import MainLayout from "../../layouts/MainLayout";
 
 const columns = [
@@ -62,11 +46,6 @@ const columns = [
         dataIndex: "name",
         key: "name",
     },
-    // {
-    //     title: "Age",
-    //     dataIndex: "age",
-    //     key: "age",
-    // },
     {
         title: "Owner Name",
         dataIndex: "tax_payer",
@@ -98,20 +77,25 @@ export default {
             data,
             columns,
             formModal: { show: false },
+            form: {},
             filters: {
                 business_id: "",
-                status: 2,
+                status: 1,
             },
         };
     },
     components: {
         MainLayout,
-        FormBusinessView,
+        FormFees,
     },
     methods: {
         refreshTable() {
             this.getData();
             this.formModal = { show: false };
+        },
+        handleSubmit(e) {
+            this.getData();
+            this.formModal.show = e;
         },
         formatData(data) {
             let map = data.map((item) => {
@@ -122,10 +106,24 @@ export default {
                 container.address = item.businessInformation.taxPayerFname;
                 container.Status = item.businessDetail.status;
                 container.business_id = item.businessDetail.business_id;
-                container.dataBusinessActivity = item.businessInformationDetail;
                 return container;
             });
 
+            return map;
+        },
+        formatDataSelect(data) {
+            let map = data.map((item) => {
+                const container = {};
+                container.bin = item.businessDetail.bin;
+                container.date_renewed = item.businessDetail.date_renewed;
+                container.organization_type = item.typeOfOrganizationLabel;
+                container.business_name =
+                    item.businessInformation.taxPayerBname;
+                container.business_address = item.businessInformation.BAddress;
+                container.owner_name = item.ownerInformation.OFullname;
+                container.owner_address = item.ownerInformation.OFulladdress;
+                return container;
+            });
             return map;
         },
         async getData() {
@@ -138,14 +136,14 @@ export default {
             // .catch(function (error) {});
             this.data = this.formatData(res.data.data);
         },
-        async view(business_id) {
+        async select(business_id) {
             this.filters.business_id = business_id;
             const res = await axios.get("/bplo/list", {
                 params: {
                     filters: this.filters,
                 },
             });
-            let data = res.data.data;
+            let data = this.formatDataSelect(res.data.data);
             this.formModal = { show: true, data };
         },
         async confirm(id, status) {

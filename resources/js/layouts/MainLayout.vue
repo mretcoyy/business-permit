@@ -30,9 +30,14 @@
                     </a></a-menu-item
                 >
                 <a-menu-item key="5">
-                    <a href="/admin/amendment">Amendment </a></a-menu-item
+                    <a href="/admin/tax-computation"
+                        >Tax Computation
+                    </a></a-menu-item
                 >
                 <a-menu-item key="6">
+                    <a href="/admin/amendment">Amendment </a></a-menu-item
+                >
+                <a-menu-item key="7">
                     <span @click="logOut">Logout </span></a-menu-item
                 >
             </a-menu>

@@ -340,7 +340,7 @@ class BusinessService implements BusinessServiceInterface
         foreach ($files as $key => $file) 
         {
             $extension = $file->getClientOriginalExtension();
-            $filename = $key.'.'.$extension;
+            $filename = $business->id.$key.date('ymdhis').'.'.$extension;
             $file->storeAs('/'. $business->id , $filename, 'requirements');
             
             switch ($key) {
@@ -453,6 +453,12 @@ class BusinessService implements BusinessServiceInterface
         }
       }
       return 'Success';
+    }
+
+
+    public function submitBusinessFees($data)
+    {
+        return '';
     }
     
 }

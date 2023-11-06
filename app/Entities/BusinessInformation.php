@@ -56,14 +56,14 @@ class BusinessInformation extends Model implements Transformable
     protected function getAddressAttribute()
     {
         return
-        ($this->BAddressHouseNo == null ? '' : $this->BAddressHouseNo. " ") 
-        . ($this->BAddressBuildingName == null ? '' : $this->BAddressBuildingName. " ") 
-        . ($this->BAddressUnitNo == null ? '' : $this->BAddressUnitNo. " ") 
-        . ($this->BAddressStreet == null ? '' : $this->BAddressStreet. " ") 
-        . ($this->BAddressBarangay == null ? '' : $this->BAddressBarangay. " ") 
-        . ($this->BAddressSubd == null ? '' : $this->BAddressSubd. " ") 
-        . ($this->BAddressCity == null ? '' : $this->BAddressCity. " ") 
-        . ($this->BAddressProvince == null ? '' : $this->BAddressProvince. " ");
+        ($this->business_number == null ? '' : $this->business_number. " ") 
+        . ($this->building_name == null ? '' : $this->building_name. " ") 
+        . ($this->unit_no == null ? '' : $this->unit_no. " ") 
+        . ($this->street == null ? '' : $this->street. " ") 
+        . ($this->barangay == null ? '' : $this->barangay. " ") 
+        . ($this->subdivision == null ? '' : $this->subdivision. " ") 
+        . ($this->city == null ? '' : $this->city. " ") 
+        . ($this->province == null ? '' : $this->province. " ");
     }
 
 
