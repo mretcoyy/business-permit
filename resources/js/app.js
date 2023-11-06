@@ -78,6 +78,11 @@ Vue.component(
     require("./views/Admin/TaxComputation.vue").default
 );
 
+Vue.component(
+    "view-admin-mayors-permit",
+    require("./views/Admin/MayorsPermit.vue").default
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
