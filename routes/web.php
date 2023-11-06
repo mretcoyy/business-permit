@@ -49,12 +49,12 @@ Route::middleware(['role:Admin,User'])->group(function () {
     Route::get('/business-form', 'UserBusinessController@index');
     Route::get('/bplo/list', 'BPLOController@list');
     Route::post('/bplo/view-requirement', 'BPLOController@viewRequirement');
+    Route::post('/bplo/store', 'BPLOController@store');
 });
 
 Route::middleware(['role:Admin'])->group(function () {
 //BPLO
 Route::get('/bplo', 'BPLOController@index');
-Route::post('/bplo/store', 'BPLOController@store');
 //APPROVAL
 Route::patch('/bplo/changeStatus/{id}', 'BPLOController@changeStatus');
 Route::patch('/bplo/update-gross/{id}', 'BPLOController@updateGross');
