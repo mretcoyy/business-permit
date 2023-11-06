@@ -40,31 +40,31 @@ export default {
     },
     watch: {
         modal(params) {
-            this.info = {};
-            if (params.show) {
-                let data = params.data[0];
-                this.info = data;
-                this.business_id = data.business_id;
-                this.fields.forEach((v) => this.form.getFieldDecorator(v));
-            }
-            const {
-                business_tax,
-                mayors_permit,
-                occupational_permit,
-                subscription_other,
-                environmental_clearance,
-                sanitary_permit_fee,
-                zoning_fee,
-            } = data;
-            this.form.setFieldsValue({
-                business_tax,
-                mayors_permit,
-                occupational_permit,
-                subscription_other,
-                environmental_clearance,
-                sanitary_permit_fee,
-                zoning_fee,
-            });
+            // this.info = {};
+            // if (params.show) {
+            //     let data = params.data[0];
+            //     this.info = data;
+            //     this.business_id = data.business_id;
+            //     this.fields.forEach((v) => this.form.getFieldDecorator(v));
+            // }
+            // const {
+            //     business_tax,
+            //     mayors_permit,
+            //     occupational_permit,
+            //     subscription_other,
+            //     environmental_clearance,
+            //     sanitary_permit_fee,
+            //     zoning_fee,
+            // } = data;
+            // this.form.setFieldsValue({
+            //     business_tax,
+            //     mayors_permit,
+            //     occupational_permit,
+            //     subscription_other,
+            //     environmental_clearance,
+            //     sanitary_permit_fee,
+            //     zoning_fee,
+            // });
         },
     },
 };

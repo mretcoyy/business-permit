@@ -90,6 +90,7 @@ export default {
             columns,
             formModal: { show: false },
             form: {},
+            search: "",
             filters: {
                 business_id: "",
                 status: 1,
