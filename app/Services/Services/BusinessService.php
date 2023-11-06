@@ -35,7 +35,7 @@ class BusinessService implements BusinessServiceInterface
             'type_of_organization' => TypeOfOrganization::SINGLE,
             'is_tax_incentive' => 1,
             'date_of_application' => Carbon::now(),
-            'user_id' => 1,
+            'user_id' => Auth::user()->id,
         ];
 
         $business = Business::create($storeBusiness);
