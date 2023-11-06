@@ -111,6 +111,10 @@ export default {
             data,
             columns,
             formModal: { show: false },
+            filters: {
+                business_id: '',
+                status: 2,
+            }
         };
     },
     components: {
@@ -137,10 +141,9 @@ export default {
             return map;
         },
         async getData() {
-            let filters = {};
             const res = await axios.get("/bplo/list", {
                 params: {
-                    filters: filters,
+                    filters: this.filters,
                 },
             });
             // .then(function (response) {})

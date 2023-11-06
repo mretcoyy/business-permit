@@ -5,7 +5,7 @@ namespace App\Criteria;
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 use Illuminate\Support\Facades\Log;
-
+use App\Enums\BusinessStatus;
 /**
  * Class BusinessCriteriaCriteria.
  *
@@ -41,6 +41,15 @@ class BusinessCriteria implements CriteriaInterface
         if (isset($filters->user_id) && $filters->user_id != '') {
             $model->where('business.user_id', $filters->user_id);
         }
+
+        if (isset($filters->status) && $filters->status != '') {
+            if ($filters->status == BusinessStatus::NEW || $filters->status == BusinessStatus::RENEW) {
+                $model->whereIn('business_detail.status', [BusinessStatus::NEW, BusinessStatus::RENEW]);
+            } else {
+                $model->where('business_detail.status', $filters->status);
+            }
+        }
+
 
         return $model;
     }

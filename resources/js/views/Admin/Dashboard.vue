@@ -80,6 +80,7 @@ export default {
             data,
             columns,
             formModal: { show: false },
+            
         };
     },
     props: {
@@ -88,6 +89,10 @@ export default {
     components: {
         MainLayout,
         FormBusinessView,
+    },
+    mounted() {
+        console.log(this.$store.state.user.id);
+        // this.filters.user_id = ;
     },
     methods: {
         refreshTable() {
@@ -114,8 +119,6 @@ export default {
                     filters: filters,
                 },
             });
-            // .then(function (response) {})
-            // .catch(function (error) {});
             this.data = this.formatData(res.data.data);
         },
         async view(business_id) {
