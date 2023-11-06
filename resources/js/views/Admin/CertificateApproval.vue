@@ -99,7 +99,7 @@ export default {
             columns,
             formModal: { show: false },
             filters: {
-                business_id: '',
+                business_id: "",
                 status: 2,
             },
         };
@@ -139,10 +139,10 @@ export default {
             this.data = this.formatData(res.data.data);
         },
         async view(business_id) {
-            let filters = { business_id: business_id };
+            this.filters.business_id = business_id;
             const res = await axios.get("/bplo/list", {
                 params: {
-                    filters: filters,
+                    filters: this.filters,
                 },
             });
             let data = res.data.data;

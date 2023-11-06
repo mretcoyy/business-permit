@@ -6,17 +6,25 @@
             collapsible
             style="min-height: 100vh"
         >
-            <div style="width: 100%">
+            <div style="width: 100%; overflow: hidden">
                 <img
                     src="/images/dolores.png"
                     alt="logo"
                     style="
-                        height: 100px;
+                        width: 100%;
+                        max-width: 100px;
+                        max-height: 100px;
                         margin: 10px auto !important;
                         display: block;
                     "
                 />
-                <p style="color: white; text-align: center">
+                <p
+                    style="
+                        color: white;
+                        text-align: center;
+                        text-overflow: ellipsis;
+                    "
+                >
                     {{ email }}
                 </p>
             </div>

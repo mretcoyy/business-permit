@@ -39,5 +39,24 @@ class OwnerInformation extends Model implements Transformable
         'created_at',
         'updated_at',
     ];
+    protected $appends = ['fullname','address'];
+
+    protected function getFullNameAttribute()
+    {
+        return $this->first_name . " " . ($this->middle_name == null ? '' : $this->middle_name. " ") . $this->last_name;
+    }
+
+    protected function getAddressAttribute()
+    {
+        return
+        ($this->house_number == null ? '' : $this->house_number. " ") 
+        . ($this->building_name == null ? '' : $this->building_name. " ") 
+        . ($this->unit_no == null ? '' : $this->unit_no. " ") 
+        . ($this->street == null ? '' : $this->street. " ") 
+        . ($this->barangay == null ? '' : $this->barangay. " ") 
+        . ($this->subdivision == null ? '' : $this->subdivision. " ") 
+        . ($this->city == null ? '' : $this->city. " ") 
+        . ($this->province == null ? '' : $this->province. " ");
+    }
 
 }

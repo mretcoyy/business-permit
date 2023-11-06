@@ -47,9 +47,9 @@ class BusinessTransformer extends TransformerAbstract
            $result = [
             'business_id' => $datum->business_id,
             'bin' => 'test',
+            'date_renewed' => $datum->date_renewed,
             'status' => BusinessStatus::getDescription($datum->status),
             'status_val' => $datum->status,
-            'date_renewed' => '',
            ];
         }
         return $result;
@@ -134,6 +134,8 @@ class BusinessTransformer extends TransformerAbstract
         $result = [];
         foreach ($data as $datum) {
             $result = [
+                'OFullname' => $datum->fullname,
+                'OFulladdress' => $datum->address,
                 'OFname' => $datum->first_name,
                 'OMname' => $datum->middle_name,
                 'OLname' => $datum->last_name,

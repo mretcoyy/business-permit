@@ -888,8 +888,14 @@ export default {
                     //     url: "bplo/store",
                     //     data: data,
                     // })
-                    .then(function (response) {})
-                    .catch((error) => {})
+                    .then(function (response) {
+                        this.emitDone();
+                    })
+                    .catch((error) => {
+                        this.$error({
+                            title: "Something went wrong!",
+                        });
+                    })
             );
         },
 
@@ -959,6 +965,10 @@ export default {
         },
         onEditBusinessActivity(data, index) {
             this.formModal = { show: true, action: "edit", data, index };
+        },
+        emitDone() {
+            this.form.resetFields();
+            this.$emit("onDone");
         },
     },
 };

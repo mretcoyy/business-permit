@@ -1,6 +1,6 @@
 <template>
     <UserLayout>
-        <FormApplication></FormApplication>
+        <FormApplication @onDone="handleDone"></FormApplication>
     </UserLayout>
 </template>
 
@@ -12,6 +12,17 @@ export default {
     components: {
         FormApplication,
         UserLayout,
+    },
+    methods: {
+        handleDone() {
+            const h = this.$createElement;
+            this.$success({
+                title: "Application has been submitted!",
+                onOk() {
+                    window.location.href = "/user/dashboard";
+                },
+            });
+        },
     },
 };
 </script>
