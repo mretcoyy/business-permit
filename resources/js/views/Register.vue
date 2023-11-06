@@ -188,8 +188,6 @@ export default {
                 },
             })
                 .then(function (response) {
-                    console.log(response);
-                    alert("deasd");
                     self.$message.success("message");
                     self.form.resetFields();
                     window.location.href = "/";
