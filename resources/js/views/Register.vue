@@ -25,7 +25,6 @@
                             size="large"
                             type="text"
                             placeholder="Full Name"
-                            :maxLength="25"
                             :disabled="loginBtn"
                             v-decorator="[
                                 'fullName',
@@ -52,12 +51,16 @@
                             size="large"
                             type="text"
                             placeholder="Email"
-                            :maxLength="25"
                             :disabled="loginBtn"
                             v-decorator="[
                                 'username',
                                 {
                                     rules: [
+                                        {
+                                            type: 'email',
+                                            message:
+                                                'The input is not valid E-mail!',
+                                        },
                                         {
                                             required: true,
                                             message: 'Email Required',
@@ -88,6 +91,9 @@
                                             required: true,
                                             message: 'Password is required',
                                         },
+                                        {
+                                            validator: validateToNextPassword,
+                                        },
                                     ],
                                 },
                             ]"
@@ -114,6 +120,9 @@
                                             required: true,
                                             message:
                                                 'Repeat Password is required',
+                                        },
+                                        {
+                                            validator: compareToFirstPassword,
                                         },
                                     ],
                                 },
@@ -162,6 +171,7 @@ export default {
     },
     data() {
         return {
+            confirmDirty: false,
             loginBtn: false,
             isLoginError: false,
             errorMessage: null,
@@ -188,16 +198,28 @@ export default {
                 },
             })
                 .then(function (response) {
-                    self.$message.success("message");
+                    self.$message.success("Registered Successfully!...Redirecting!...");
                     self.form.resetFields();
-                    window.location.href = "/";
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 2000);
                 })
                 .catch((error) => {});
-
-            // console.log(this.form.getFieldValue("fullName"));
-            // console.log(this.form.getFieldValue("username"));
-            // console.log(this.form.getFieldValue("password"));
-            // console.log(this.form.getFieldValue("repeatPassword"));
+        },
+        compareToFirstPassword(rule, value, callback) {
+            const form = this.form;
+            if (value && value !== form.getFieldValue("password")) {
+                callback("Two passwords that you enter is inconsistent!");
+            } else {
+                callback();
+            }
+        },
+        validateToNextPassword(rule, value, callback) {
+            const form = this.form;
+            if (value && this.confirmDirty) {
+                form.validateFields(["confirm"], { force: true });
+            }
+            callback();
         },
     },
 };

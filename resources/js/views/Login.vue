@@ -38,6 +38,11 @@
                                 {
                                     rules: [
                                         {
+                                            type: 'email',
+                                            message:
+                                                'The input is not valid E-mail!',
+                                        },
+                                        {
                                             required: true,
                                             message: 'Email Required',
                                         },

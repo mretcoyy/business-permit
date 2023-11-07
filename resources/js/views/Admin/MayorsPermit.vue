@@ -1,7 +1,7 @@
 <template>
     <MainLayout>
         <a-card>
-            <h1>Tax Computations</h1>
+            <h1>Mayor`s Permit</h1>
             <a-row :gutter="16">
                 <a-col :span="8">
                     <a-input-search
@@ -36,11 +36,12 @@
                     >
                 </span>
                 <span slot="action" slot-scope="text, record">
-                    <a @click="select(text.business_id)">Select</a>
+                    <a @click="print(text.business_id)">Print</a>
                 </span>
             </a-table>
         </a-card>
-        <FormFees
+
+        <FormMayorsPermit
             :modal="formModal"
             @refresh="refreshTable"
             @onSubmit="handleSubmit($event)"
@@ -48,7 +49,7 @@
     </MainLayout>
 </template>
 <script>
-import FormFees from "../../components/FormFees.vue";
+import FormMayorsPermit from "../../components/FormMayorsPermit.vue";
 import MainLayout from "../../layouts/MainLayout";
 
 const columns = [
@@ -85,21 +86,20 @@ const data = [];
 export default {
     data() {
         return {
-            form: this.$form.createForm(this),
-            fields: ["search"],
             data,
             columns,
             formModal: { show: false },
+            form: {},
+            search: "",
             filters: {
                 business_id: "",
                 status: 1,
             },
-            search: "",
         };
     },
     components: {
         MainLayout,
-        FormFees,
+        FormMayorsPermit,
     },
     methods: {
         refreshTable() {
@@ -154,7 +154,7 @@ export default {
             this.filters = { bin: this.search };
             this.getData();
         },
-        async select(business_id) {
+        async print(business_id) {
             this.filters.business_id = business_id;
             const res = await axios.get("/bplo/list", {
                 params: {

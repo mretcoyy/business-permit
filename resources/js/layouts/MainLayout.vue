@@ -58,7 +58,11 @@
                     <a-icon type="money-collect" />
                     <span>Tax Computation</span>
                 </a-menu-item>
-                <a-menu-item @click="viewPage(`/admin/amendment`)" key="6">
+                <a-menu-item @click="viewPage(`/admin/mayors-permit`)" key="6">
+                    <a-icon type="money-collect" />
+                    <span>Mayor's Permit</span>
+                </a-menu-item>
+                <a-menu-item @click="viewPage(`/admin/amendment`)" key="7">
                     <a-icon type="folder-open" />
                     <span>Amendment</span>
                 </a-menu-item>

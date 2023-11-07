@@ -73,6 +73,10 @@ Route::post('/amendment/update-data', 'AmendmentController@updateData');
 Route::get('/admin/tax-computation', 'TaxComputationController@index');
 Route::post('/tax-computation/store', 'TaxComputationController@store');
 
+//MAYORS PERMIT
+Route::get('/admin/mayors-permit', 'MayorsPermitController@index');
+Route::post('/mayors-permit/view-mayors-permit', 'MayorsPermitController@view');
+
 Route::get('/menro', 'MENROController@index');
 Route::get('/mpdc', 'MPDCController@index');
 Route::get('/engineering', 'EngineeringController@index');
