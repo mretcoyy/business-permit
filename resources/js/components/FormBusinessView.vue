@@ -556,7 +556,7 @@
                         Show File
                     "
                     v-model="modalFile"
-                    :width="600"
+                    :width="800"
                     @cancel="closeModalFile()"
                     :maskClosable="false"
                     :okButtonProps="{ style: { display: 'none' } }"
