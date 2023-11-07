@@ -17,9 +17,12 @@
             <a-table :columns="columns" :data-source="data" rowKey="id">
                 <span slot="action" slot-scope="text, record">
                     <a @click="select(text.id)">Edit</a> |
-                    <a @click="viewChangeRole(text.id)">Change Role</a>
-                    |
-                    <a @click="viewLinkBusiness(text.id)">Link Business</a>
+                    <a @click="viewChangeRole(text.id)" v-if="text.role == 1"
+                        >Change Role</a
+                    >
+                    <a @click="viewLinkBusiness(text.id)" v-if="text.role == 2"
+                        >Link Business</a
+                    >
                 </span>
             </a-table>
         </a-card>
@@ -33,11 +36,17 @@
             @refresh="refreshTable"
             @onSubmit="handleSubmit($event)"
         />
+        <FormLinkBusiness
+            :modal="formModalLinkBusiness"
+            @refresh="refreshTable"
+            @onSubmit="handleSubmit($event)"
+        />
     </MainLayout>
 </template>
 <script>
 import FormUser from "../../components/FormUser.vue";
 import FormChangeRole from "../../components/FormChangeRole.vue";
+import FormLinkBusiness from "../../components/FormLinkBusiness.vue";
 import MainLayout from "../../layouts/MainLayout";
 
 const columns = [
@@ -74,6 +83,7 @@ export default {
             columns,
             formModal: { show: false },
             formModalRole: { show: false },
+            formModalLinkBusiness: { show: false },
             filters: {
                 search_keyword: "",
                 user_id: "",
@@ -85,17 +95,20 @@ export default {
         MainLayout,
         FormUser,
         FormChangeRole,
+        FormLinkBusiness,
     },
     methods: {
         refreshTable() {
             this.getData();
             this.formModal = { show: false };
             this.formModalRole = { show: false };
+            this.formModalLinkBusiness = { show: false };
         },
         handleSubmit(e) {
             this.getData();
             this.formModal.show = e;
-            this.formModal.show = e;
+            this.formModalRole.show = e;
+            this.formModalLinkBusiness.show = e;
         },
         async getData() {
             const res = await axios.get("/user/list", {
@@ -129,7 +142,33 @@ export default {
             let data = res.data;
             this.formModalRole = { show: true, data };
         },
-        viewLinkBusiness(user_id) {},
+        formatData(data) {
+            let map = data.map((item) => {
+                const container = {};
+                container.referenceNo = item.referenceNo;
+                container.name = item.businessInformation.taxPayerBname;
+                container.tax_payer = item.businessInformation.taxPayerFullname;
+                container.address = item.businessInformation.taxPayerFname;
+                container.Status = item.businessDetail.status;
+                container.business_id = item.businessDetail.business_id;
+                return container;
+            });
+
+            return map;
+        },
+        async viewLinkBusiness() {
+            this.filters = {
+                is_null: true,
+                user_id: "",
+            };
+            const res = await axios.get("/bplo/list", {
+                params: {
+                    filters: this.filters,
+                },
+            });
+            let data = this.formatData(res.data.data);
+            this.formModalLinkBusiness = { show: true, data };
+        },
         async confirm(id, status) {
             const res = await axios.patch("/user/change-role/" + id, {
                 status: status,

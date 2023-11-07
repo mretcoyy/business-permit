@@ -54,6 +54,9 @@ class BusinessCriteria implements CriteriaInterface
             $model->where('business_detail.bin','like','%'. $filters->bin .'%');
         }
 
+        if (isset($filters->is_null) && $filters->is_null == true) {
+            $model->where('business.user_id', null);
+        }
 
         return $model;
     }
