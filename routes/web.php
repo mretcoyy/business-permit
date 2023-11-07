@@ -86,6 +86,10 @@ Route::get('/bfp', 'BFPController@index');
 Route::get('/mayors-office', 'MayorsOfficeController@index');
 Route::get('/bplo-releasing', 'BPLOReleasingController@index');
 
+//User Management
+Route::patch('/user/change-role/{id}', 'BPLOController@viewRequirement');
+Route::patch('/user/link-business/{id}', 'BPLOController@viewRequirement');
+
 // Application
 Route::get('/admin/application', 'Application@index');
 });

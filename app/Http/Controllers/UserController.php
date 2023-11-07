@@ -46,25 +46,20 @@ class UserController extends Controller
         return $store;
     }
 
-    public function changeRole(Request $request, User $service)
+    public function changeRole(Request $request, $id, User $service)
     {
-        $data = $request->post('filters');
-        
-        $userID = $data['user_id'];
+        $data = $request->post('role');
 
-        $store = $service->changeRole($data, $userID);
+        $store = $service->changeRole($data, $id);
 
         return $store;
     }
 
-    public function linkBusiness(Request $request, User $service)
+    public function linkBusiness(Request $request, $id, User $service)
     {
-        $data = (object) $request->post('filters');
+        $businessID = $request->post('business_id');
 
-        $businessID = $data->business_id;
-        $userID = $data->user_id;
-
-        $store = $service->linkBusiness($businessID, $userID);
+        $store = $service->linkBusiness($businessID, $id);
 
         return $store;
     }
