@@ -46,6 +46,29 @@ class UserController extends Controller
         return $store;
     }
 
+    public function changeRole(Request $request, User $service)
+    {
+        $data = $request->post('filters');
+        
+        $userID = $data['user_id'];
+
+        $store = $service->changeRole($data, $userID);
+
+        return $store;
+    }
+
+    public function linkBusiness(Request $request, User $service)
+    {
+        $data = (object) $request->post('filters');
+
+        $businessID = $data->business_id;
+        $userID = $data->user_id;
+
+        $store = $service->linkBusiness($businessID, $userID);
+
+        return $store;
+    }
+
     public function forgotPassword()
     {
         return;

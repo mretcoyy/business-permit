@@ -19,7 +19,7 @@ class UserService implements UserServiceInterface
         return $user;
     }
 
-    public function changeRole($data, $id) 
+    public function changeRole($data, $userID) 
     {
 
         $updateData = [
