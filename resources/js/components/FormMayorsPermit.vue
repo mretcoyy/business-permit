@@ -30,13 +30,29 @@ export default {
             selectedIndex: null,
             selectedId: null,
             business_id: "",
+            pdfsrc: null,
         };
     },
     methods: {
         closeModal() {
             this.form.resetFields();
         },
-        handleSubmit() {},
+        handleSubmit() {
+            let form = this.modal.data;
+
+            axios
+                .post("/mayors-permit/view-mayors-permit", form, {
+                    responseType: "blob",
+                })
+                .then((res) => {
+                    const file = new Blob([res.data], {
+                        type: "application/pdf",
+                    });
+                    let fileURL = URL.createObjectURL(file);
+                    this.pdfsrc = fileURL + "#toolbar=0&navpanes=0&scrollbar=0";
+                })
+                .catch((error) => {});
+        },
     },
     watch: {
         modal(params) {
