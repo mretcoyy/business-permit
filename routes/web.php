@@ -87,8 +87,9 @@ Route::get('/mayors-office', 'MayorsOfficeController@index');
 Route::get('/bplo-releasing', 'BPLOReleasingController@index');
 
 //User Management
-Route::patch('/user/change-role/{id}', 'BPLOController@viewRequirement');
-Route::patch('/user/link-business/{id}', 'BPLOController@viewRequirement');
+Route::get('/user/list', 'UserController@list');
+Route::patch('/user/change-role/{id}', 'UserController@changeRole');
+Route::patch('/user/link-business/{id}', 'UserController@linkBusiness');
 
 // Application
 Route::get('/admin/application', 'Application@index');

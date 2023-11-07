@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Services\Services\UserService;
 use App\Repositories\Eloquent\UserRepositoryEloquent;
+use App\Transformers\UserTransformer;
 
 class UserController extends Controller
 {
@@ -19,6 +20,17 @@ class UserController extends Controller
     public function registration()
     {
         return view('page.User.register');
+    }
+
+    public function list(Request $request)
+    {
+        $filters =  (object) $request->get('filters');
+
+        $userList = app()->make(UserRepositoryEloquent::class)->list($filters);
+        
+        $userList = fractal()->collection($userList, UserTransformer::class);
+
+        return $userList;
     }
 
     public function login(Request $request)
