@@ -51,7 +51,7 @@ Route::middleware(['role:Admin,User'])->group(function () {
     Route::post('/bplo/view-requirement', 'BPLOController@viewRequirement');
     Route::post('/user/bplo/store', 'BPLOController@store');
     Route::post('/admin/bplo/store', 'BPLOController@store');
-    Route::post('/user/bplo/view-requirement');
+    Route::post('/user/bplo/view-requirement', 'BPLOController@viewRequirement');
 });
 
 Route::middleware(['role:Admin'])->group(function () {
