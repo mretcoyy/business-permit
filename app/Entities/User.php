@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,6 +45,12 @@ class User extends Authenticatable
     public function business()
     {
         return $this->hasMany(Business::class, 'user_id', 'id');
+    }
+    protected $appends = ['role_label'];
+
+    public function getRoleLabelAttribute()
+    {
+        return UserRole::getDescription($this->role);
     }
     
     // public function sendPasswordResetNotification($token)

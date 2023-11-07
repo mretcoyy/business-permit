@@ -14,41 +14,30 @@
                 </a-col>
             </a-row>
             <br />
-            <a-table
-                :columns="columns"
-                :data-source="data"
-                rowKey="business_id"
-            >
-                <span slot="Status" slot-scope="Status">
-                    <a-tag
-                        :color="
-                            Status === 'Approved'
-                                ? 'green'
-                                : Status === 'Forapproval'
-                                ? 'yellow'
-                                : Status === 'Declined'
-                                ? 'volcano'
-                                : 'blue'
-                        "
-                        >{{
-                            Status == "Forapproval" ? "For Approval" : Status
-                        }}</a-tag
-                    >
-                </span>
+            <a-table :columns="columns" :data-source="data" rowKey="id">
                 <span slot="action" slot-scope="text, record">
-                    <a @click="select(text.business_id)">Select</a>
+                    <a @click="select(text.id)">Edit</a> |
+                    <a @click="viewChangeRole(text.id)">Change Role</a>
+                    |
+                    <a @click="viewLinkBusiness(text.id)">Link Business</a>
                 </span>
             </a-table>
         </a-card>
-        <FormFees
+        <FormUser
             :modal="formModal"
+            @refresh="refreshTable"
+            @onSubmit="handleSubmit($event)"
+        />
+        <FormChangeRole
+            :modal="formModalRole"
             @refresh="refreshTable"
             @onSubmit="handleSubmit($event)"
         />
     </MainLayout>
 </template>
 <script>
-import FormFees from "../../components/FormFees.vue";
+import FormUser from "../../components/FormUser.vue";
+import FormChangeRole from "../../components/FormChangeRole.vue";
 import MainLayout from "../../layouts/MainLayout";
 
 const columns = [
@@ -56,16 +45,6 @@ const columns = [
         title: "Name",
         dataIndex: "name",
         key: "name",
-    },
-    {
-        title: "Address",
-        dataIndex: "full_address",
-        key: "full_address",
-    },
-    {
-        title: "Contact",
-        dataIndex: "contact_number",
-        key: "contact_number",
     },
     {
         title: "Email",
@@ -94,6 +73,7 @@ export default {
             data,
             columns,
             formModal: { show: false },
+            formModalRole: { show: false },
             filters: {
                 search_keyword: "",
                 user_id: "",
@@ -103,64 +83,53 @@ export default {
     },
     components: {
         MainLayout,
-        FormFees,
+        FormUser,
+        FormChangeRole,
     },
     methods: {
         refreshTable() {
             this.getData();
             this.formModal = { show: false };
+            this.formModalRole = { show: false };
         },
         handleSubmit(e) {
             this.getData();
             this.formModal.show = e;
+            this.formModal.show = e;
         },
-        formatData(data) {
-            let map = data.map((item) => {
-                const container = {};
-                container.referenceNo = item.referenceNo;
-                container.name = item.businessInformation.taxPayerBname;
-                container.tax_payer = item.businessInformation.taxPayerFullname;
-                container.address = item.businessInformation.taxPayerFname;
-                container.Status = item.businessDetail.status;
-                container.business_id = item.businessDetail.business_id;
-                return container;
-            });
-
-            return map;
-        },
-        // formatDataSelect(data) {
-        //     let map = data.map((item) => {
-        //         const container = {};
-        //         container.business_id = item.businessDetail.business_id;
-        //         container.bin = item.businessDetail.bin;
-        //         container.date_renewed = item.businessDetail.date_renewed;
-        //         container.organization_type = item.typeOfOrganizationLabel;
-        //         container.business_name =
-        //             item.businessInformation.taxPayerBname;
-        //         container.business_address = item.businessInformation.BAddress;
-        //         container.owner_name = item.ownerInformation.OFullname;
-        //         container.owner_address = item.ownerInformation.OFulladdress;
-        //         return container;
-        //     });
-        //     return map;
-        // },
         async getData() {
             const res = await axios.get("/user/list", {
                 params: {
                     filters: this.filters,
                 },
             });
-            this.data = res.data.data;
+            this.data = res.data;
         },
         async onSearch() {
-            this.filters = { bin: this.search };
+            this.filters = { search_keyword: this.search };
             this.getData();
         },
         async select(user_id) {
             this.filters.user_id = user_id;
-            this.getData();
+            const res = await axios.get("/user/list", {
+                params: {
+                    filters: this.filters,
+                },
+            });
+            let data = res.data;
             this.formModal = { show: true, data };
         },
+        async viewChangeRole(user_id) {
+            this.filters.user_id = user_id;
+            const res = await axios.get("/user/list", {
+                params: {
+                    filters: this.filters,
+                },
+            });
+            let data = res.data;
+            this.formModalRole = { show: true, data };
+        },
+        viewLinkBusiness(user_id) {},
         async confirm(id, status) {
             const res = await axios.patch("/user/change-role/" + id, {
                 status: status,

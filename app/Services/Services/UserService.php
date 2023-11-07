@@ -4,6 +4,7 @@ namespace App\Services\Services;
 use Illuminate\Support\Facades\Auth;
 use App\Entities\User;
 use App\Entities\Business;
+use App\Services\Contract\UserServiceInterface;
 
 class UserService implements UserServiceInterface
 {
@@ -26,7 +27,7 @@ class UserService implements UserServiceInterface
             'role' => $data['role']
         ];
 
-        $user = User::find($id);
+        $user = User::find($userID);
         $user->update($updateData);
 
         return $user;
