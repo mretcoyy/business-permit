@@ -28,7 +28,7 @@ class UserController extends Controller
 
         $userList = app()->make(UserRepositoryEloquent::class)->list($filters);
         
-        $userList = fractal()->collection($userList, UserTransformer::class);
+        // $userList = fractal()->collection($userList, UserTransformer::class);
 
         return $userList;
     }

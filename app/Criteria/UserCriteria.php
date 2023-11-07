@@ -42,5 +42,7 @@ class UserCriteria implements CriteriaInterface
             ->where('user.full_address', 'LIKE',  '%'.$filters->search_keyword.'%')
             ->where('user.email', 'LIKE',  '%'.$filters->search_keyword.'%');
         }
+
+        return $model;
     }
 }

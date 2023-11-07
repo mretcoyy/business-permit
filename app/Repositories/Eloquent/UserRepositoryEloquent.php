@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Eloqeunt;
+namespace App\Repositories\Eloquent;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
