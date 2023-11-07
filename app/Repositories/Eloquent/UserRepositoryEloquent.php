@@ -7,6 +7,8 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\Contract\UserRepository;
 use App\Entities\User;
 use App\Validators\UserValidator;
+use Illuminate\Support\Facades\DB;
+use App\Criteria\UserCriteria;
 
 /**
  * Class UserRepositoryEloquent.
@@ -25,24 +27,18 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return User::class;
     }
 
-    /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
+    public function list($filters = [], $isForExport = false)
     {
+        $this->model = $this->model
+            ->select([
+                '*'
+            ]);
 
-        return UserValidator::class;
-    }
+        $this->pushCriteria(new UserCriteria($filters))->applyCriteria();
 
+        $result = $this->model->get();
 
-    /**
-     * Boot up the repository, pushing criteria
-     */
-    public function boot()
-    {
-        $this->pushCriteria(app(RequestCriteria::class));
+        return $result;
     }
     
 }

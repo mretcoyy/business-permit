@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Entities\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Services\Services\UserService;
+use App\Repositories\Eloquent\UserRepositoryEloquent;
 
 class UserController extends Controller
 {
@@ -35,16 +37,13 @@ class UserController extends Controller
         Auth::logout();
     }
 
-    public function register(Request $request)
+    public function register(Request $request, User $service)
     {
         $data = $request->all();
 
-        return User::create([
-            'name' => $data['fullName'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $store = $service->store($data);
 
+        return $store;
     }
 
     public function forgotPassword()

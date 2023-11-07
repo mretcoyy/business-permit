@@ -8,6 +8,17 @@ use App\Entities\Business;
 class UserService implements UserServiceInterface
 {
 
+    public function store($data)
+    {
+        $user = User::create([
+            'name' => $data['fullName'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+
+        return $user;
+    }
+
     public function changeRole($data, $id) 
     {
 
