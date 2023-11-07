@@ -83,6 +83,11 @@ Vue.component(
     require("./views/Admin/MayorsPermit.vue").default
 );
 
+Vue.component(
+    "view-admin-user-management",
+    require("./views/Admin/UserManagement.vue").default
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

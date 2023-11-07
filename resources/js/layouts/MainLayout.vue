@@ -66,10 +66,17 @@
                     <a-icon type="folder-open" />
                     <span>Amendment</span>
                 </a-menu-item>
+                <a-menu-item
+                    @click="viewPage(`/admin/user-management`)"
+                    key="8"
+                >
+                    <a-icon type="user" />
+                    <span>User Management</span>
+                </a-menu-item>
 
                 <a-menu-item
                     @click="logOut"
-                    key="7
+                    key="9
             "
                 >
                     <a-icon type="logout" />
