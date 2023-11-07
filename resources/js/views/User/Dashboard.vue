@@ -47,7 +47,7 @@
                     </a-tag> -->
                 </span>
                 <span slot="action" slot-scope="text, record">
-                    <a @click="view(text.business_id)">View </a>
+                    <a @click="view(record.business_id)">View </a>
                 </span>
             </a-table>
         </a-card>
@@ -74,6 +74,12 @@ const columns = [
         key: "Status",
         dataIndex: "Status",
         scopedSlots: { customRender: "Status" },
+    },
+    {
+        title: "Action",
+        key: "action",
+        dataIndex: "action",
+        scopedSlots: { customRender: "action" },
     },
 ];
 
