@@ -100,5 +100,10 @@ class UserController extends Controller
     public function viewApplication(){
         return view('user.Application.index');
     }
+ 
+    public function viewUserManagement(){
+        return view('admin.UserManagement.list');
+    }
+
 
 }

@@ -36,7 +36,7 @@ class UserCriteria implements CriteriaInterface
             $model->where('user.id', $filters->user_id);
         }
 
-        if (isset($fitlters->search_keyword) && $filters->search_keyword != '') {
+        if (isset($filters->search_keyword) && $filters->search_keyword != '') {
             $model->where('user.name', 'LIKE', '%'.$filters->search_keyword.'%')
             ->where('user.contact_number', 'LIKE',  '%'.$filters->search_keyword.'%')
             ->where('user.full_address', 'LIKE',  '%'.$filters->search_keyword.'%')
