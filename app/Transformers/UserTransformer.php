@@ -28,7 +28,7 @@ class UserTransformer extends TransformerAbstract
             'email' => $model->email, 
             'username' => $model->username, 
             'role' => $model->role, 
-            'role_label' => UserRole::getDescription($model->role), 
+            'role_label' => UserRole::getDescription($model->role),
             'password' => $model->password, 
             'full_address' => $model->full_address, 
             'contact_number' => $model->contact_number, 

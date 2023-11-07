@@ -49,7 +49,7 @@ class UserController extends Controller
         Auth::logout();
     }
 
-    public function register(Request $request, User $service)
+    public function register(Request $request, UserService $service)
     {
         $data = $request->all();
 
@@ -58,7 +58,7 @@ class UserController extends Controller
         return $store;
     }
 
-    public function changeRole(Request $request, $id, User $service)
+    public function changeRole(Request $request, $id, UserService $service)
     {
         $data = $request->post('role');
 
@@ -67,7 +67,7 @@ class UserController extends Controller
         return $store;
     }
 
-    public function linkBusiness(Request $request, $id, User $service)
+    public function linkBusiness(Request $request, $id, UserService $service)
     {
         $businessID = $request->post('business_id');
 

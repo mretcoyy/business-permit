@@ -33,7 +33,7 @@ class UserCriteria implements CriteriaInterface
         $filters = $this->filters;
 
         if (isset($filters->user_id) && $filters->user_id != '') {
-            $model->where('user.id', $filters->user_id);
+            $model->where('id', $filters->user_id);
         }
 
         if (isset($filters->search_keyword) && $filters->search_keyword != '') {
