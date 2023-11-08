@@ -102,7 +102,14 @@ export default {
         FormMayorsPermit,
     },
     methods: {
-        refreshTable() {
+        async refreshTable() {
+            const res = await axios.patch(
+                "/bplo/changeStatus/" + this.filters.business_id,
+                {
+                    status: 2,
+                }
+            );
+            this.filters.business_id = "";
             this.getData();
             this.formModal = { show: false };
         },
@@ -156,12 +163,7 @@ export default {
         },
         async print(business_id) {
             this.formModal = { show: true, business_id };
-        },
-        async confirm(id, status) {
-            const res = await axios.patch("/bplo/changeStatus/" + id, {
-                status: status,
-            });
-            this.getData();
+            this.filters.business_id = business_id;
         },
     },
     mounted() {

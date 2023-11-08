@@ -17,8 +17,7 @@ use App\Services\Contract\BusinessServiceInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Elibyy\TCPDF\Facades\TCPDF;
-
+use setasign\Fpdi\Tcpdf\Fpdi;
 class BusinessService implements BusinessServiceInterface
 {
     public function store($data_field, $files)
@@ -491,21 +490,43 @@ class BusinessService implements BusinessServiceInterface
             $business_address = $business_information->address;
         }
         $line_of_business = $business->businessInformationDetail[0]->line_of_business;
-        $date_issued = Date('M d, Y');
+        $date_issued = Date('M/d/Y');
+        $valid_until = '12/31/'.Date('Y');
 
-        $pdf = new TCPDF;
-        // $pdf::setSourceFile(public_path("pdf/BLANK-BUSINESS-PERMIT-FORMAT.pdf"));
-        $pdf::SetFont('helvetica', '', 12);
-        $pdf::SetTitle('Mayor`s Permit');
-        $pdf::AddPage();
-        $pdf::Cell(0, 10, $bin, 0, 1, 'L');
-        $pdf::Cell(0, 10, $business_name, 0, 1, 'L');
-        $pdf::Cell(0, 10, $taxpayer, 0, 1, 'L');
-        $pdf::Cell(0, 10, $business_address, 0, 1, 'L');
-        $pdf::Cell(0, 10, $line_of_business, 0, 1, 'L');
-        $pdf::Cell(0, 10, $date_issued, 0, 1, 'L');
+        $pdf = new Fpdi();
+        $pagesource = $pdf->setSourceFile(public_path("pdf/BUSINESS_PERMIT.pdf"));
+        $pageimport = $pdf->importPage($pagesource);
+        $pdf->AddPage();
+        $pdf->useTemplate($pageimport, null, null, 215.6, 297 ,FALSE);
+        $pdf->SetHeaderMargin(0);
+        $pdf->SetFooterMargin(0);
+        $pdf->MultiCell(40, 0, $bin, '', 'C', 0, 0, 26, 168, true, 0, false, true, 8, 'M', true);
+        $pdf->MultiCell(40, 0, $date_issued, '', 'C', 0, 0, 26, 178, true, 0, false, true, 8, 'M', true);
+        $pdf->MultiCell(40, 0, $valid_until, '', 'C', 0, 0, 26, 188, true, 0, false, true, 8, 'M', true);
 
-        $pdf::Output($filename, 'I');
+        $pdf->MultiCell(110, 0, $taxpayer, '', 'L', 0, 0, 80, 135, true, 0, false, true, 8, 'M', true);
+        $pdf->MultiCell(110, 0, $line_of_business, '', 'L', 0, 0, 80, 150, true, 0, false, true, 8, 'M', true);
+        $pdf->MultiCell(110, 0, $business_address, '', 'L', 0, 0, 80, 165, true, 0, false, true, 8, 'M', true);
+        $pdf->MultiCell(110, 0, $taxpayer, '', 'L', 0, 0, 80, 180, true, 0, false, true, 8, 'M', true);
+
+
+        $style = array(
+            'border' => 0,
+            'vpadding' => 'auto',
+            'hpadding' => 'auto',
+            'fgcolor' => array(0,0,0),
+            'bgcolor' => false, //array(255,255,255)
+            'module_width' => 1, // width of a single module in points
+            'module_height' => 1 // height of a single module in points
+        );
+        
+        //barcode
+        $pdf->write2DBarcode( $bin.'/'.$date_issued.'/'.$valid_until, 'QRCODE,L',24,123, 45, 45, $style, 'N');
+        
+
+
+
+        $pdf->Output($filename, 'I');
         return $pdf;
     }
     

@@ -27,6 +27,18 @@
                 scrolling="auto"
             ></iframe>
         </div>
+
+        <a-modal
+            v-model="modalPrint"
+            :width="300"
+            :maskClosable="false"
+            okText="Done"
+            centered
+            @ok="closeModalPrint()"
+            :cancelButtonProps="{ style: { display: 'none' } }"
+        >
+            Done Printing?
+        </a-modal>
     </a-modal>
 </template>
 <script>
@@ -36,14 +48,12 @@ export default {
     },
     data() {
         return {
-            form: this.$form.createForm(this),
-            selectedIndex: null,
-            selectedId: null,
             business_id: "",
             pdfsrc: null,
             filters: {
                 business_id: "",
             },
+            modalPrint: false,
         };
     },
     methods: {
@@ -51,10 +61,15 @@ export default {
             this.form.resetFields();
         },
         handleSubmit() {
-            let form = this.modal.data;
             var myIframe = document.getElementById("pdf_frame").contentWindow;
             myIframe.focus();
             myIframe.print();
+            this.modalPrint = true;
+        },
+        closeModalPrint() {
+            this.modalPrint = false;
+            this.$emit("refresh");
+            this.pdfsrc = null;
         },
     },
     watch: {
