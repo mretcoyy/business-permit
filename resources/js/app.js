@@ -88,6 +88,11 @@ Vue.component(
     require("./views/Admin/UserManagement.vue").default
 );
 
+Vue.component(
+    "view-admin-new-application",
+    require("./views/Admin/NewApplication.vue").default
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

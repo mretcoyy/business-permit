@@ -691,6 +691,9 @@ export default {
     components: {
         FormBusinessActivity,
     },
+    props: {
+        is_admin: { type: Boolean, default: () => false },
+    },
     data() {
         return {
             form: this.$form.createForm(this),
@@ -851,6 +854,7 @@ export default {
                             },
                             FileUploads: self.file,
                             BusinessActivity: self.dataBusinessActivity,
+                            Admin: self.is_admin,
                         };
 
                         self.submitData(data);

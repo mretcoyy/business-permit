@@ -94,4 +94,6 @@ Route::patch('/user/link-business/{id}', 'UserController@linkBusiness');
 
 // Application
 Route::get('/admin/application', 'Application@index');
+Route::get('/admin/new-application', 'Application@viewNewApplication');
+
 });

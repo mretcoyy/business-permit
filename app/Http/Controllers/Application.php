@@ -10,4 +10,9 @@ class Application extends Controller
     {
         return view('admin.Application.list');
     }
+
+    public function viewNewApplication()
+    {
+        return view('admin.NewApplication.list');
+    }
 }

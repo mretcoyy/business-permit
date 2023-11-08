@@ -38,6 +38,13 @@
                     <span>Application</span>
                 </a-menu-item>
                 <a-menu-item
+                    @click="viewPage(`/admin/new-application`)"
+                    key="2"
+                >
+                    <a-icon type="form" />
+                    <span>New Application</span>
+                </a-menu-item>
+                <a-menu-item
                     @click="viewPage(`/admin/certificate-approval`)"
                     key="3"
                 >
