@@ -17,6 +17,7 @@ use App\Services\Contract\BusinessServiceInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Elibyy\TCPDF\Facades\TCPDF;
 
 class BusinessService implements BusinessServiceInterface
 {
@@ -474,6 +475,38 @@ class BusinessService implements BusinessServiceInterface
 
         $business = BusinessFees::create($storeBusinessFees);
         return $business;
+    }
+
+    public function viewMayorsPermit($data)
+    {
+        $business = Business::where('id',$data['filters']['business_id'])->with(['businessDetail','businessInformation', 'businessInformationDetail'])->first();
+
+        $filename = '';
+        $business_detail =  $business->businessDetail;
+        $bin = $business_detail[0]['bin'];
+        $filename =  $bin.Date('YmdHis').'.pdf';
+        foreach ($business->businessInformation as $business_information) {
+            $business_name = $business_information->business_name;
+            $taxpayer = $business_information->fullname;
+            $business_address = $business_information->address;
+        }
+        $line_of_business = $business->businessInformationDetail[0]->line_of_business;
+        $date_issued = Date('M d, Y');
+
+        $pdf = new TCPDF;
+        // $pdf::setSourceFile(public_path("pdf/BLANK-BUSINESS-PERMIT-FORMAT.pdf"));
+        $pdf::SetFont('helvetica', '', 12);
+        $pdf::SetTitle('Mayor`s Permit');
+        $pdf::AddPage();
+        $pdf::Cell(0, 10, $bin, 0, 1, 'L');
+        $pdf::Cell(0, 10, $business_name, 0, 1, 'L');
+        $pdf::Cell(0, 10, $taxpayer, 0, 1, 'L');
+        $pdf::Cell(0, 10, $business_address, 0, 1, 'L');
+        $pdf::Cell(0, 10, $line_of_business, 0, 1, 'L');
+        $pdf::Cell(0, 10, $date_issued, 0, 1, 'L');
+
+        $pdf::Output($filename, 'I');
+        return $pdf;
     }
     
 }

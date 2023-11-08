@@ -155,14 +155,7 @@ export default {
             this.getData();
         },
         async print(business_id) {
-            this.filters.business_id = business_id;
-            const res = await axios.get("/bplo/list", {
-                params: {
-                    filters: this.filters,
-                },
-            });
-            let data = this.formatDataSelect(res.data.data);
-            this.formModal = { show: true, data };
+            this.formModal = { show: true, business_id };
         },
         async confirm(id, status) {
             const res = await axios.patch("/bplo/changeStatus/" + id, {

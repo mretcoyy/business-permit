@@ -16,7 +16,17 @@
                 padding: '24px',
                 minHeight: '280px',
             }"
-        ></div>
+        >
+            <iframe
+                class="frame-file"
+                id="pdf_frame"
+                height="500"
+                width="100%"
+                :src="pdfsrc"
+                frameborder="0"
+                scrolling="auto"
+            ></iframe>
+        </div>
     </a-modal>
 </template>
 <script>
@@ -31,6 +41,9 @@ export default {
             selectedId: null,
             business_id: "",
             pdfsrc: null,
+            filters: {
+                business_id: "",
+            },
         };
     },
     methods: {
@@ -39,48 +52,35 @@ export default {
         },
         handleSubmit() {
             let form = this.modal.data;
-
-            axios
-                .post("/mayors-permit/view-mayors-permit", form, {
-                    responseType: "blob",
-                })
-                .then((res) => {
-                    const file = new Blob([res.data], {
-                        type: "application/pdf",
-                    });
-                    let fileURL = URL.createObjectURL(file);
-                    this.pdfsrc = fileURL + "#toolbar=0&navpanes=0&scrollbar=0";
-                })
-                .catch((error) => {});
+            var myIframe = document.getElementById("pdf_frame").contentWindow;
+            myIframe.focus();
+            myIframe.print();
         },
     },
     watch: {
         modal(params) {
             // this.info = {};
-            // if (params.show) {
-            //     let data = params.data[0];
-            //     this.info = data;
-            //     this.business_id = data.business_id;
-            //     this.fields.forEach((v) => this.form.getFieldDecorator(v));
-            // }
-            // const {
-            //     business_tax,
-            //     mayors_permit,
-            //     occupational_permit,
-            //     subscription_other,
-            //     environmental_clearance,
-            //     sanitary_permit_fee,
-            //     zoning_fee,
-            // } = data;
-            // this.form.setFieldsValue({
-            //     business_tax,
-            //     mayors_permit,
-            //     occupational_permit,
-            //     subscription_other,
-            //     environmental_clearance,
-            //     sanitary_permit_fee,
-            //     zoning_fee,
-            // });
+            if (params.show) {
+                (this.filters.business_id = params.business_id),
+                    axios
+                        .post(
+                            "/mayors-permit/view-mayors-permit",
+                            { filters: this.filters },
+                            {
+                                responseType: "blob",
+                            }
+                        )
+                        .then((res) => {
+                            const file = new Blob([res.data], {
+                                type: "application/pdf",
+                            });
+                            console.log(file);
+                            let fileURL = URL.createObjectURL(file);
+                            this.pdfsrc =
+                                fileURL + "#toolbar=0&navpanes=0&scrollbar=0";
+                        })
+                        .catch((error) => {});
+            }
         },
     },
 };
