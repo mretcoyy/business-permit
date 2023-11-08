@@ -37,10 +37,10 @@ class UserCriteria implements CriteriaInterface
         }
 
         if (isset($filters->search_keyword) && $filters->search_keyword != '') {
-            $model->where('user.name', 'LIKE', '%'.$filters->search_keyword.'%')
-            ->where('user.contact_number', 'LIKE',  '%'.$filters->search_keyword.'%')
-            ->where('user.full_address', 'LIKE',  '%'.$filters->search_keyword.'%')
-            ->where('user.email', 'LIKE',  '%'.$filters->search_keyword.'%');
+            $model->where('name', 'LIKE', '%'.$filters->search_keyword.'%')
+            ->orWhere('contact_number', 'LIKE',  '%'.$filters->search_keyword.'%')
+            ->orWhere('full_address', 'LIKE',  '%'.$filters->search_keyword.'%')
+            ->orWhere('email', 'LIKE',  '%'.$filters->search_keyword.'%');
         }
 
         return $model;

@@ -95,5 +95,6 @@ Route::patch('/user/link-business/{id}', 'UserController@linkBusiness');
 // Application
 Route::get('/admin/application', 'Application@index');
 Route::get('/admin/new-application', 'Application@viewNewApplication');
-
+Route::post('/admin/bplo/view-requirement', 'BPLOController@viewRequirement');
+Route::get('/admin/dashboard', 'Application@viewDashboard');
 });

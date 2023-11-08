@@ -29,7 +29,7 @@
                 </p>
             </div>
             <a-menu theme="dark" mode="inline" :default-selected-keys="['0']">
-                <a-menu-item @click="viewPage(`/user/dashboard`)" key="1">
+                <a-menu-item @click="viewPage(`/admin/dashboard`)" key="1">
                     <a-icon type="dashboard" />
                     <span>Dashboard</span>
                 </a-menu-item>
@@ -39,43 +39,43 @@
                 </a-menu-item>
                 <a-menu-item
                     @click="viewPage(`/admin/new-application`)"
-                    key="2"
+                    key="3"
                 >
                     <a-icon type="form" />
                     <span>New Application</span>
                 </a-menu-item>
                 <a-menu-item
                     @click="viewPage(`/admin/certificate-approval`)"
-                    key="3"
+                    key="4"
                 >
                     <a-icon type="safety-certificate" />
                     <span>Certificate Approval</span>
                 </a-menu-item>
                 <a-menu-item
                     @click="viewPage(`/admin/clearance-approval`)"
-                    key="4"
+                    key="5"
                 >
                     <a-icon type="folder" />
                     <span>Clearance Approval</span>
                 </a-menu-item>
                 <a-menu-item
                     @click="viewPage(`/admin/tax-computation`)"
-                    key="5"
+                    key="6"
                 >
                     <a-icon type="money-collect" />
                     <span>Tax Computation</span>
                 </a-menu-item>
-                <a-menu-item @click="viewPage(`/admin/mayors-permit`)" key="6">
+                <a-menu-item @click="viewPage(`/admin/mayors-permit`)" key="7">
                     <a-icon type="money-collect" />
                     <span>Mayor's Permit</span>
                 </a-menu-item>
-                <a-menu-item @click="viewPage(`/admin/amendment`)" key="7">
+                <a-menu-item @click="viewPage(`/admin/amendment`)" key="8">
                     <a-icon type="folder-open" />
                     <span>Amendment</span>
                 </a-menu-item>
                 <a-menu-item
                     @click="viewPage(`/admin/user-management`)"
-                    key="8"
+                    key="9"
                 >
                     <a-icon type="user" />
                     <span>User Management</span>
@@ -83,7 +83,7 @@
 
                 <a-menu-item
                     @click="logOut"
-                    key="9
+                    key="10
             "
                 >
                     <a-icon type="logout" />

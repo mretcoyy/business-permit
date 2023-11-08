@@ -21,9 +21,7 @@ export default {
             const h = this.$createElement;
             this.$success({
                 title: "Application has been submitted!",
-                onOk() {
-                    window.location.href = "/user/dashboard";
-                },
+                onOk() {},
             });
         },
     },

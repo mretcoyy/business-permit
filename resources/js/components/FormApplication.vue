@@ -896,6 +896,7 @@ export default {
                         this.emitDone();
                     })
                     .catch((error) => {
+                        console.log(error);
                         this.$error({
                             title: "Something went wrong!",
                         });

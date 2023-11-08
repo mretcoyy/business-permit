@@ -40,6 +40,9 @@
                     <a-descriptions-item label="Owner Address">
                         {{ info.owner_address }}
                     </a-descriptions-item>
+                    <a-descriptions-item label="Number of Employees">
+                        {{ info.number_of_employees }}
+                    </a-descriptions-item>
                 </a-descriptions>
             </a-card>
             <a-form :form="form">
@@ -193,31 +196,20 @@ export default {
     },
     watch: {
         modal(params) {
+            console.log(params);
             this.info = {};
+            let occupational_permit = 0;
             if (params.show) {
                 let data = params.data[0];
                 this.info = data;
                 this.business_id = data.business_id;
                 this.fields.forEach((v) => this.form.getFieldDecorator(v));
+                occupational_permit = 200 * Number(data.number_of_employees);
             }
-            const {
-                business_tax,
-                mayors_permit,
-                occupational_permit,
-                subscription_other,
-                environmental_clearance,
-                sanitary_permit_fee,
-                zoning_fee,
-            } = data;
-            this.form.setFieldsValue({
-                business_tax,
-                mayors_permit,
-                occupational_permit,
-                subscription_other,
-                environmental_clearance,
-                sanitary_permit_fee,
-                zoning_fee,
-            });
+
+            console.log(occupational_permit);
+
+            this.form.setFieldsValue({ occupational_permit });
         },
     },
 };

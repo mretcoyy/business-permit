@@ -15,4 +15,9 @@ class Application extends Controller
     {
         return view('admin.NewApplication.list');
     }
+   
+    public function viewDashboard()
+    {
+        return view('admin.Dashboard.list');
+    }
 }

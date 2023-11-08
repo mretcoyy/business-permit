@@ -16,7 +16,7 @@
             <br />
             <a-table :columns="columns" :data-source="data" rowKey="id">
                 <span slot="action" slot-scope="text, record">
-                    <a @click="select(text.id)">Edit</a> |
+                    <!-- <a @click="select(text.id)">Edit</a> | -->
                     <a @click="viewChangeRole(text.id)" v-if="text.role == 1"
                         >Change Role</a
                     >

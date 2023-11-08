@@ -344,7 +344,9 @@ export default {
             const res = await axios.patch("/bplo/changeStatus/" + id, {
                 status: status,
             });
+            this.filters.business_id = "";
             this.getData();
+            this.$message.success("Business Updated Succesfully!");
         },
     },
     mounted() {

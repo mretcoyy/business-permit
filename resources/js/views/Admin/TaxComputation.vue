@@ -92,7 +92,7 @@ export default {
             formModal: { show: false },
             filters: {
                 business_id: "",
-                status: 1,
+                status: 5,
             },
             search: "",
         };
@@ -103,10 +103,12 @@ export default {
     },
     methods: {
         refreshTable() {
+            this.filters = { business_id: "", search_keyword: "" };
             this.getData();
             this.formModal = { show: false };
         },
         handleSubmit(e) {
+            this.filters = { business_id: "", search_keyword: "" };
             this.getData();
             this.formModal.show = e;
         },
@@ -136,6 +138,8 @@ export default {
                 container.business_address = item.businessInformation.BAddress;
                 container.owner_name = item.ownerInformation.OFullname;
                 container.owner_address = item.ownerInformation.OFulladdress;
+                container.number_of_employees =
+                    item.businessInformation.TotalNumberofEmployees;
                 return container;
             });
             return map;
@@ -151,11 +155,11 @@ export default {
             this.data = this.formatData(res.data.data);
         },
         async onSearch() {
-            this.filters = { bin: this.search };
+            this.filters = { search_keyword: this.search, status: 5 };
             this.getData();
         },
         async select(business_id) {
-            this.filters.business_id = business_id;
+            this.filters = { business_id, status: "" };
             const res = await axios.get("/bplo/list", {
                 params: {
                     filters: this.filters,
@@ -168,6 +172,7 @@ export default {
             const res = await axios.patch("/bplo/changeStatus/" + id, {
                 status: status,
             });
+            this.filters = { business_id: "", search_keyword: "" };
             this.getData();
         },
     },

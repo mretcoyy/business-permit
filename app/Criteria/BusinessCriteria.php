@@ -6,6 +6,8 @@ use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 use Illuminate\Support\Facades\Log;
 use App\Enums\BusinessStatus;
+use Illuminate\Support\Facades\DB;
+
 /**
  * Class BusinessCriteriaCriteria.
  *
@@ -50,8 +52,11 @@ class BusinessCriteria implements CriteriaInterface
             }
         }
 
-        if (isset($filters->bin) && $filters->bin != '') {
-            $model->where('business_detail.bin','like','%'. $filters->bin .'%');
+        if (isset($filters->search_keyword) && $filters->search_keyword != '') {
+            $model->where('business_detail.bin', 'LIKE', '%'.$filters->search_keyword.'%')
+            ->orWhere('business_information.business_name', 'LIKE',  '%'.$filters->search_keyword.'%')
+            ->orWhere(DB::raw("CONCAT(business_information.first_name, ' ', business_information.last_name)"), 'LIKE',  '%'.$filters->search_keyword.'%')
+            ->where('business_detail.status', $filters->status);
         }
 
         if (isset($filters->is_null) && $filters->is_null == true) {
