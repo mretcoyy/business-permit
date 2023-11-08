@@ -106,10 +106,18 @@ export default {
     },
     methods: {
         refreshTable() {
+            this.filters = {
+                business_id: "",
+                status: 2,
+            };
             this.getData();
             this.formModal = { show: false };
         },
         handleSubmitAmendment(e) {
+            this.filters = {
+                business_id: "",
+                status: 2,
+            };
             this.getData();
             this.formModal.show = e;
         },
@@ -146,12 +154,6 @@ export default {
             });
             let data = res.data.data;
             this.formModal = { show: true, data };
-        },
-        async confirm(id, status) {
-            const res = await axios.patch("/bplo/changeStatus/" + id, {
-                status: status,
-            });
-            this.getData();
         },
     },
     mounted() {

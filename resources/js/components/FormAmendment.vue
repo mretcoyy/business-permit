@@ -1144,16 +1144,26 @@ export default {
                     "Content-Type": "multipart/form-data",
                 },
             };
-            await axios(
-                {
-                    method: "POST",
-                    url: "/amendment/update-data",
-                    data: formData,
-                },
-                config
-            );
-            this.$emit("onSubmit", false);
-            this.$message.success("Updated Succesfully");
+
+            try {
+                await axios(
+                    {
+                        method: "POST",
+                        url: "/amendment/update-data",
+                        data: formData,
+                    },
+                    config
+                );
+            } catch (e) {
+                console.log(error);
+                this.$error({
+                    title: "Something went wrong!",
+                });
+            } finally {
+                let self = this;
+                self.$emit("onSubmit", false);
+                self.$message.success("Updated Succesfully");
+            }
         },
 
         checkFilesisFalse(files) {

@@ -878,30 +878,23 @@ export default {
                     "Content-Type": "multipart/form-data",
                 },
             };
-            return (
-                axios(
-                    {
-                        method: "POST",
-                        url: "bplo/store",
-                        data: formData,
-                    },
-                    config
-                )
-                    // return axios({
-                    //     method: "POST",
-                    //     url: "bplo/store",
-                    //     data: data,
-                    // })
-                    .then(function (response) {
-                        this.emitDone();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$error({
-                            title: "Something went wrong!",
-                        });
-                    })
-            );
+            return axios(
+                {
+                    method: "POST",
+                    url: "bplo/store",
+                    data: formData,
+                },
+                config
+            )
+                .then(function (response) {
+                    this.emitDone();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$error({
+                        title: "Something went wrong!",
+                    });
+                });
         },
 
         checkFilesisFalse(files) {

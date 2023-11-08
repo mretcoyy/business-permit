@@ -15,7 +15,7 @@ class CreateBusinessTable extends Migration
     {
         Schema::create('business', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable;
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('reference_number');
             $table->string('dti_registration_no');
             $table->date('dti_date_of_registration');

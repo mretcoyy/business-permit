@@ -126,7 +126,7 @@ class BusinessService implements BusinessServiceInterface
         foreach ($files as $key => $file) 
         {
             $extension = $file->getClientOriginalExtension();
-            $filename = $key.'.'.$extension;
+            $filename = $business->id.$key.date('ymdhis').'.'.$extension;
             $file->storeAs('/'. $business->id , $filename, 'requirements');
             
             switch ($key) {
@@ -338,52 +338,96 @@ class BusinessService implements BusinessServiceInterface
         $community_tax_certificate = null;
         $real_property_tax_clearance = null;
         $fire_certificate = null;
-        foreach ($files as $key => $file) 
+        if(count($files))
         {
-            $extension = $file->getClientOriginalExtension();
-            $filename = $business->id.$key.date('ymdhis').'.'.$extension;
-            $file->storeAs('/'. $business->id , $filename, 'requirements');
-            
-            switch ($key) {
-                case 'barangay':
-                    $barangay_clearance = $filename;
-                    break;
-                case 'community':
-                    $community_tax_certificate = $filename;
-                    break;
-                case 'environment':
-                    $environment_certificate = $filename;
-                    break;
-                case 'occupancy':
-                    $occupancy_permit = $filename;
-                    break;
-                case 'rpt':
-                    $real_property_tax_clearance = $filename;
-                    break;
-                case 'zoning':
-                    $zoning_clearance = $filename;
-                    break;
-                default:
-                    break;
+            foreach ($files as $key => $file) 
+            {
+                $filename = '';
+                $extension = $file->getClientOriginalExtension();
+                $filename = $business->id.$key.date('ymdhis').'.'.$extension;
+                $file->storeAs('/'. $business->id , $filename, 'requirements');
+                
+                switch ($key) {
+                    case 'barangay':
+                        $barangay_clearance = $filename;
+                        break;
+                    case 'community':
+                        $community_tax_certificate = $filename;
+                        break;
+                    case 'environment':
+                        $environment_certificate = $filename;
+                        break;
+                    case 'occupancy':
+                        $occupancy_permit = $filename;
+                        break;
+                    case 'rpt':
+                        $real_property_tax_clearance = $filename;
+                        break;
+                    case 'zoning':
+                        $zoning_clearance = $filename;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-        $updateBusinessFiles = [
-            'business_id' => $business->id,
-            'barangay_clearance' => $barangay_clearance, 
-            'zoning_clearance' => $zoning_clearance, 
-            'sanitary_clearance' => $sanitary_clearance, 
-            'occupancy_permit' => $occupancy_permit, 
-            'environment_certificate' => $environment_certificate, 
-            'community_tax_certificate' => $community_tax_certificate, 
-            'real_property_tax_clearance' => $real_property_tax_clearance, 
-            'fire_certificate' => $fire_certificate, 
-        ];
         if(count($business->businessFiles) == 0)
         {
+            $updateBusinessFiles = [
+                'business_id' => $business->id,
+                'barangay_clearance' => $barangay_clearance, 
+                'zoning_clearance' => $zoning_clearance, 
+                'sanitary_clearance' => $sanitary_clearance, 
+                'occupancy_permit' => $occupancy_permit, 
+                'environment_certificate' => $environment_certificate, 
+                'community_tax_certificate' => $community_tax_certificate, 
+                'real_property_tax_clearance' => $real_property_tax_clearance, 
+                'fire_certificate' => $fire_certificate, 
+            ];
+       
             $businessFiles = BusinessFiles::create($updateBusinessFiles);
         }
         else{
-            $businessFiles = $business->businessFiles()->update($updateBusinessFiles);
+            if($barangay_clearance != null)
+            {
+                $updateBusinessFiles = ['barangay_clearance'=>$barangay_clearance];
+                $business->businessFiles()->update($updateBusinessFiles);
+            }
+            if($zoning_clearance != null)
+            {
+                $updateBusinessFiles = ['zoning_clearance'=>$zoning_clearance];
+                $business->businessFiles()->update($updateBusinessFiles);
+            }
+            if($sanitary_clearance != null)
+            {
+                $updateBusinessFiles = ['sanitary_clearance'=>$sanitary_clearance];
+                $business->businessFiles()->update($updateBusinessFiles);
+            }
+            if($occupancy_permit != null)
+            {
+                $updateBusinessFiles = ['occupancy_permit'=>$occupancy_permit];
+                $business->businessFiles()->update($updateBusinessFiles);
+            }
+            if($environment_certificate != null)
+            {
+                $updateBusinessFiles = ['environment_certificate'=>$environment_certificate];
+                $business->businessFiles()->update($updateBusinessFiles);
+            }
+            if($community_tax_certificate != null)
+            {
+                $updateBusinessFiles = ['community_tax_certificate'=>$community_tax_certificate];
+                $business->businessFiles()->update($updateBusinessFiles);
+            }
+            if($real_property_tax_clearance != null)
+            {
+                $updateBusinessFiles = ['real_property_tax_clearance'=>$real_property_tax_clearance];
+                $business->businessFiles()->update($updateBusinessFiles);
+            }
+            if($zoning_clearance != null)
+            {
+                $updateBusinessFiles = ['zoning_clearance'=>$zoning_clearance];
+                $business->businessFiles()->update($updateBusinessFiles);
+            }
         }
 
         if(count($business->BusinessInformationDetail) == 0)
