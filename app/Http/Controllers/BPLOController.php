@@ -47,8 +47,9 @@ class BPLOController extends Controller
 
     public function changeBusinessStatus(Request $request, BusinessService $service, $id)
     {
-        $changeBusinessStatus = $service->changeBusinessStatus(BusinessStatus::MENRO, $id);
+        $status = $request->post('status') == BusinessStatus::APPROVED ? BusinessStatus::MENRO : BusinessStatus::DECLINED;
 
+        $changeBusinessStatus = $service->changeBusinessStatus($status, $id);
         return $changeBusinessStatus;
     }
 

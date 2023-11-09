@@ -16,8 +16,9 @@ class MenroController extends Controller
 
     public function changeBusinessStatus(Request $request, BusinessService $service, $id)
     {
-        $changeStatus = $service->changeBusinessStatus(BusinessStatus::MPDC, $id);
+        $status = $request->post('status') == BusinessStatus::APPROVED ? BusinessStatus::MPDC : BusinessStatus::DECLINED;
 
-        return $changeStatus;
+        $changeBusinessStatus = $service->changeBusinessStatus($status, $id);
+        return $changeBusinessStatus;
     }
 }
