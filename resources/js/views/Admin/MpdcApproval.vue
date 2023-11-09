@@ -1,7 +1,7 @@
 <template>
     <MainLayout>
         <a-card>
-            <h1>Certificate Approval</h1>
+            <h1>MPDC Approval</h1>
             <a-table
                 :columns="columns"
                 :data-source="data"
@@ -100,7 +100,8 @@ export default {
             formModal: { show: false },
             filters: {
                 business_id: "",
-                status: 2,
+                business_status: 12,
+                status: 1,
             },
         };
     },
@@ -149,7 +150,7 @@ export default {
             this.formModal = { show: true, data };
         },
         async confirm(id, status) {
-            const res = await axios.patch("/bplo/changeStatus/" + id, {
+            const res = await axios.patch("/bplo/mpdc-change-status/" + id, {
                 status: status,
             });
             this.getData();

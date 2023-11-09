@@ -44,6 +44,10 @@ class BusinessCriteria implements CriteriaInterface
             $model->where('business.user_id', $filters->user_id);
         }
 
+        if (isset($filters->business_status) && $filters->business_status) {
+            $model->where('business_detail.business_status', $filters->business_status);
+        }
+
         if (isset($filters->status) && $filters->status != '') {
             if ($filters->status == BusinessStatus::NEW || $filters->status == BusinessStatus::RENEW) {
                 $model->whereIn('business_detail.status', [BusinessStatus::NEW, BusinessStatus::RENEW]);

@@ -29,62 +29,13 @@
                 </p>
             </div>
             <a-menu theme="dark" mode="inline" :default-selected-keys="['0']">
-                <a-menu-item @click="viewPage(`/admin/dashboard`)" key="1">
-                    <a-icon type="dashboard" />
-                    <span>Dashboard</span>
+                <a-menu-item v-for="(item, sidebarIndex) in sidebar" :key="sidebarIndex" @click="viewPage(item.url)">
+                    <a-icon :type="item.icon" />
+                    <span>{{ item.title }}</span>
                 </a-menu-item>
-                <a-menu-item @click="viewPage(`/admin/application`)" key="2">
-                    <a-icon type="form" />
-                    <span>Application</span>
-                </a-menu-item>
-                <a-menu-item
-                    @click="viewPage(`/admin/new-application`)"
-                    key="3"
-                >
-                    <a-icon type="form" />
-                    <span>New Application</span>
-                </a-menu-item>
-                <a-menu-item
-                    @click="viewPage(`/admin/certificate-approval`)"
-                    key="4"
-                >
-                    <a-icon type="safety-certificate" />
-                    <span>Certificate Approval</span>
-                </a-menu-item>
-                <a-menu-item
-                    @click="viewPage(`/admin/clearance-approval`)"
-                    key="5"
-                >
-                    <a-icon type="folder" />
-                    <span>Clearance Approval</span>
-                </a-menu-item>
-                <a-menu-item
-                    @click="viewPage(`/admin/tax-computation`)"
-                    key="6"
-                >
-                    <a-icon type="money-collect" />
-                    <span>Tax Computation</span>
-                </a-menu-item>
-                <a-menu-item @click="viewPage(`/admin/mayors-permit`)" key="7">
-                    <a-icon type="money-collect" />
-                    <span>Mayor's Permit</span>
-                </a-menu-item>
-                <a-menu-item @click="viewPage(`/admin/amendment`)" key="8">
-                    <a-icon type="folder-open" />
-                    <span>Amendment</span>
-                </a-menu-item>
-                <a-menu-item
-                    @click="viewPage(`/admin/user-management`)"
-                    key="9"
-                >
-                    <a-icon type="user" />
-                    <span>User Management</span>
-                </a-menu-item>
-
                 <a-menu-item
                     @click="logOut"
-                    key="10
-            "
+                    :key="sidebar.length + 1"
                 >
                     <a-icon type="logout" />
                     <span>Logout</span>
@@ -118,6 +69,53 @@ export default {
         return {
             collapsed: false,
             email: "",
+            sidebar: [
+                {
+                    url: '/admin/new-application',
+                    title: 'New Application',
+                    icon: 'form',
+                },
+                {
+                    url: '/admin/application',
+                    title: 'Application Approval',
+                    icon: 'form',
+                },
+                {
+                    url: '/admin/menro',
+                    title: 'MENRO',
+                    icon: 'safety-certificate',
+                },
+                {
+                    url: '/admin/mpdc',
+                    title: 'MPDC',
+                    icon: 'folder',
+                },
+                {
+                    url: '/admin/engineering',
+                    title: 'Engineering',
+                    icon: 'folder',
+                },
+                {
+                    url: '/admin/sanitary',
+                    title: 'Sanitary',
+                    icon: 'folder',
+                },
+                {
+                    url: '/admin/tax-computation',
+                    title: 'Tax Computation',
+                    icon: 'money-collect',
+                },
+                {
+                    url: '/admin/mayors-permit',
+                    title: 'Mayor\'s Permit',
+                    icon: 'money-collect',
+                },
+                {
+                    url: '/admin/user-management',
+                    title: 'User Management',
+                    icon: 'user',
+                },
+            ],
         };
     },
     methods: {

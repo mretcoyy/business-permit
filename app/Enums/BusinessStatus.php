@@ -13,11 +13,14 @@ final class BusinessStatus extends Enum
 {
     const NEW = 1;
     const RENEW = 2;
-    const CHECKREQUIREMENTS = 10;
-    const CHECKREQUIREMENTS2 = 11;
-    const TAXCOMPUTATION = 13;
-    const PAYMENT = 14;
-    const MAYORSPERMIT = 3;
+    const BPLOAPPROVAL = 10;
+    const MENRO = 11;
+    const MPDC = 12;
+    const ENGINEERING = 13;
+    const SANITARY = 14;
+    const TAXCOMPUTATION = 15;
+    const PAYMENT = 16;
+    const MAYORSPERMIT = 17;
     const FORAPPROVAL = 4;
     const APPROVED = 5;
     const DECLINED = 6;

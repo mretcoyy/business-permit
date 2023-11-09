@@ -45,6 +45,7 @@ class BusinessService implements BusinessServiceInterface
             'business_id' => $business->id,
             'bin' => '1234',
             'status' => BusinessStatus::NEW,
+            'business_status' => BusinessStatus::BPLOAPPROVAL,
             'date_renewed' => $date,
         ];
 
@@ -189,11 +190,22 @@ class BusinessService implements BusinessServiceInterface
         return $businessInformationDetail;
     }
 
-    public function changeStatus($data, $id) 
+    public function changeBusinessStatus($data, $status, $id) 
     {
-
         $updateData = [
-            'status' => $data['status']
+            'business_status' => $status
+        ];
+
+        $businessDetail = BusinessDetail::find($id);
+        $businessDetail->update($updateData);
+
+        return $businessDetail;
+    }
+
+    public function changeStatus($id)
+    {
+        $updateData = [
+            'status' => BusinessStatus::RENEW
         ];
 
         $businessDetail = BusinessDetail::find($id);

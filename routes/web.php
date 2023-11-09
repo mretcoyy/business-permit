@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BPLOController;
 use App\Http\Controllers\BFPController;
 use App\Http\Controllers\MayorsOfficeController;
-use App\Http\Controllers\MENROController;
-use App\Http\Controllers\MPDCController;
+use App\Http\Controllers\MenroController;
+use App\Http\Controllers\MpdcController;
 use App\Http\Controllers\EngineeringController;
 use App\Http\Controllers\SanitaryController;
 use App\Http\Controllers\BPLOReleasingController;
@@ -59,11 +59,18 @@ Route::middleware(['role:Admin'])->group(function () {
 Route::get('/bplo', 'BPLOController@index');
 //APPROVAL
 Route::patch('/bplo/changeStatus/{id}', 'BPLOController@changeStatus');
+Route::patch('/bplo/business-change-status/{id}', 'BPLOController@changeBusinessStatus');
 Route::patch('/bplo/update-gross/{id}', 'BPLOController@updateGross');
 
 //APPROVAL
-Route::get('/admin/certificate-approval', 'CertificateApprovalController@index');
-Route::get('/admin/clearance-approval', 'ClearanceApprovalController@index');
+Route::get('/admin/menro', 'MenroController@index');
+Route::patch('/admin/menro-change-status/{id}', 'MenroController@changeBusinessStatus');
+Route::get('/admin/mpdc', 'MpdcController@index');
+Route::patch('/admin/mpdc-change-status/{id}', 'BPLOContrMpdcControlleroller@changeBusinessStatus');
+Route::get('/admin/engineering', 'EngineeringController@index');
+Route::patch('/admin/engineering-change-status/{id}', 'EngineeringController@changeBusinessStatus');
+Route::get('/admin/sanitary', 'SanitaryController@index');
+Route::patch('/admin/sanitary-change-status/{id}', 'SanitaryController@changeBusinessStatus');
 
 //AMENDMENT
 Route::get('/admin/amendment', 'AmendmentController@index');

@@ -191,7 +191,8 @@ export default {
             formModal: { show: false },
             filters: {
                 business_id: "",
-                status: 2,
+                status: 1,
+                business_status: 10,
             },
             modalGross: { show: false },
             formModalBussActivity: { show: false },
@@ -341,7 +342,7 @@ export default {
             this.formModal = { show: true, data };
         },
         async confirm(id, status) {
-            const res = await axios.patch("/bplo/changeStatus/" + id, {
+            const res = await axios.patch("/bplo/business-change-status/" + id, {
                 status: status,
             });
             this.filters.business_id = "";

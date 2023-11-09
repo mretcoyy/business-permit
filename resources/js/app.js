@@ -64,13 +64,23 @@ Vue.component(
 );
 
 Vue.component(
-    "view-admin-certificate-approval",
-    require("./views/Admin/CertificateApproval.vue").default
+    "view-admin-menro-approval",
+    require("./views/Admin/MenroApproval.vue").default
 );
 
 Vue.component(
-    "view-admin-clearance-approval",
-    require("./views/Admin/ClearanceApproval.vue").default
+    "view-admin-mpdc-approval",
+    require("./views/Admin/MpdcApproval.vue").default
+);
+
+Vue.component(
+    "view-admin-engineering-approval",
+    require("./views/Admin/EngineeringApproval.vue").default
+);
+
+Vue.component(
+    "view-admin-sanitary-approval",
+    require("./views/Admin/SanitaryApproval.vue").default
 );
 
 Vue.component(

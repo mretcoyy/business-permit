@@ -25,6 +25,7 @@ class BusinessDetail extends Model implements Transformable
         'business_id',
         'bin',
         'status',
+        'business_status',
         'date_renewed',
         'created_at',
         'updated_at'

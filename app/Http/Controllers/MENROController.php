@@ -3,11 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\Services\BusinessService;
+use Illuminate\Support\Facades\Log;
+use App\Enums\BusinessStatus;
 
-class MENROController extends Controller
+class MenroController extends Controller
 {
     public function index()
     {
-        return view('page.MENRO.list');
+        return view('admin.MenroApproval.list');
+    }
+
+    public function changeStatus(Request $request, BusinessService $service, $id)
+    {
+        $changeStatus = $service->changeStatus($request->all(), BusinessStatus::MPDC, $id);
+
+        return $changeStatus;
     }
 }

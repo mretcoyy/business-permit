@@ -37,11 +37,18 @@ class BPLOController extends Controller
         return $business;
     }
 
-    public function changeStatus(Request $request,BusinessService $service, $id)
+    public function changeStatus(Request $request)
     {
-        $changeStatus = $service->changeStatus($request->all(), $id);
+        $changeStatus = $service->changeStatus($id);
 
         return $changeStatus;
+    }
+
+    public function changeBusinessStatus(Request $request, BusinessService $service, $id)
+    {
+        $changeBusinessStatus = $service->changeBusinessStatus(BusinessStatus::MENRO, $id);
+
+        return $changeBusinessStatus;
     }
 
     public function viewRequirement(Request $request, BusinessService $service)
