@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\PassworReset;
 use Illuminate\Http\Request;
 use App\Entities\User;
 use Illuminate\Support\Facades\Auth;
@@ -69,16 +70,19 @@ class UserController extends Controller
 
     public function linkBusiness(Request $request, $id, UserService $service)
     {
-        $businessID = $request->post('business_id');
+        $user_id = $request->post('user_id');
 
-        $store = $service->linkBusiness($businessID, $id);
+        $store = $service->linkBusiness($user_id, $id);
 
         return $store;
     }
 
-    public function forgotPassword()
+    public function forgotPassword(Request $request, UserService $service)
     {
-        return;
+        $email = $request->post('email');
+
+        $forgot_password = $service->forgotPassword($email); 
+        return $forgot_password;
     }
 
     public function changePassword()
@@ -104,6 +108,14 @@ class UserController extends Controller
     public function viewUserManagement(){
         return view('admin.UserManagement.list');
     }
+    
+    public function passwordReset(Request $request, UserService $service){
+        $data = $service->passwordReset($request->all()); 
+        return $data;
+    }
 
-
+    public function savePasswordReset(Request $request, UserService $service){
+        $data = $service->savePasswordReset($request->all()); 
+        return;
+    }
 }

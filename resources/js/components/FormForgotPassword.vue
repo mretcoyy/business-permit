@@ -47,8 +47,13 @@ export default {
         handleSubmit() {
             this.form.validateFields(async (errors, values) => {
                 if (!errors) {
-                    this.saving = true;
                     try {
+                        let email = this.form.getFieldValue("email");
+                        const res = await axios.post("/forgot-password", {
+                            email,
+                        });
+                        this.data = res.data;
+                        this.saving = true;
                         this.$message.success(this.form.getFieldValue("email"));
                         this.closeModal();
                         // close modal

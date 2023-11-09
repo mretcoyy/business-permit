@@ -103,6 +103,11 @@ Vue.component(
     require("./views/Admin/NewApplication.vue").default
 );
 
+Vue.component(
+    "view-password-reset",
+    require("./views/Password-reset.vue").default
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

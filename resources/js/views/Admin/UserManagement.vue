@@ -99,12 +99,20 @@ export default {
     },
     methods: {
         refreshTable() {
+            this.filters = {
+                search_keyword: "",
+                user_id: "",
+            };
             this.getData();
             this.formModal = { show: false };
             this.formModalRole = { show: false };
             this.formModalLinkBusiness = { show: false };
         },
         handleSubmit(e) {
+            this.filters = {
+                search_keyword: "",
+                user_id: "",
+            };
             this.getData();
             this.formModal.show = e;
             this.formModalRole.show = e;
@@ -156,7 +164,7 @@ export default {
 
             return map;
         },
-        async viewLinkBusiness() {
+        async viewLinkBusiness(user_id) {
             this.filters = {
                 is_null: true,
                 user_id: "",
@@ -167,7 +175,7 @@ export default {
                 },
             });
             let data = this.formatData(res.data.data);
-            this.formModalLinkBusiness = { show: true, data };
+            this.formModalLinkBusiness = { show: true, data, user_id };
         },
         async confirm(id, status) {
             const res = await axios.patch("/user/change-role/" + id, {

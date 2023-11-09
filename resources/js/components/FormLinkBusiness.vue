@@ -108,9 +108,8 @@ export default {
         modal(params) {
             let data = {};
             if (params.show) {
-                this.user_id = data.id;
+                this.user_id = params.user_id;
                 this.data = params.data;
-                console.log(this.data);
             }
         },
     },

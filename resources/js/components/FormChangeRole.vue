@@ -77,6 +77,7 @@ export default {
                 this.fields.forEach((v) => this.form.getFieldDecorator(v));
                 data = params.data[0];
                 this.user_id = data.id;
+                console.log(this.user_id);
                 this.form.setFieldsValue({ role: data.role.toString() });
                 console.log(data);
             }

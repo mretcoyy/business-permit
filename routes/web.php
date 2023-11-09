@@ -42,6 +42,9 @@ Route::post('/user/login', 'UserController@login');
 Route::post('/user/store', 'UserController@register');
 Route::post('/user/logout', 'UserController@logout');
 Route::get('/user/get-user', 'UserController@getUser');
+Route::post('/forgot-password', 'UserController@forgotPassword');
+Route::get('/password-reset', 'UserController@passwordReset')->name('password-reset');
+Route::post('/save-password-reset', 'UserController@savePasswordReset');
 
 Route::middleware(['role:Admin,User'])->group(function () {
     Route::get('/user/dashboard', 'UserController@viewDashboard');
