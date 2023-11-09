@@ -14,9 +14,9 @@ class MenroController extends Controller
         return view('admin.MenroApproval.list');
     }
 
-    public function changeStatus(Request $request, BusinessService $service, $id)
+    public function changeBusinessStatus(Request $request, BusinessService $service, $id)
     {
-        $changeStatus = $service->changeStatus($request->all(), BusinessStatus::MPDC, $id);
+        $changeStatus = $service->changeBusinessStatus(BusinessStatus::MPDC, $id);
 
         return $changeStatus;
     }

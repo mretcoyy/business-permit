@@ -14,9 +14,9 @@ class MpdcController extends Controller
         return view('admin.MpdcApproval.list');
     }
 
-    public function changeStatus(Request $request, BusinessService $service, $id)
+    public function changeBusinessStatus(Request $request, BusinessService $service, $id)
     {
-        $changeStatus = $service->changeStatus($request->all(), BusinessStatus::ENGINEERING, $id);
+        $changeStatus = $service->changeBusinessStatus(BusinessStatus::ENGINEERING, $id);
 
         return $changeStatus;
     }

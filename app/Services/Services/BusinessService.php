@@ -190,7 +190,7 @@ class BusinessService implements BusinessServiceInterface
         return $businessInformationDetail;
     }
 
-    public function changeBusinessStatus($data, $status, $id) 
+    public function changeBusinessStatus($status, $id) 
     {
         $updateData = [
             'business_status' => $status
@@ -529,6 +529,9 @@ class BusinessService implements BusinessServiceInterface
         ];
 
         $business = BusinessFees::create($storeBusinessFees);
+
+        $this->changeBusinessStatus(BusinessStatus::MAYORSPERMIT, $data['business_id']);
+
         return $business;
     }
 

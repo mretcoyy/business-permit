@@ -14,9 +14,9 @@ class EngineeringController extends Controller
         return view('admin.Engineering.list');
     }
 
-    public function changeStatus(Request $request, BusinessService $service, $id)
+    public function changeBusinessStatus(Request $request, BusinessService $service, $id)
     {
-        $changeStatus = $service->changeStatus($request->all(), BusinessStatus::SANITARY, $id);
+        $changeStatus = $service->changeBusinessStatus(BusinessStatus::SANITARY, $id);
 
         return $changeStatus;
     }

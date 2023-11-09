@@ -64,13 +64,13 @@ Route::patch('/bplo/update-gross/{id}', 'BPLOController@updateGross');
 
 //APPROVAL
 Route::get('/admin/menro', 'MenroController@index');
-Route::patch('/admin/menro-change-status/{id}', 'MenroController@changeBusinessStatus');
+Route::patch('/bplo/menro-change-status/{id}', 'MenroController@changeBusinessStatus');
 Route::get('/admin/mpdc', 'MpdcController@index');
-Route::patch('/admin/mpdc-change-status/{id}', 'BPLOContrMpdcControlleroller@changeBusinessStatus');
+Route::patch('/bplo/mpdc-change-status/{id}', 'MpdcController@changeBusinessStatus');
 Route::get('/admin/engineering', 'EngineeringController@index');
-Route::patch('/admin/engineering-change-status/{id}', 'EngineeringController@changeBusinessStatus');
+Route::patch('/bplo/engineering-change-status/{id}', 'EngineeringController@changeBusinessStatus');
 Route::get('/admin/sanitary', 'SanitaryController@index');
-Route::patch('/admin/sanitary-change-status/{id}', 'SanitaryController@changeBusinessStatus');
+Route::patch('/bplo/sanitary-change-status/{id}', 'SanitaryController@changeBusinessStatus');
 
 //AMENDMENT
 Route::get('/admin/amendment', 'AmendmentController@index');

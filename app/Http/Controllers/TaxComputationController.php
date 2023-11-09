@@ -14,7 +14,6 @@ class TaxComputationController extends Controller
 
     public function store(Request $request, BusinessService $service)
     {
-      
         $store = $service->submitBusinessFees($request->all());
 
         return $store;

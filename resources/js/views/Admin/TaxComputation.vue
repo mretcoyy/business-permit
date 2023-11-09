@@ -92,7 +92,8 @@ export default {
             formModal: { show: false },
             filters: {
                 business_id: "",
-                status: 5,
+                business_status: 15,
+                status: 1,
             },
             search: "",
         };

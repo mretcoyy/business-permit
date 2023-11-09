@@ -111,6 +111,11 @@ export default {
                     icon: 'money-collect',
                 },
                 {
+                    url: '/admin/amendment',
+                    title: 'Amendments',
+                    icon: 'folder-open',
+                },
+                {
                     url: '/admin/user-management',
                     title: 'User Management',
                     icon: 'user',

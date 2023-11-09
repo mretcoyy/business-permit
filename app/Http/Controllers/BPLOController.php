@@ -7,6 +7,7 @@ use App\Services\Services\BusinessService;
 use App\Repositories\Eloquent\BusinessRepositoryEloquent;
 use App\Transformers\BusinessTransformer;
 use Illuminate\Support\Facades\Log;
+use App\Enums\BusinessStatus;
 
 class BPLOController extends Controller
 {

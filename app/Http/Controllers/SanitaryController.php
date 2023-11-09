@@ -14,9 +14,9 @@ class SanitaryController extends Controller
         return view('admin.Sanitary.list');
     }
 
-    public function changeStatus(Request $request, BusinessService $service, $id)
+    public function changeBusinessStatus(Request $request, BusinessService $service, $id)
     {
-        $changeStatus = $service->changeStatus($request->all(), BusinessStatus::TAXCOMPUTATION, $id);
+        $changeStatus = $service->changeBusinessStatus(BusinessStatus::TAXCOMPUTATION, $id);
 
         return $changeStatus;
     }
