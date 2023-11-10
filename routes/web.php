@@ -74,6 +74,8 @@ Route::get('/admin/engineering', 'EngineeringController@index');
 Route::patch('/bplo/engineering-change-status/{id}', 'EngineeringController@changeBusinessStatus');
 Route::get('/admin/sanitary', 'SanitaryController@index');
 Route::patch('/bplo/sanitary-change-status/{id}', 'SanitaryController@changeBusinessStatus');
+Route::get('/admin/bfp', 'SanitaryController@index');
+Route::patch('/bplo/sanitary-change-status/{id}', 'SanitaryController@changeBusinessStatus');
 
 //AMENDMENT
 Route::get('/admin/amendment', 'AmendmentController@index');

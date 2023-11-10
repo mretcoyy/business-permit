@@ -84,6 +84,11 @@ Vue.component(
 );
 
 Vue.component(
+    "view-admin-bfp-approval",
+    require("./views/Admin/BfpApproval.vue").default
+);
+
+Vue.component(
     "view-admin-tax-computation",
     require("./views/Admin/TaxComputation.vue").default
 );

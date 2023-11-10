@@ -1,17 +1,7 @@
 <template>
-    <UserLayout>
+    <MainLayout>
         <a-card>
-            <div style="margin-bottom: 10px; display: flex">
-                <h1>My Application</h1>
-                <a-button
-                    style="margin-left: 20px"
-                    type="primary"
-                    @click="viewPage('/user/application')"
-                >
-                    <a-icon type="plus" />
-                    New Application</a-button
-                >
-            </div>
+            <h1>Sanitary Approval</h1>
             <a-table
                 :columns="columns"
                 :data-source="data"
@@ -32,37 +22,55 @@
                             Status == "Forapproval" ? "For Approval" : Status
                         }}</a-tag
                     >
-                    <!-- <a-tag
-                        v-for="tag in Status"
-                        :key="tag"
-                        :color="
-                            tag === 'approval'
-                                ? 'volcano'
-                                : tag === 'for approval'
-                                ? 'geekblue'
-                                : 'green'
-                        "
-                    >
-                        {{ tag.toUpperCase() }}
-                    </a-tag> -->
                 </span>
                 <span slot="action" slot-scope="text, record">
-                    <a @click="view(record.business_id)">View </a>
+                    <a @click="view(text.business_id)">View</a> |
+                    <a-popconfirm
+                        title="Sure to Approve Application?"
+                        @confirm="
+                            () => {
+                                confirm(text.business_id, 5);
+                            }
+                        "
+                    >
+                        <a>Approve</a>
+                    </a-popconfirm>
+                    |
+                    <a-popconfirm
+                        title="Sure to Decline Application?"
+                        @confirm="
+                            () => {
+                                confirm(text.business_id, 6);
+                            }
+                        "
+                    >
+                        <a>Decline</a>
+                    </a-popconfirm>
                 </span>
             </a-table>
         </a-card>
         <FormBusinessView :modal="formModal" @refresh="refreshTable" />
-    </UserLayout>
+    </MainLayout>
 </template>
 <script>
 import FormBusinessView from "../../components/FormBusinessView.vue";
-import UserLayout from "../../layouts/UserLayout";
+import MainLayout from "../../layouts/MainLayout";
 
 const columns = [
     {
         title: "Business Name",
         dataIndex: "name",
         key: "name",
+    },
+    // {
+    //     title: "Age",
+    //     dataIndex: "age",
+    //     key: "age",
+    // },
+    {
+        title: "Owner Name",
+        dataIndex: "tax_payer",
+        key: "tax_payer",
     },
     {
         title: "Address",
@@ -78,7 +86,6 @@ const columns = [
     {
         title: "Action",
         key: "action",
-        dataIndex: "action",
         scopedSlots: { customRender: "action" },
     },
 ];
@@ -91,24 +98,18 @@ export default {
             data,
             columns,
             formModal: { show: false },
-            userId: this.$root.$children[0].user.id,
             filters: {
-                user_id: "",
                 business_id: "",
+                business_status: 15,
+                status: 1,
             },
         };
     },
     components: {
-        UserLayout,
+        MainLayout,
         FormBusinessView,
     },
-    created() {
-        this.filters.user_id = this.$store.state.user.id;
-    },
     methods: {
-        viewPage(url) {
-            if (url) window.location.href = url;
-        },
         refreshTable() {
             this.getData();
             this.formModal = { show: false };
@@ -120,10 +121,12 @@ export default {
                 container.name = item.businessInformation.taxPayerBname;
                 container.tax_payer = item.businessInformation.taxPayerFullname;
                 container.address = item.businessInformation.taxPayerFname;
-                container.Status = item.businessDetail.business_status;
+                container.Status = item.businessDetail.status;
                 container.business_id = item.businessDetail.business_id;
+                container.dataBusinessActivity = item.businessInformationDetail;
                 return container;
             });
+
             return map;
         },
         async getData() {
@@ -132,6 +135,8 @@ export default {
                     filters: this.filters,
                 },
             });
+            // .then(function (response) {})
+            // .catch(function (error) {});
             this.data = this.formatData(res.data.data);
         },
         async view(business_id) {
@@ -144,13 +149,15 @@ export default {
             let data = res.data.data;
             this.formModal = { show: true, data };
         },
+        async confirm(id, status) {
+            const res = await axios.patch("/bplo/bfp-change-status/" + id, {
+                status: status,
+            });
+            this.getData();
+        },
     },
     mounted() {
-        this.filters.user_id = this.$store.state.user.id;
-
-        if (this.filters.user_id != "") {
-            this.getData();
-        }
+        this.getData();
     },
 };
 </script>

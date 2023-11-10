@@ -49,8 +49,9 @@ class BusinessTransformer extends TransformerAbstract
             'bin' => 'test',
             'date_renewed' => $datum->date_renewed,
             'status' => BusinessStatus::getDescription($datum->status),
-            'business_status' => BusinessStatus::getDescription($datum->business_status),
+            'business_status' => strtoupper(BusinessStatus::getDescription( (integer) $datum->business_status)),
             'status_val' => $datum->status,
+            'business_status_val' => (integer) $datum->business_status,
            ];
         }
         return $result;

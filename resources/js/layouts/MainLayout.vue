@@ -77,7 +77,7 @@ export default {
                 },
                 {
                     url: '/admin/application',
-                    title: 'Application Approval',
+                    title: 'BPLO Approval',
                     icon: 'form',
                 },
                 {
@@ -88,21 +88,26 @@ export default {
                 {
                     url: '/admin/mpdc',
                     title: 'MPDC',
-                    icon: 'folder',
+                    icon: 'safety-certificate',
                 },
                 {
                     url: '/admin/engineering',
                     title: 'Engineering',
-                    icon: 'folder',
+                    icon: 'safety-certificate',
                 },
                 {
                     url: '/admin/sanitary',
                     title: 'Sanitary',
-                    icon: 'folder',
+                    icon: 'safety-certificate',
+                },
+                {
+                    url: '/admin/bfp',
+                    title: 'BFP',
+                    icon: 'safety-certificate',
                 },
                 {
                     url: '/admin/tax-computation',
-                    title: 'Tax Computation',
+                    title: 'Payment',
                     icon: 'money-collect',
                 },
                 {

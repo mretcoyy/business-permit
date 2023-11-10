@@ -92,7 +92,7 @@ export default {
             formModal: { show: false },
             filters: {
                 business_id: "",
-                business_status: 15,
+                business_status: 16,
                 status: 1,
             },
             search: "",
@@ -105,7 +105,7 @@ export default {
     methods: {
         refreshTable() {
             this.filters = {
-                business_status: 15,
+                business_status: 16,
                 status: 1,
                 search_keyword: "",
             };
@@ -114,7 +114,7 @@ export default {
         },
         handleSubmit(e) {
             this.filters = {
-                business_status: 15,
+                business_status: 16,
                 status: 1,
                 search_keyword: "",
             };

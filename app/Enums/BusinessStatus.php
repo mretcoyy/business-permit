@@ -18,7 +18,7 @@ final class BusinessStatus extends Enum
     const MPDC = 12;
     const ENGINEERING = 13;
     const SANITARY = 14;
-    const TAXCOMPUTATION = 15;
+    const BFP = 15;
     const PAYMENT = 16;
     const MAYORSPERMIT = 17;
     const FORAPPROVAL = 4;
