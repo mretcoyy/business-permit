@@ -16,18 +16,18 @@ class CreateLessorInformationTable extends Migration
         Schema::create('lessor_information', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('business_id');
-            $table->string('first_name');
+            $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
-            $table->string('last_name');
-            $table->double('monthly_rental', 20, 6);
-            $table->string('house_number');
+            $table->string('last_name')->nullable();
+            $table->double('monthly_rental', 20, 6)->nullable();
+            $table->string('house_number')->nullable();
             $table->string('street')->nullable();
-            $table->string('barangay');
+            $table->string('barangay')->nullable();
             $table->string('subdivision')->nullable();
-            $table->string('city');
-            $table->string('province');
-            $table->string('contact_number');
-            $table->string('email_address');
+            $table->string('city')->nullable();
+            $table->string('province')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('email_address')->nullable();
             $table->timestamps();
 
             $table->foreign('business_id')

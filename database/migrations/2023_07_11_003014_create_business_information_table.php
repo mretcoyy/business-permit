@@ -33,9 +33,9 @@ class CreateBusinessInformationTable extends Migration
             $table->string('email_address');
             $table->string('pin')->nullable();
             $table->string('business_area');
-            $table->string('number_of_employees');
-            $table->string('number_of_employees_in_lgu');
-            $table->string('emergency_contact_person');
+            $table->string('number_of_employees')->nullable();
+            $table->string('number_of_employees_in_lgu')->nullable();
+            $table->string('emergency_contact_person')->nullable();
             $table->timestamps();
 
             $table->foreign('business_id')

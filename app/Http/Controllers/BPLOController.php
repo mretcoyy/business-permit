@@ -11,6 +11,13 @@ use App\Enums\BusinessStatus;
 
 class BPLOController extends Controller
 {
+    public function __construct()
+    {
+        ini_set('post_max_size', -1);
+        ini_set('upload_max_filesize', -1);
+        ini_set('max_upload_limit', -1);
+    }
+    
     public function index()
     {
         return view('page.BPLO.list');

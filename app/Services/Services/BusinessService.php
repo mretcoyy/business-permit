@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Tcpdf\Fpdi;
 class BusinessService implements BusinessServiceInterface
 {
+
     public function store($data_field, $files)
     {
         DB::beginTransaction();
@@ -56,25 +57,25 @@ class BusinessService implements BusinessServiceInterface
 
         $storeBusinessInfo = [
             'business_id' => $business->id,
-            'first_name' => $businessInformationData->taxPayerLname,
-            'middle_name' => $businessInformationData->taxPayerMname,
-            'last_name' => $businessInformationData->taxPayerFname,
-            'business_name' => $businessInformationData->taxPayerBname,
-            'trade_name' => $businessInformationData->taxPayerTname,
-            'business_number' => $businessInformationData->BAddressHouseNo,
-            'building_name' => $businessInformationData->BAddressBuildingName,
-            'unit_no' => $businessInformationData->BAddressUnitNo,
-            'street' => $businessInformationData->BAddressStreet,
-            'barangay' => $businessInformationData->BAddressBarangay,
-            'subdivision' => $businessInformationData->BAddressSubd,
-            'city' => $businessInformationData->BAddressCity,
-            'province' => $businessInformationData->BAddressProvince,
-            'contact_number' => $businessInformationData->BAddressTelNo,
-            'email_address' => $businessInformationData->BAddressEmail,
-            'pin' => $businessInformationData->BusinessArea,
-            'business_area' => $businessInformationData->BusinessArea,
-            'number_of_employees' => $businessInformationData->TotalNumberofEmployees,
-            'number_of_employees_in_lgu' => $businessInformationData->LGUEmployeeCount,
+            'first_name' => isset($businessInformationData->taxPayerLname) ? $businessInformationData->taxPayerLname : null,
+            'middle_name' => isset($businessInformationData->taxPayerMname) ? $businessInformationData->taxPayerMname : null,
+            'last_name' => isset($businessInformationData->taxPayerFname) ? $businessInformationData->taxPayerFname : null,
+            'business_name' => isset($businessInformationData->taxPayerBname) ? $businessInformationData->taxPayerBname : null,
+            'trade_name' => isset($businessInformationData->taxPayerTname) ? $businessInformationData->taxPayerTname : null,
+            'business_number' => isset($businessInformationData->BAddressHouseNo) ? $businessInformationData->BAddressHouseNo : null,
+            'building_name' => isset($businessInformationData->BAddressBuildingName) ? $businessInformationData->BAddressBuildingName : null,
+            'unit_no' => isset($businessInformationData->BAddressUnitNo) ? $businessInformationData->BAddressUnitNo : null,
+            'street' => isset($businessInformationData->BAddressStreet) ? $businessInformationData->BAddressStreet : null,
+            'barangay' => isset($businessInformationData->BAddressBarangay) ? $businessInformationData->BAddressBarangay : null,
+            'subdivision' => isset($businessInformationData->BAddressSubd) ? $businessInformationData->BAddressSubd : null,
+            'city' => isset($businessInformationData->BAddressCity) ? $businessInformationData->BAddressCity : null,
+            'province' => isset($businessInformationData->BAddressProvince) ? $businessInformationData->BAddressProvince : null,
+            'contact_number' => isset($businessInformationData->BAddressTelNo) ? $businessInformationData->BAddressTelNo : null,
+            'email_address' => isset($businessInformationData->BAddressEmail) ? $businessInformationData->BAddressEmail : null,
+            'pin' => isset($businessInformationData->BusinessArea) ? $businessInformationData->BusinessArea : null,
+            'business_area' => isset($businessInformationData->BusinessArea) ? $businessInformationData->BusinessArea : null,
+            'number_of_employees' => isset($businessInformationData->TotalNumberofEmployees) ? $businessInformationData->TotalNumberofEmployees : 0,
+            'number_of_employees_in_lgu' => isset($businessInformationData->LGUEmployeeCount) ? $businessInformationData->LGUEmployeeCount : 0,
             'emergency_contact_person' => $businessInformationData->BusinessArea,
         ];
 
@@ -102,18 +103,18 @@ class BusinessService implements BusinessServiceInterface
   
             $storeLessorInformation = [
                 'business_id' => $business->id,
-                'first_name' => $lessorInformationData->LessorFname,
-                'middle_name' => $lessorInformationData->LessorMname,
-                'last_name' => $lessorInformationData->LessorLname,
-                'monthly_rental' => $lessorInformationData->LessorMonthlyRental,
-                'house_number' => $lessorInformationData->LAddressHouseNo,
-                'street' => $lessorInformationData->LAddressStreet,
-                'barangay' => $lessorInformationData->LAddressBarangay,
-                'subdivision' => $lessorInformationData->LAddressSubd,
-                'city' => $lessorInformationData->LAddressCity,
-                'province' => $lessorInformationData->LAddressProvince,
-                'contact_number' => $lessorInformationData->LAddressTelNo,
-                'email_address' => $lessorInformationData->LAddressEmail,
+                'first_name' => isset($lessorInformationData->LessorFname) ? $lessorInformationData->LessorFname : null,
+                'middle_name' => isset($lessorInformationData->LessorMname) ? $lessorInformationData->LessorMname : null,
+                'last_name' => isset($lessorInformationData->LessorLname) ? $lessorInformationData->LessorLname : null,
+                'monthly_rental' => isset($lessorInformationData->LessorMonthlyRental) ? $lessorInformationData->LessorMonthlyRental : null,
+                'house_number' => isset($lessorInformationData->LAddressHouseNo) ? $lessorInformationData->LAddressHouseNo : null,
+                'street' => isset($lessorInformationData->LAddressStreet) ? $lessorInformationData->LAddressStreet : null,
+                'barangay' => isset($lessorInformationData->LAddressBarangay) ? $lessorInformationData->LAddressBarangay : null,
+                'subdivision' => isset($lessorInformationData->LAddressSubd) ? $lessorInformationData->LAddressSubd : null,
+                'city' => isset($lessorInformationData->LAddressCity) ? $lessorInformationData->LAddressCity : null,
+                'province' => isset($lessorInformationData->LAddressProvince) ? $lessorInformationData->LAddressProvince : null,
+                'contact_number' => isset($lessorInformationData->LAddressTelNo) ? $lessorInformationData->LAddressTelNo : null,
+                'email_address' => isset($lessorInformationData->LAddressEmail) ? $lessorInformationData->LAddressEmail : null,
             ];
     
             $lessorInformation = LessorInformation::create($storeLessorInformation);
@@ -302,8 +303,8 @@ class BusinessService implements BusinessServiceInterface
             'email_address' => $businessInformationData->BAddressEmail,
             'pin' => $businessInformationData->BusinessArea,
             'business_area' => $businessInformationData->BusinessArea,
-            'number_of_employees' => $businessInformationData->TotalNumberofEmployees,
-            'number_of_employees_in_lgu' => $businessInformationData->LGUEmployeeCount,
+            'number_of_employees' => isset($businessInformationData->TotalNumberofEmployees) ? $businessInformationData->TotalNumberofEmployees : 0,
+            'number_of_employees_in_lgu' => isset($businessInformationData->LGUEmployeeCount) ? $businessInformationData->LGUEmployeeCount : 0,
             'emergency_contact_person' => $businessInformationData->BusinessArea,
         ];
         $businessInformation = $business->businessInformation()->update($updateBusinessInfo);
@@ -333,18 +334,18 @@ class BusinessService implements BusinessServiceInterface
   
             $updateLessorInformation = [
                 'business_id' => $business->id,
-                'first_name' => $lessorInformationData->LessorFname,
-                'middle_name' => $lessorInformationData->LessorMname,
-                'last_name' => $lessorInformationData->LessorLname,
-                'monthly_rental' => $lessorInformationData->LessorMonthlyRental,
-                'house_number' => $lessorInformationData->LAddressHouseNo,
-                'street' => $lessorInformationData->LAddressStreet,
-                'barangay' => $lessorInformationData->LAddressBarangay,
-                'subdivision' => $lessorInformationData->LAddressSubd,
-                'city' => $lessorInformationData->LAddressCity,
-                'province' => $lessorInformationData->LAddressProvince,
-                'contact_number' => $lessorInformationData->LAddressTelNo,
-                'email_address' => $lessorInformationData->LAddressEmail,
+                'first_name' => isset($lessorInformationData->LessorFname) ? $lessorInformationData->LessorFname : null,
+                'middle_name' => isset($lessorInformationData->LessorMname) ? $lessorInformationData->LessorMname : null,
+                'last_name' => isset($lessorInformationData->LessorLname) ? $lessorInformationData->LessorLname : null,
+                'monthly_rental' => isset($lessorInformationData->LessorMonthlyRental) ? $lessorInformationData->LessorMonthlyRental : null,
+                'house_number' => isset($lessorInformationData->LAddressHouseNo) ? $lessorInformationData->LAddressHouseNo : null,
+                'street' => isset($lessorInformationData->LAddressStreet) ? $lessorInformationData->LAddressStreet : null,
+                'barangay' => isset($lessorInformationData->LAddressBarangay) ? $lessorInformationData->LAddressBarangay : null,
+                'subdivision' => isset($lessorInformationData->LAddressSubd) ? $lessorInformationData->LAddressSubd : null,
+                'city' => isset($lessorInformationData->LAddressCity) ? $lessorInformationData->LAddressCity : null,
+                'province' => isset($lessorInformationData->LAddressProvince) ? $lessorInformationData->LAddressProvince : null,
+                'contact_number' => isset($lessorInformationData->LAddressTelNo) ? $lessorInformationData->LAddressTelNo : null,
+                'email_address' => isset($lessorInformationData->LAddressEmail) ? $lessorInformationData->LAddressEmail : null,
             ];
 
             $lessorInformation = $business->lessorInformation()->update($updateLessorInformation);
