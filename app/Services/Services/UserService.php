@@ -27,6 +27,7 @@ class UserService implements UserServiceInterface
 
     public function forgotPassword($email)
     {
+        set_time_limit(0);
         $user = User::where('email',$email)->first();
         if($user)
         {
@@ -37,7 +38,7 @@ class UserService implements UserServiceInterface
             $data->token = sha1(time());
             $data->save();
             
-            try{
+            // try{
                   $email_data = [
                     'fullname' => $name,
                     'email' => $email,
@@ -50,10 +51,10 @@ class UserService implements UserServiceInterface
                   return ['message'=> "Mail not Sent"];
                 }
                 return response()->json(['response'=>'success', 'message' => 'Email Successfully Sent!']);
-            }
-            catch(\Error $th){
-              return response()->json(['message'=> $th->getMessage()], 422);
-            }
+            // }
+            // catch(\Error $th){
+            //   return response()->json(['message'=> $th->getMessage()], 422);
+            // }
         }
         else{
           return response()->json(['response'=>'error', 'message' => 'No Email Found']);
@@ -87,9 +88,8 @@ class UserService implements UserServiceInterface
     }
 
     public function passwordReset($data){
-        
-        $email =  $data->email;
-        $token =  $data->token;
+        $email =  $data['email'];
+        $token =  $data['token'];
         $pw_token = PassworReset::where('token',$token)->first();
         if($pw_token){
           $expired = $this->tokenExpire($email);
@@ -107,9 +107,9 @@ class UserService implements UserServiceInterface
     }
     
     public function savePasswordReset($data){
-        $email =  $data->email;
-        $token =  $data->token;
-        $password =  $data->password;
+        $email =  $data['email'];
+        $token =  $data['token'];
+        $password =  $data['password'];
         $expired = $this->tokenExpire($email);
   
         $token = PassworReset::where('token',$token)->first();
@@ -121,6 +121,7 @@ class UserService implements UserServiceInterface
             ];
             $user = User::where('email',$email)->update($data);
             $pw_reset = PassworReset::where('email',$email)->delete();
+            return $user;
         }
     }
     

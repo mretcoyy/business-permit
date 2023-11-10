@@ -110,14 +110,14 @@
                     <tr>
                         <td bgcolor="#ffffff" align="center">
                             <p
-                                style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:16px;line-height:19px;font-weight:700;font-style:normal;color:#009378;text-decoration:none;letter-spacing:0px;padding: 15px 50px 15px 50px;display: inline-block;">
+                                style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:16px;line-height:19px;font-weight:700;font-style:normal;color:rgb(43, 74, 169);text-decoration:none;letter-spacing:0px;padding: 15px 50px 15px 50px;display: inline-block;">
                                 Password Reset Request</p>
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 500; line-height: 20px;">
-                            <p style="margin: 0; font-weight:bold; color: #1B5E20;">Hello {{ $email_data['fullname'] }},</p>
+                            <p style="margin: 0; font-weight:bold; color: rgb(43, 74, 169);">Hello {{ $email_data['fullname'] }},</p>
                         </td>
                     </tr>
                     <tr>
@@ -145,7 +145,7 @@
                                 font-weight:700;
                                 color:white;
                                 text-decoration:none;
-                                background-color:#009378; 
+                                background-color:rgb(43, 74, 169); 
                                 border: none;
                                 padding: 15px 32px;
                                 text-align: center;

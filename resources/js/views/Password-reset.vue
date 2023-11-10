@@ -109,6 +109,9 @@ import Default from "../layouts/Default.vue";
 import axios from "axios";
 
 export default {
+    components: {
+        Default,
+    },
     props: { token: String, email: String },
     data() {
         return {
@@ -128,29 +131,94 @@ export default {
             );
         },
         passwordReset() {
-            this.loading = true;
-
-            console.log(this.form);
-            axios
-                .post("/save-password-reset", this.form)
-                .then((res) => {
-                    console.log(res);
-                    if (res.data.response == "success") {
-                        self.$message.success(
-                            "Updated Successfully!...Redirecting!..."
-                        );
-                        self.form.resetFields();
-                        setTimeout(() => {
-                            window.location.href = "/";
-                        }, 2000);
-                    } else {
-                    }
-                    this.loading = false;
+            let self = this;
+            self.loginBtn = true;
+            console.log(self.form);
+            axios({
+                method: "POST",
+                url: "password-reset/save-password-reset",
+                data: {
+                    password: this.form.getFieldValue("password"),
+                    email: this.email,
+                    token: this.token,
+                },
+            })
+                .then(function (response) {
+                    self.$message.success(
+                        "Updated Successfully!...Redirecting!..."
+                    );
+                    self.form.resetFields();
+                    self.loginBtn = false;
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 2000);
+                    self.loginBtn = false;
                 })
                 .catch((error) => {});
+        },
+        validateToNextPassword(rule, value, callback) {
+            const form = this.form;
+            if (value && this.confirmDirty) {
+                form.validateFields(["confirm"], { force: true });
+            }
+            callback();
+        },
+        compareToFirstPassword(rule, value, callback) {
+            const form = this.form;
+            if (value && value !== form.getFieldValue("password")) {
+                callback("Two passwords that you enter is inconsistent!");
+            } else {
+                callback();
+            }
         },
     },
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.user-layout-login {
+    label {
+        font-size: 14px;
+    }
+
+    .getCaptcha {
+        display: block;
+        width: 100%;
+        height: 40px;
+    }
+
+    .forge-password {
+        font-size: 14px;
+    }
+
+    button.login-button {
+        padding: 0 15px;
+        font-size: 16px;
+        height: 40px;
+        width: 100%;
+    }
+
+    .user-login-other {
+        text-align: left;
+        margin-top: 24px;
+        line-height: 22px;
+
+        .item-icon {
+            font-size: 24px;
+            color: rgba(0, 0, 0, 0.2);
+            margin-left: 16px;
+            vertical-align: middle;
+            cursor: pointer;
+            transition: color 0.3s;
+
+            &:hover {
+                color: #1890ff;
+            }
+        }
+
+        .register {
+            float: right;
+        }
+    }
+}
+</style>

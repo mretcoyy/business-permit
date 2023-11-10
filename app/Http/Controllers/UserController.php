@@ -116,6 +116,6 @@ class UserController extends Controller
 
     public function savePasswordReset(Request $request, UserService $service){
         $data = $service->savePasswordReset($request->all()); 
-        return;
+        return $data;
     }
 }
