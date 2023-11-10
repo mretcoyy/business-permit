@@ -23,8 +23,8 @@ class CreateBusinessFeesTable extends Migration
             $table->decimal('environmental_clearance',23,6)->default(0.000000);
             $table->decimal('sanitary_permit_fee',23,6)->default(0.000000);
             $table->decimal('zoning_fee',23,6)->default(0.000000);
-            $table->string('status');
-            $table->string('user_id');
+            $table->tinyInteger('status')->default(0);
+            $table->string('user_id')->nullable();
             $table->timestamps();
 
             $table->foreign('business_id')

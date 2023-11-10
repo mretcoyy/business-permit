@@ -98,9 +98,6 @@ export default {
             },
         };
     },
-    created() {
-        this.filters.user_id = this.$store.state.user.id;
-    },
     components: {
         UserLayout,
         FormBusinessView,
@@ -149,7 +146,11 @@ export default {
         },
     },
     mounted() {
-        this.getData();
+        this.filters.user_id = this.$store.state.user.id;
+
+        if (this.filters.user_id != "") {
+            this.getData();
+        }
     },
 };
 </script>

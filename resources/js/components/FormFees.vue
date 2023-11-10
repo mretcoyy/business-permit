@@ -4,7 +4,7 @@
            Business Fees
         "
         v-model="modal.show"
-        :width="1000"
+        :width="900"
         @cancel="closeModal()"
         :maskClosable="false"
         okText="Submit"
@@ -13,12 +13,15 @@
         <div
             :style="{
                 background: '#fff',
-                padding: '24px',
+                padding: '14px',
                 minHeight: '280px',
             }"
         >
             <a-card>
                 <a-descriptions title="Business Information">
+                    <a-descriptions-item label="Status">{{
+                        info.status
+                    }}</a-descriptions-item>
                     <a-descriptions-item label="BIN">{{
                         info.bin
                     }}</a-descriptions-item>
@@ -47,13 +50,18 @@
             </a-card>
             <a-form :form="form">
                 <a-card>
-                    <a-row :gutter="16">
+                    <a-row :gutter="12">
                         <p style="padding-left: 9px; font-weight: bold">
                             Fees:
                         </p>
-                        <a-col :span="8">
+                        <a-col :span="8" v-if="info.status != 'New'">
                             <a-form-item label="Business Tax">
                                 <a-input
+                                    @keyup="
+                                        () => {
+                                            compute();
+                                        }
+                                    "
                                     v-decorator="[
                                         'business_tax',
                                         {
@@ -71,6 +79,11 @@
                         <a-col :span="8">
                             <a-form-item label="Mayor's Permit Fee">
                                 <a-input
+                                    @keyup="
+                                        () => {
+                                            compute();
+                                        }
+                                    "
                                     v-decorator="[
                                         'mayors_permit',
                                         {
@@ -88,6 +101,12 @@
                         <a-col :span="8">
                             <a-form-item label="Occupational Permit Fee">
                                 <a-input
+                                    inputmode="numeric"
+                                    @keyup="
+                                        () => {
+                                            compute();
+                                        }
+                                    "
                                     v-decorator="[
                                         'occupational_permit',
                                         {
@@ -105,25 +124,63 @@
                         <a-col :span="8">
                             <a-form-item label="Subscription Fee & Other Fees">
                                 <a-input
+                                    inputmode="numeric"
+                                    @keyup="
+                                        () => {
+                                            compute();
+                                        }
+                                    "
                                     v-decorator="['subscription_other']"
                                 /> </a-form-item
                         ></a-col>
                         <a-col :span="8">
                             <a-form-item label="Environmental Clearance">
                                 <a-input
+                                    inputmode="numeric"
+                                    @keyup="
+                                        () => {
+                                            compute();
+                                        }
+                                    "
                                     v-decorator="['environmental_clearance']"
                                 /> </a-form-item
                         ></a-col>
                         <a-col :span="8">
                             <a-form-item label="Sanitary Permit Fee">
                                 <a-input
+                                    inputmode="numeric"
+                                    @keyup="
+                                        () => {
+                                            compute();
+                                        }
+                                    "
                                     v-decorator="['sanitary_permit_fee']"
                                 /> </a-form-item
                         ></a-col>
                         <a-col :span="8">
                             <a-form-item label="Zoning Fee">
                                 <a-input
+                                    inputmode="numeric"
+                                    @keyup="
+                                        () => {
+                                            compute();
+                                        }
+                                    "
                                     v-decorator="['zoning_fee']"
+                                /> </a-form-item
+                        ></a-col>
+
+                        <a-col :span="8">
+                            <a-form-item label="Total Fee">
+                                <a-input
+                                    inputmode="numeric"
+                                    @keyup="
+                                        () => {
+                                            compute();
+                                        }
+                                    "
+                                    :disabled="true"
+                                    v-decorator="['total_fee']"
                                 /> </a-form-item
                         ></a-col>
                     </a-row>
@@ -151,6 +208,7 @@ export default {
                 "environmental_clearance",
                 "sanitary_permit_fee",
                 "zoning_fee",
+                "total_fee",
             ],
             info: {},
         };
@@ -179,6 +237,7 @@ export default {
                             "sanitary_permit_fee"
                         ),
                         zoning_fee: self.form.getFieldValue("zoning_fee"),
+                        total_fee: self.form.getFieldValue("total_fee"),
                     };
                     self.submitData(data);
                 }
@@ -192,6 +251,42 @@ export default {
             });
             this.$emit("onSubmit", false);
             this.$message.success("Submit Succesfully");
+        },
+        compute() {
+            let total_fee = 0;
+            let self = this;
+            let business_tax = self.form.getFieldValue("business_tax");
+            let mayors_permit = self.form.getFieldValue("mayors_permit");
+            let occupational_permit = self.form.getFieldValue(
+                "occupational_permit"
+            );
+            let subscription_other =
+                self.form.getFieldValue("subscription_other");
+            let environmental_clearance = self.form.getFieldValue(
+                "environmental_clearance"
+            );
+            let sanitary_permit_fee = self.form.getFieldValue(
+                "sanitary_permit_fee"
+            );
+            let zoning_fee = self.form.getFieldValue("zoning_fee");
+
+            total_fee =
+                (isNaN(business_tax) ? 0 : parseFloat(business_tax)) +
+                (isNaN(mayors_permit) ? 0 : parseFloat(mayors_permit)) +
+                (isNaN(occupational_permit)
+                    ? 0
+                    : parseFloat(occupational_permit)) +
+                (isNaN(subscription_other)
+                    ? 0
+                    : parseFloat(subscription_other)) +
+                (isNaN(environmental_clearance)
+                    ? 0
+                    : parseFloat(environmental_clearance)) +
+                (isNaN(sanitary_permit_fee)
+                    ? 0
+                    : parseFloat(sanitary_permit_fee)) +
+                (isNaN(zoning_fee) ? 0 : parseFloat(zoning_fee));
+            this.form.setFieldsValue({ total_fee });
         },
     },
     watch: {
@@ -208,7 +303,6 @@ export default {
             }
 
             console.log(occupational_permit);
-
             this.form.setFieldsValue({ occupational_permit });
         },
     },

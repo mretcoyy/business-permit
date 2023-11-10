@@ -60,7 +60,8 @@ class BusinessCriteria implements CriteriaInterface
             $model->where('business_detail.bin', 'LIKE', '%'.$filters->search_keyword.'%')
             ->orWhere('business_information.business_name', 'LIKE',  '%'.$filters->search_keyword.'%')
             ->orWhere(DB::raw("CONCAT(business_information.first_name, ' ', business_information.last_name)"), 'LIKE',  '%'.$filters->search_keyword.'%')
-            ->where('business_detail.status', $filters->status);
+            ->where('business_detail.status', $filters->status)
+            ->where('business_detail.business_status', $filters->business_status);
         }
 
         if (isset($filters->is_null) && $filters->is_null == true) {

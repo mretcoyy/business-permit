@@ -95,8 +95,8 @@
                         label="Are you enjoying tax incentive from any Goverment Entity:"
                     >
                         <a-radio-group v-decorator="['hasTaxIncentive']">
-                            <a-radio value="yes"> Yes </a-radio>
-                            <a-radio value="No"> No </a-radio>
+                            <a-radio value="1"> Yes </a-radio>
+                            <a-radio value="0"> No </a-radio>
                         </a-radio-group>
                     </a-form-item>
                 </a-col>
@@ -633,7 +633,11 @@
                         </a-upload>
                     </a-col> -->
             </a-row>
-            <a-button type="primary" @click="handleSubmit" block
+            <a-button
+                type="primary"
+                @click="handleSubmit"
+                block
+                :loading="isLoading"
                 >Submit Application</a-button
             >
             <a-button type="danger" style="margin-top: 10px" block
@@ -650,11 +654,11 @@ function getBase64(img, callback) {
 }
 import FormBusinessActivity from "./FormBusinessActivity";
 const columns = [
-    // {
-    //     dataIndex: "code",
-    //     key: "code",
-    //     title: "Code",
-    // },
+    {
+        dataIndex: "code",
+        key: "code",
+        title: "Code",
+    },
     {
         dataIndex: "lineOfBusiness",
         key: "lineOfBusiness",
@@ -703,6 +707,7 @@ export default {
             dataBusinessActivity: [],
             columns,
             fileLoading: false,
+            isLoading: false,
             file: {
                 barangay: false,
                 zoning: false,
@@ -727,6 +732,8 @@ export default {
                             "Please upload all file requirements!"
                         );
                     } else {
+                        self.isLoading = true;
+
                         var data = {
                             typeOfBusienss:
                                 self.form.getFieldValue("typeOfBusienss"),
@@ -878,23 +885,35 @@ export default {
                     "Content-Type": "multipart/form-data",
                 },
             };
-            return axios(
-                {
-                    method: "POST",
-                    url: "bplo/store",
-                    data: formData,
-                },
-                config
-            )
-                .then(function (response) {
-                    this.emitDone();
-                })
-                .catch((error) => {
-                    console.log(error);
-                    this.$error({
-                        title: "Something went wrong!",
-                    });
+            try {
+                await axios(
+                    {
+                        method: "POST",
+                        url: "bplo/store",
+                        data: formData,
+                    },
+                    config
+                );
+                // .then(function (response) {
+                //     this.emitDone();
+                // })
+                // .catch((error) => {
+                //     console.log(error);
+                //     this.$error({
+                //         title: "Something went wrong!",
+                //     });
+                // });
+            } catch (e) {
+                console.log(error);
+                this.isLoading = false;
+
+                this.$error({
+                    title: "Something went wrong!",
                 });
+            } finally {
+                this.isLoading = false;
+                this.emitDone();
+            }
         },
 
         checkFilesisFalse(files) {

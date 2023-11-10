@@ -83,7 +83,8 @@ class BusinessRepositoryEloquent extends BaseRepository implements BusinessRepos
                 'business.user_id',
                 '=',
                 'users.id'
-            );
+            )
+            ->distinct('business_id');
 
             $this->pushCriteria(new BusinessCriteria($filters))->applyCriteria();
 

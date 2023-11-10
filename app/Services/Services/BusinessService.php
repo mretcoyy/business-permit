@@ -15,6 +15,7 @@ use App\Enums\TypeOfOrganization;
 use Carbon\Carbon;
 use App\Services\Contract\BusinessServiceInterface;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Tcpdf\Fpdi;
@@ -22,6 +23,8 @@ class BusinessService implements BusinessServiceInterface
 {
     public function store($data_field, $files)
     {
+        DB::beginTransaction();
+        try {
         $data = json_decode($data_field);
         $businessData = $data->business;
         $businessInformationData = $data->businessInformation;
@@ -33,8 +36,8 @@ class BusinessService implements BusinessServiceInterface
             'reference_number' => $businessData->referenceNo,
             'dti_registration_no' => $businessData->dtiSecNo,
             'dti_date_of_registration' => Carbon::now(),
-            'type_of_organization' => TypeOfOrganization::SINGLE,
-            'is_tax_incentive' => 1,
+            'type_of_organization' => (int)$businessData->typeOfOrganization,
+            'is_tax_incentive' => (int)$businessData->hasTaxIncentive,
             'date_of_application' => Carbon::now(),
             'user_id' => $data->Admin ? null : Auth::user()->id,
         ];
@@ -170,7 +173,12 @@ class BusinessService implements BusinessServiceInterface
         foreach ($businessInformationDetailData as $data) {
             $this->storeBusinessDetail($data, $business->id);
         }
-        
+            DB::commit();
+            return response()->json(['message' => 'Successfully Saved']);
+        } catch (\Error $th) {
+            DB::rollBack();
+            return response()->json(['message' => $th->getMessage()], 422);
+        }
     }
 
     public function storeBusinessDetail($data, $id)
@@ -181,8 +189,8 @@ class BusinessService implements BusinessServiceInterface
             'line_of_business' => $data->lineOfBusiness,
             'number_of_units' => $data->noOfUnits,
             'capitalization' => isset($data->capitalization) ? $data->capitalization : 0,
-            'essential' => isset($data->essential) ? $data->essential : 0,
-            'non_essential' => isset($data->non_essential) ? $data->non_essential : 0,
+            'essential' => isset($data->essential) && is_numeric($data->essential) ? $data->essential : 0,
+            'non_essential' => isset($data->non_essential) && is_numeric($data->essential) ? $data->non_essential : 0,
         ];
 
         $businessInformationDetail = BusinessInformationDetail::create($businessInformationDetailData);
@@ -517,13 +525,14 @@ class BusinessService implements BusinessServiceInterface
     {
         $storeBusinessFees = [
             'business_id' => $data['business_id'],
-            'business_tax' => $data['business_tax'],
-            'mayors_permit' => $data['mayors_permit'],
-            'occupational_permit' => $data['occupational_permit'],
-            'subscription_other' => $data['subscription_other'],
-            'environmental_clearance' => $data['environmental_clearance'],
-            'sanitary_permit_fee' => $data['sanitary_permit_fee'],
-            'zoning_fee' => $data['zoning_fee'],
+            'business_tax' => isset($data['business_tax']) ? $data['business_tax'] : 0,
+            'mayors_permit' => isset($data['mayors_permit']) ? $data['mayors_permit'] : 0,
+            'occupational_permit' => isset($data['occupational_permit']) ? $data['occupational_permit'] : 0,
+            'subscription_other' => isset($data['subscription_other']) ? $data['subscription_other'] : 0,
+            'environmental_clearance' => isset($data['environmental_clearance']) ? $data['environmental_clearance'] : 0,
+            'sanitary_permit_fee' => isset($data['sanitary_permit_fee']) ? $data['sanitary_permit_fee'] : 0,
+            'zoning_fee' => isset($data['zoning_fee']) ? $data['zoning_fee'] : 0,
+            'total_fee' => $data['total_fee'],
             // 'user_id' => $data->user_id,
             // 'status' => $data->status,
         ];

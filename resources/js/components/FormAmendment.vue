@@ -686,7 +686,11 @@
                         </a-upload>
                     </a-col> -->
                 </a-row>
-                <a-button type="primary" @click="handleSubmit" block
+                <a-button
+                    type="primary"
+                    @click="handleSubmit"
+                    block
+                    :loading="isLoading"
                     >Update Application</a-button
                 >
                 <a-button type="danger" style="margin-top: 10px" block
@@ -795,6 +799,7 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             business_id: null,
             form: this.$form.createForm(this),
             formModal: { show: false },
@@ -992,6 +997,7 @@ export default {
                             "Please upload all file requirements!"
                         );
                     } else {
+                        self.isLoading = true;
                         var data = {
                             typeOfBusienss:
                                 self.form.getFieldValue("typeOfBusienss"),
@@ -1159,10 +1165,12 @@ export default {
                 this.$error({
                     title: "Something went wrong!",
                 });
+                this.isLoading = false;
             } finally {
                 let self = this;
                 self.$emit("onSubmit", false);
                 self.$message.success("Updated Succesfully");
+                this.isLoading = false;
             }
         },
 

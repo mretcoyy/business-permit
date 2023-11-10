@@ -38,7 +38,7 @@ class BPLOController extends Controller
         return $business;
     }
 
-    public function changeStatus(Request $request)
+    public function changeStatus(Request $request, BusinessService $service, $id)
     {
         $changeStatus = $service->changeStatus($id);
 

@@ -104,12 +104,20 @@ export default {
     },
     methods: {
         refreshTable() {
-            this.filters = { business_id: "", search_keyword: "" };
+            this.filters = {
+                business_status: 15,
+                status: 1,
+                search_keyword: "",
+            };
             this.getData();
             this.formModal = { show: false };
         },
         handleSubmit(e) {
-            this.filters = { business_id: "", search_keyword: "" };
+            this.filters = {
+                business_status: 15,
+                status: 1,
+                search_keyword: "",
+            };
             this.getData();
             this.formModal.show = e;
         },
@@ -141,6 +149,7 @@ export default {
                 container.owner_address = item.ownerInformation.OFulladdress;
                 container.number_of_employees =
                     item.businessInformation.TotalNumberofEmployees;
+                container.status = item.businessDetail.status;
                 return container;
             });
             return map;
@@ -156,7 +165,11 @@ export default {
             this.data = this.formatData(res.data.data);
         },
         async onSearch() {
-            this.filters = { search_keyword: this.search, status: 5 };
+            this.filters = {
+                search_keyword: this.search,
+                status: 1,
+                business_status: 15,
+            };
             this.getData();
         },
         async select(business_id) {

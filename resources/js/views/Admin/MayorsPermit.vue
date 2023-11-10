@@ -94,7 +94,8 @@ export default {
             filters: {
                 business_id: "",
                 search_keyword: "",
-                status: 3,
+                status: 1,
+                business_status: 17,
             },
         };
     },
@@ -110,12 +111,20 @@ export default {
                     status: 2,
                 }
             );
-            this.filters = { business_id: "", search_keyword: "" };
+            this.filters = {
+                search_keyword: "",
+                status: 1,
+                business_status: 17,
+            };
             this.getData();
             this.formModal = { show: false };
         },
         handleSubmit(e) {
-            this.filters = { business_id: "", search_keyword: "" };
+            this.filters = {
+                search_keyword: "",
+                status: 1,
+                business_status: 17,
+            };
             this.getData();
             this.formModal.show = e;
         },
@@ -160,7 +169,11 @@ export default {
             this.data = this.formatData(res.data.data);
         },
         async onSearch() {
-            this.filters = { search_keyword: this.search };
+            this.filters = {
+                search_keyword: this.search,
+                status: 1,
+                business_status: 17,
+            };
             this.getData();
         },
         async print(business_id) {
