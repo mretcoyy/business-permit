@@ -31,7 +31,7 @@
                             size="large"
                             type="text"
                             placeholder="Email"
-                            :maxLength="25"
+                            :maxLength="45"
                             :disabled="loginBtn"
                             v-decorator="[
                                 'email',

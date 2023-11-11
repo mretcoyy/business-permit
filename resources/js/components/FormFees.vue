@@ -7,8 +7,8 @@
         :width="900"
         @cancel="closeModal()"
         :maskClosable="false"
-        okText="Submit"
-        @ok="handleSubmit()"
+        okText="Print"
+        @ok="handlePrint()"
     >
         <div
             :style="{
@@ -89,7 +89,7 @@
                                         {
                                             rules: [
                                                 {
-                                                    required: false,
+                                                    required: true,
                                                     message:
                                                         'Mayor`s Permit is required',
                                                 },
@@ -112,7 +112,7 @@
                                         {
                                             rules: [
                                                 {
-                                                    required: false,
+                                                    required: true,
                                                     message:
                                                         'Mayor`s Permit is required',
                                                 },
@@ -130,7 +130,18 @@
                                             compute();
                                         }
                                     "
-                                    v-decorator="['subscription_other']"
+                                    v-decorator="[
+                                        'subscription_other',
+                                        {
+                                            rules: [
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        'Subscription Fee & Other Fees is required',
+                                                },
+                                            ],
+                                        },
+                                    ]"
                                 /> </a-form-item
                         ></a-col>
                         <a-col :span="8">
@@ -142,7 +153,18 @@
                                             compute();
                                         }
                                     "
-                                    v-decorator="['environmental_clearance']"
+                                    v-decorator="[
+                                        'environmental_clearance',
+                                        {
+                                            rules: [
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        'Environmental Clearance is required',
+                                                },
+                                            ],
+                                        },
+                                    ]"
                                 /> </a-form-item
                         ></a-col>
                         <a-col :span="8">
@@ -154,7 +176,18 @@
                                             compute();
                                         }
                                     "
-                                    v-decorator="['sanitary_permit_fee']"
+                                    v-decorator="[
+                                        'sanitary_permit_fee',
+                                        {
+                                            rules: [
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        'Sanitary Permit Fee is required',
+                                                },
+                                            ],
+                                        },
+                                    ]"
                                 /> </a-form-item
                         ></a-col>
                         <a-col :span="8">
@@ -166,7 +199,18 @@
                                             compute();
                                         }
                                     "
-                                    v-decorator="['zoning_fee']"
+                                    v-decorator="[
+                                        'zoning_fee',
+                                        {
+                                            rules: [
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        'Zoning Fee is required',
+                                                },
+                                            ],
+                                        },
+                                    ]"
                                 /> </a-form-item
                         ></a-col>
 
@@ -187,6 +231,41 @@
                 </a-card>
             </a-form>
         </div>
+
+        <a-modal
+            title="
+                        Show Form
+                    "
+            v-model="modalFile"
+            :width="800"
+            @cancel="closeModalFile()"
+            :maskClosable="false"
+            okText="Print"
+            @ok="handlePrintForm()"
+        >
+            <div>
+                <iframe
+                    class="frame-file"
+                    id="pdf_frame"
+                    height="500"
+                    width="100%"
+                    :src="pdfsrc"
+                    frameborder="0"
+                    scrolling="auto"
+                ></iframe>
+            </div>
+        </a-modal>
+        <a-modal
+            v-model="modalPrint"
+            :width="300"
+            :maskClosable="false"
+            okText="Done"
+            centered
+            @ok="closeModalPrint()"
+            :cancelButtonProps="{ style: { display: 'none' } }"
+        >
+            Done Printing?
+        </a-modal>
     </a-modal>
 </template>
 <script>
@@ -211,14 +290,56 @@ export default {
                 "total_fee",
             ],
             info: {},
+            pdfsrc: null,
+            fileLoading: false,
+            modalFile: false,
+            modalPrint: false,
+            fees: [],
         };
     },
     methods: {
         closeModal() {
             this.form.resetFields();
         },
-        handleSubmit() {
+        closeModalFile() {
+            this.modalFile = false;
+        },
+        closeModalPrint() {
+            this.modalPrint = false;
+            this.submitData();
+            this.pdfsrc = null;
+        },
+        handlePrintForm() {
+            var myIframe = document.getElementById("pdf_frame").contentWindow;
+            myIframe.focus();
+            myIframe.print();
+            this.modalPrint = true;
+        },
+        printData() {
+            axios
+                .post(
+                    "/tax-computation/view-fees-form",
+                    { data: this.info, fees: this.fees },
+                    {
+                        responseType: "blob",
+                    }
+                )
+                .then((res) => {
+                    const file = new Blob([res.data], {
+                        type: "application/pdf",
+                    });
+                    const fileURL = URL.createObjectURL(file);
+                    this.pdfsrc = fileURL;
+                    this.modalFile = true;
+                })
+                .catch((error) => {
+                    console.log("error");
+                    console.log(error);
+                });
+        },
+        handlePrint() {
             let self = this;
+            self.fees = [];
             self.form.validateFields(async (errors, values) => {
                 if (!errors) {
                     var data = {
@@ -239,16 +360,19 @@ export default {
                         zoning_fee: self.form.getFieldValue("zoning_fee"),
                         total_fee: self.form.getFieldValue("total_fee"),
                     };
-                    self.submitData(data);
+                    self.printData();
+                    self.fees = data;
                 }
             });
         },
-        async submitData(data) {
+        async submitData() {
             await axios({
                 method: "POST",
                 url: "/tax-computation/store",
-                data: data,
+                data: this.fees,
             });
+            this.modalPrint = false;
+            this.modalFile = false;
             this.$emit("onSubmit", false);
             this.$message.success("Submit Succesfully");
         },
@@ -304,6 +428,7 @@ export default {
 
             console.log(occupational_permit);
             this.form.setFieldsValue({ occupational_permit });
+            this.compute();
         },
     },
 };

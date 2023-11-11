@@ -84,6 +84,7 @@ Route::post('/amendment/update-data', 'AmendmentController@updateData');
 //TAX COMPUTATION
 Route::get('/admin/tax-computation', 'TaxComputationController@index');
 Route::post('/tax-computation/store', 'TaxComputationController@store');
+Route::post('/tax-computation/view-fees-form', 'TaxComputationController@viewFeesForm');
 
 //MAYORS PERMIT
 Route::get('/admin/mayors-permit', 'MayorsPermitController@index');

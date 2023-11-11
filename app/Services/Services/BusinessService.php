@@ -559,7 +559,7 @@ class BusinessService implements BusinessServiceInterface
             $business_address = $business_information->address;
         }
         $line_of_business = $business->businessInformationDetail[0]->line_of_business;
-        $date_issued = Date('M/d/Y');
+        $date_issued = Date('m/d/Y');
         $valid_until = '12/31/'.Date('Y');
 
         $pdf = new Fpdi();
@@ -591,9 +591,101 @@ class BusinessService implements BusinessServiceInterface
         
         //barcode
         $pdf->write2DBarcode( $bin.'/'.$date_issued.'/'.$valid_until, 'QRCODE,L',24,123, 45, 45, $style, 'N');
+
+        $pdf->Output($filename, 'I');
+        return $pdf;
+    }
+
+    public function viewFeesForm($data)
+    {
+        $d = $data['data'];
+        $f = $data['fees'];
+        $filename = $d['bin'].Date('YmdHis');
         
+        $date_issued = Date('M/d/Y');
+        $pdf = new Fpdi();
+        $pdf->AddPage();
+        $pdf->SetHeaderMargin(0);
+        $pdf->SetFooterMargin(0);
+      
+        $html = '';
+        $html .= '<table border="0" cellspacing="0" cellpadding="3" >
+                    <tr>
+                        <td colspan="2" style="text-align:center; font-weight:bold">BUSINESS FEES</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" >BIN: '.$d['bin'].'</td>
+                        <td colspan="2" >Date Issued: '.$date_issued.'</td>
+                    </tr>
+                    <tr>
+                        <td >Business Name: '.$d['business_name'].'</td>
+                        <td >Business Address: '.$d['business_address'].'</td>
+                    </tr>
+                    <tr>
+                        <td >Owners Name: '.$d['owner_name'].'</td>
+                        <td >Owners Address: '.$d['owner_address'].'</td>
+                    </tr>
+                    <tr>
+                        <td >Number of Employees: '.$d['number_of_employees'].'</td>
+                        <td ></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" ></td>
+                    </tr>
 
+        </table>
+        ';
+                        // <td align="right">'.!empty($f['business_tax']) ? $f['business_tax'] : 0.00.'</td>
 
+        $html .= '
+                <div style="display:flex; align-items:center; justify-content:center">
+                <table border="1" cellspacing="0" cellpadding="3" style="border:black  1px; width:60%">
+                    <tr style="border:0">
+                        <td >Business Tax:</td>
+                        <td align="right">'.((isset($f['business_tax']) && is_numeric($f['business_tax'])) ? number_format($f['business_tax'],2) : "0.00").'</td>
+                    </tr>
+                    <tr style="border:0">
+                        <td >Mayors Permit:</td>
+                        <td align="right">'.((isset($f['mayors_permit']) && is_numeric($f['mayors_permit'])) ? number_format($f['mayors_permit'], 2) : "0.00").'</td>
+                    </tr>
+                    <tr style="border:0">
+                        <td >Occupational Permit</td>
+                        <td align="right">'.((isset($f['occupational_permit']) && is_numeric($f['occupational_permit'])) ? number_format($f['occupational_permit'], 2) : "0.00").'</td>
+                    </tr>
+                    <tr style="border:0">
+                        <td >Subscription and Others</td>
+                        <td align="right">'.((isset($f['subscription_other']) && is_numeric($f['subscription_other'])) ? number_format($f['subscription_other'], 2) : "0.00").'</td>
+                    </tr>
+                    <tr style="border:0">
+                        <td >Environmental Clearance</td>
+                        <td align="right">'.((isset($f['environmental_clearance']) && is_numeric($f['environmental_clearance'])) ? number_format($f['environmental_clearance'], 2) : "0.00").'</td>
+                    </tr>
+                    <tr>
+                        <td >Sanitary Permit Fee</td>
+                        <td align="right">'.((isset($f['sanitary_permit_fee']) && is_numeric($f['sanitary_permit_fee'])) ? number_format($f['sanitary_permit_fee'], 2) : "0.00").'</td>
+                    </tr>
+                    <tr style="border:0">
+                        <td >Zoning Fee</td>
+                        <td align="right">'.((isset($f['zoning_fee']) && is_numeric($f['zoning_fee'])) ? number_format($f['zoning_fee'], 2) : "0.00").'</td>
+                    </tr>
+                    <tr style="border:0">
+                        <td >Total Fee</td>
+                        <td align="right">'.((isset($f['total_fee']) && is_numeric($f['total_fee'])) ? number_format($f['total_fee'], 2) : "0.00").'</td>
+                    </tr>
+                </table>
+                </div>
+        ';
+        $pdf->writeHTML($html, true, false, true, false, '');
+
+      
+        // business_tax
+        // mayors_permit
+        // occupational_permit
+        // subscription_other
+        // environmental_clearance
+        // sanitary_permit_fee
+        // zoning_fee
+        // total_fee
 
         $pdf->Output($filename, 'I');
         return $pdf;

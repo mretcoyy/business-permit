@@ -18,4 +18,10 @@ class TaxComputationController extends Controller
 
         return $store;
     }
+
+    public function viewFeesForm(Request $request, BusinessService $service)
+    {
+        $store = $service->viewFeesForm($request->all());
+        return $store;
+    }
 }

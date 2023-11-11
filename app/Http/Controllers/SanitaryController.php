@@ -16,7 +16,7 @@ class SanitaryController extends Controller
 
     public function changeBusinessStatus(Request $request, BusinessService $service, $id)
     {
-        $status = $request->post('status') == BusinessStatus::APPROVED ? BusinessStatus::TAXCOMPUTATION : BusinessStatus::DECLINED;
+        $status = $request->post('status') == BusinessStatus::APPROVED ? BusinessStatus::PAYMENT : BusinessStatus::DECLINED;
 
         $changeBusinessStatus = $service->changeBusinessStatus($status, $id);
         return $changeBusinessStatus;
