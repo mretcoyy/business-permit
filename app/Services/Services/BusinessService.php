@@ -524,25 +524,33 @@ class BusinessService implements BusinessServiceInterface
 
     public function submitBusinessFees($data)
     {
-        $storeBusinessFees = [
-            'business_id' => $data['business_id'],
-            'business_tax' => isset($data['business_tax']) ? $data['business_tax'] : 0,
-            'mayors_permit' => isset($data['mayors_permit']) ? $data['mayors_permit'] : 0,
-            'occupational_permit' => isset($data['occupational_permit']) ? $data['occupational_permit'] : 0,
-            'subscription_other' => isset($data['subscription_other']) ? $data['subscription_other'] : 0,
-            'environmental_clearance' => isset($data['environmental_clearance']) ? $data['environmental_clearance'] : 0,
-            'sanitary_permit_fee' => isset($data['sanitary_permit_fee']) ? $data['sanitary_permit_fee'] : 0,
-            'zoning_fee' => isset($data['zoning_fee']) ? $data['zoning_fee'] : 0,
-            'total_fee' => $data['total_fee'],
-            // 'user_id' => $data->user_id,
-            // 'status' => $data->status,
-        ];
-
-        $business = BusinessFees::create($storeBusinessFees);
-
-        $this->changeBusinessStatus(BusinessStatus::MAYORSPERMIT, $data['business_id']);
-
-        return $business;
+        $buss_or_number = BusinessFees::where('or_number', $data['or_number'])->first();
+        if($buss_or_number)
+        {
+            return response()->json(['message' => 'OR number already exists.'], 422);
+        }
+        else{
+            $storeBusinessFees = [
+                'business_id' => $data['business_id'],
+                'or_number' => $data['or_number'],
+                'business_tax' => isset($data['business_tax']) ? $data['business_tax'] : 0,
+                'mayors_permit' => isset($data['mayors_permit']) ? $data['mayors_permit'] : 0,
+                'occupational_permit' => isset($data['occupational_permit']) ? $data['occupational_permit'] : 0,
+                'subscription_other' => isset($data['subscription_other']) ? $data['subscription_other'] : 0,
+                'environmental_clearance' => isset($data['environmental_clearance']) ? $data['environmental_clearance'] : 0,
+                'sanitary_permit_fee' => isset($data['sanitary_permit_fee']) ? $data['sanitary_permit_fee'] : 0,
+                'zoning_fee' => isset($data['zoning_fee']) ? $data['zoning_fee'] : 0,
+                'total_fee' => $data['total_fee'],
+                // 'user_id' => $data->user_id,
+                // 'status' => $data->status,
+            ];
+    
+            $business = BusinessFees::create($storeBusinessFees);
+    
+            $this->changeBusinessStatus(BusinessStatus::MAYORSPERMIT, $data['business_id']);
+    
+            return $business;
+        }
     }
 
     public function viewMayorsPermit($data)
@@ -627,7 +635,7 @@ class BusinessService implements BusinessServiceInterface
                     </tr>
                     <tr>
                         <td >Number of Employees: '.$d['number_of_employees'].'</td>
-                        <td ></td>
+                        <td >OR number: '.$f['or_number'].'</td>
                     </tr>
                     <tr>
                         <td colspan="2" ></td>

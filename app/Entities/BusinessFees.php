@@ -32,6 +32,7 @@ class BusinessFees extends Model implements Transformable
         'zoning_fee',
         'user_id',
         'status',
+        'or_number',
     ];
 
 }

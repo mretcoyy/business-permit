@@ -168,11 +168,12 @@ export default {
             this.filters = {
                 search_keyword: this.search,
                 status: 1,
-                business_status: 15,
+                business_status: 16,
             };
             this.getData();
         },
         async select(business_id) {
+            this.form.resetFields();
             this.filters = { business_id, status: "" };
             const res = await axios.get("/bplo/list", {
                 params: {

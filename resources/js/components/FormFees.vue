@@ -51,9 +51,30 @@
             <a-form :form="form">
                 <a-card>
                     <a-row :gutter="12">
+                        <a-col :span="8">
+                            <a-form-item label="OR number">
+                                <a-input
+                                    v-decorator="[
+                                        'or_number',
+                                        {
+                                            rules: [
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        'OR number is required',
+                                                },
+                                            ],
+                                        },
+                                    ]"
+                                    maxLength="7"
+                                /> </a-form-item
+                        ></a-col>
+                    </a-row>
+                    <a-row :gutter="12">
                         <p style="padding-left: 9px; font-weight: bold">
                             Fees:
                         </p>
+
                         <a-col :span="8" v-if="info.status != 'New'">
                             <a-form-item label="Business Tax">
                                 <a-input
@@ -344,6 +365,7 @@ export default {
                 if (!errors) {
                     var data = {
                         business_id: this.business_id,
+                        or_number: self.form.getFieldValue("or_number"),
                         business_tax: self.form.getFieldValue("business_tax"),
                         mayors_permit: self.form.getFieldValue("mayors_permit"),
                         occupational_permit: self.form.getFieldValue(
@@ -360,21 +382,32 @@ export default {
                         zoning_fee: self.form.getFieldValue("zoning_fee"),
                         total_fee: self.form.getFieldValue("total_fee"),
                     };
-                    self.printData();
                     self.fees = data;
+                    self.printData();
                 }
             });
         },
         async submitData() {
-            await axios({
-                method: "POST",
-                url: "/tax-computation/store",
-                data: this.fees,
-            });
-            this.modalPrint = false;
-            this.modalFile = false;
-            this.$emit("onSubmit", false);
-            this.$message.success("Submit Succesfully");
+            try {
+                await axios({
+                    method: "POST",
+                    url: "/tax-computation/store",
+                    data: this.fees,
+                });
+                this.modalPrint = false;
+                this.modalFile = false;
+                this.$emit("onSubmit", false);
+                this.$message.success("Submit Succesfully");
+            } catch (e) {
+                this.modalFile = false;
+                this.modalPrint = false;
+                console.log(e);
+                console.log(e.message);
+                this.$error({
+                    title: "Something went wrong!",
+                });
+            } finally {
+            }
         },
         compute() {
             let total_fee = 0;
