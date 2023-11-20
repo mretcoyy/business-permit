@@ -68,6 +68,11 @@ class BusinessCriteria implements CriteriaInterface
             $model->where('business.user_id', null);
         }
 
+        if (isset($filters->year) && isset($filters->business_type)) {
+            $model->whereYear('date_renewed', $filters->year)
+            ->where('business_detail.status', $filters->business_type);
+        }
+
         return $model;
     }
 }

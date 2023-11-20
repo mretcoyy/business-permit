@@ -29,14 +29,15 @@
                 </p>
             </div>
             <a-menu theme="dark" mode="inline" :default-selected-keys="['0']">
-                <a-menu-item v-for="(item, sidebarIndex) in sidebar" :key="sidebarIndex" @click="viewPage(item.url)">
+                <a-menu-item
+                    v-for="(item, sidebarIndex) in sidebar"
+                    :key="sidebarIndex"
+                    @click="viewPage(item.url)"
+                >
                     <a-icon :type="item.icon" />
                     <span>{{ item.title }}</span>
                 </a-menu-item>
-                <a-menu-item
-                    @click="logOut"
-                    :key="sidebar.length + 1"
-                >
+                <a-menu-item @click="logOut" :key="sidebar.length + 1">
                     <a-icon type="logout" />
                     <span>Logout</span>
                 </a-menu-item>
@@ -71,59 +72,64 @@ export default {
             email: "",
             sidebar: [
                 {
-                    url: '/admin/new-application',
-                    title: 'New Application',
-                    icon: 'form',
+                    url: "/admin/new-application",
+                    title: "New Application",
+                    icon: "form",
                 },
                 {
-                    url: '/admin/application',
-                    title: 'BPLO Approval',
-                    icon: 'form',
+                    url: "/admin/application",
+                    title: "BPLO Approval",
+                    icon: "form",
                 },
                 {
-                    url: '/admin/menro',
-                    title: 'MENRO',
-                    icon: 'safety-certificate',
+                    url: "/admin/menro",
+                    title: "MENRO",
+                    icon: "safety-certificate",
                 },
                 {
-                    url: '/admin/mpdc',
-                    title: 'MPDC',
-                    icon: 'safety-certificate',
+                    url: "/admin/mpdc",
+                    title: "MPDC",
+                    icon: "safety-certificate",
                 },
                 {
-                    url: '/admin/engineering',
-                    title: 'Engineering',
-                    icon: 'safety-certificate',
+                    url: "/admin/engineering",
+                    title: "Engineering",
+                    icon: "safety-certificate",
                 },
                 {
-                    url: '/admin/sanitary',
-                    title: 'Sanitary',
-                    icon: 'safety-certificate',
+                    url: "/admin/sanitary",
+                    title: "Sanitary",
+                    icon: "safety-certificate",
                 },
                 {
-                    url: '/admin/bfp',
-                    title: 'BFP',
-                    icon: 'safety-certificate',
+                    url: "/admin/bfp",
+                    title: "BFP",
+                    icon: "safety-certificate",
                 },
                 {
-                    url: '/admin/tax-computation',
-                    title: 'Payment',
-                    icon: 'money-collect',
+                    url: "/admin/tax-computation",
+                    title: "Payment",
+                    icon: "money-collect",
                 },
                 {
-                    url: '/admin/mayors-permit',
-                    title: 'Mayor\'s Permit',
-                    icon: 'money-collect',
+                    url: "/admin/mayors-permit",
+                    title: "Mayor's Permit",
+                    icon: "money-collect",
                 },
                 {
-                    url: '/admin/amendment',
-                    title: 'Amendments',
-                    icon: 'folder-open',
+                    url: "/admin/amendment",
+                    title: "Amendments",
+                    icon: "folder-open",
                 },
                 {
-                    url: '/admin/user-management',
-                    title: 'User Management',
-                    icon: 'user',
+                    url: "/admin/report",
+                    title: "Report",
+                    icon: "file",
+                },
+                {
+                    url: "/admin/user-management",
+                    title: "User Management",
+                    icon: "user",
                 },
             ],
         };
