@@ -12,6 +12,7 @@ import Antd from "ant-design-vue";
 Vue.use(Antd);
 import "../sass/app.scss";
 import store from "./vuex/index";
+import JsonExcel from "vue-json-excel";
 
 /**
  * The following block of code may be used to automatically register your
@@ -23,6 +24,7 @@ import store from "./vuex/index";
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+Vue.component("downloadExcel", JsonExcel);
 
 Vue.component(
     "example-component",

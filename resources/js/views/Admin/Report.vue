@@ -70,7 +70,12 @@
                     @click="handleReport"
                     :disabled="data.length == 0"
                 >
-                    Generate
+                    <download-excel
+                        :data="data"
+                        name="report.xls"
+                        :fields="data_fields"
+                        >Export</download-excel
+                    >
                 </a-button>
             </div>
         </a-card>
@@ -78,6 +83,7 @@
 </template>
 <script>
 import MainLayout from "../../layouts/MainLayout";
+import JsonExcel from "vue-json-excel";
 
 const columns = [
     {
@@ -86,12 +92,17 @@ const columns = [
         key: "name",
     },
     {
-        title: "Owner Name",
+        title: "Business Address",
+        dataIndex: "business_address",
+        key: "business_address",
+    },
+    {
+        title: "Tax Payor Name",
         dataIndex: "tax_payer",
         key: "tax_payer",
     },
     {
-        title: "Address",
+        title: "Tax Payor Address",
         dataIndex: "address",
         key: "address",
     },
@@ -109,16 +120,6 @@ const columns = [
         title: "Organization Type",
         dataIndex: "organization_type",
         key: "organization_type",
-    },
-    {
-        title: "Business Name",
-        dataIndex: "business_name",
-        key: "business_name",
-    },
-    {
-        title: "Business Address",
-        dataIndex: "business_address",
-        key: "business_address",
     },
     {
         title: "Owner Name",
@@ -159,11 +160,24 @@ export default {
                 status: 1,
             },
             search: "",
-            value: ref(this.years),
+            data_fields: {
+                "Business Name": "name",
+                "Business Address": "business_address",
+                "Tax Payor": "tax_payer",
+                "Tax Payor Address": "owner_address",
+                BIN: "bin",
+                "Date Renewed": "date_renewed",
+                "Organization Type": "organization_type",
+                "Owner Name": "owner_name",
+                "Owner Address": "owner_address",
+                "No. :of Employees": "number_of_employees",
+                Status: "Status",
+            },
         };
     },
     components: {
         MainLayout,
+        JsonExcel,
     },
     methods: {
         handleReport() {},

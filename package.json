@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "ant-design-vue": "^1.7.8",
+        "vue-json-excel": "^0.3.0",
         "vue-loader": "^15.10.1",
         "vuex": "^3.0.0",
         "vuex-persistedstate": "^4.1.0"
