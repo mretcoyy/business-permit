@@ -84,14 +84,14 @@ class BusinessService implements BusinessServiceInterface
         $storeOwnersInformation = [
             'business_id' => $business->id,
             'first_name' => $businessInformationData->taxPresidentFname,
-            'middle_name' => $businessInformationData->taxPresidentMname,
+            'middle_name' => isset($businessInformationData->taxPresidentMname) ? $businessInformationData->taxPresidentMname : null,
             'last_name' => $businessInformationData->taxPresidentLname,
-            'house_number' => $ownersInformationData->OAddressHouseNo,
-            'building_name' => $ownersInformationData->OAddressBuildingName,
-            'unit_no' => $ownersInformationData->OAddressUnitNo,
-            'street' => $ownersInformationData->OAddressStreet,
+            'house_number' => isset($ownersInformationData->OAddressHouseNo) ? $ownersInformationData->OAddressHouseNo : null,
+            'building_name' => isset($ownersInformationData->OAddressBuildingName) ? $ownersInformationData->OAddressBuildingName : null,
+            'unit_no' => isset($ownersInformationData->OAddressUnitNo) ? $ownersInformationData->OAddressUnitNo : null,
+            'street' => isset($ownersInformationData->OAddressStreet) ? $ownersInformationData->OAddressStreet : null,
             'barangay' => $ownersInformationData->OAddressBarangay,
-            'subdivision' => $ownersInformationData->OAddressSubd,
+            'subdivision' => isset($ownersInformationData->OAddressSubd) ? $ownersInformationData->OAddressSubd : null,
             'city' => $ownersInformationData->OAddressCity,
             'province' => $ownersInformationData->OAddressProvince,
             'contact_number' => $ownersInformationData->OAddressTelNo,
@@ -100,24 +100,25 @@ class BusinessService implements BusinessServiceInterface
 
         $ownerInformation = OwnerInformation::create($storeOwnersInformation);
         if (isset($lessorInformationData)) {
-  
-            $storeLessorInformation = [
-                'business_id' => $business->id,
-                'first_name' => isset($lessorInformationData->LessorFname) ? $lessorInformationData->LessorFname : null,
-                'middle_name' => isset($lessorInformationData->LessorMname) ? $lessorInformationData->LessorMname : null,
-                'last_name' => isset($lessorInformationData->LessorLname) ? $lessorInformationData->LessorLname : null,
-                'monthly_rental' => isset($lessorInformationData->LessorMonthlyRental) ? $lessorInformationData->LessorMonthlyRental : null,
-                'house_number' => isset($lessorInformationData->LAddressHouseNo) ? $lessorInformationData->LAddressHouseNo : null,
-                'street' => isset($lessorInformationData->LAddressStreet) ? $lessorInformationData->LAddressStreet : null,
-                'barangay' => isset($lessorInformationData->LAddressBarangay) ? $lessorInformationData->LAddressBarangay : null,
-                'subdivision' => isset($lessorInformationData->LAddressSubd) ? $lessorInformationData->LAddressSubd : null,
-                'city' => isset($lessorInformationData->LAddressCity) ? $lessorInformationData->LAddressCity : null,
-                'province' => isset($lessorInformationData->LAddressProvince) ? $lessorInformationData->LAddressProvince : null,
-                'contact_number' => isset($lessorInformationData->LAddressTelNo) ? $lessorInformationData->LAddressTelNo : null,
-                'email_address' => isset($lessorInformationData->LAddressEmail) ? $lessorInformationData->LAddressEmail : null,
-            ];
-    
-            $lessorInformation = LessorInformation::create($storeLessorInformation);
+            if(isset($lessorInformationData->is_lessor) ? $lessorInformationData->is_lessor : false)
+            {
+                $storeLessorInformation = [
+                    'business_id' => $business->id,
+                    'first_name' => isset($lessorInformationData->LessorFname) ? $lessorInformationData->LessorFname : null,
+                    'middle_name' => isset($lessorInformationData->LessorMname) ? $lessorInformationData->LessorMname : null,
+                    'last_name' => isset($lessorInformationData->LessorLname) ? $lessorInformationData->LessorLname : null,
+                    'monthly_rental' => isset($lessorInformationData->LessorMonthlyRental) ? $lessorInformationData->LessorMonthlyRental : null,
+                    'house_number' => isset($lessorInformationData->LAddressHouseNo) ? $lessorInformationData->LAddressHouseNo : null,
+                    'street' => isset($lessorInformationData->LAddressStreet) ? $lessorInformationData->LAddressStreet : null,
+                    'barangay' => isset($lessorInformationData->LAddressBarangay) ? $lessorInformationData->LAddressBarangay : null,
+                    'subdivision' => isset($lessorInformationData->LAddressSubd) ? $lessorInformationData->LAddressSubd : null,
+                    'city' => isset($lessorInformationData->LAddressCity) ? $lessorInformationData->LAddressCity : null,
+                    'province' => isset($lessorInformationData->LAddressProvince) ? $lessorInformationData->LAddressProvince : null,
+                    'contact_number' => isset($lessorInformationData->LAddressTelNo) ? $lessorInformationData->LAddressTelNo : null,
+                    'email_address' => isset($lessorInformationData->LAddressEmail) ? $lessorInformationData->LAddressEmail : null,
+                ];
+                $lessorInformation = LessorInformation::create($storeLessorInformation);
+            }
         }
 
         $barangay_clearance = null;

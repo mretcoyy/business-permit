@@ -23,7 +23,7 @@
                             {
                                 rules: [
                                     {
-                                        required: false,
+                                        required: true,
                                         message: 'Business Type is required',
                                     },
                                 ],
@@ -45,7 +45,7 @@
                                     {
                                         rules: [
                                             {
-                                                required: false,
+                                                required: true,
                                                 message:
                                                     'Date of Application is required',
                                             },
@@ -58,18 +58,54 @@
                         <a-form-item label="Reference No">
                             <a-input
                                 type="number"
-                                v-decorator="['referenceNo']"
+                                v-decorator="[
+                                    'referenceNo',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Reference Number is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             />
                         </a-form-item>
                     </a-col>
                     <a-col :span="12">
                         <a-form-item label="DTI/SEC/CDA Registration No">
-                            <a-input type="number" v-decorator="['dtiSecNo']" />
+                            <a-input
+                                type="number"
+                                v-decorator="[
+                                    'dtiSecNo',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'DTI sec. no. is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="DTI/SEC/CDA Date of registration">
                             <a-date-picker
                                 style="width: 100%"
-                                v-decorator="['dtiSecdateofReg']"
+                                v-decorator="[
+                                    'dtiSecdateofReg',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'DTI Date Registered is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             />
                         </a-form-item>
                     </a-col>
@@ -81,7 +117,7 @@
                                     {
                                         rules: [
                                             {
-                                                required: false,
+                                                required: true,
                                                 message:
                                                     'Type of Organization is required',
                                             },
@@ -108,7 +144,20 @@
                         <a-form-item
                             label="Are you enjoying tax incentive from any Goverment Entity:"
                         >
-                            <a-radio-group v-decorator="['isTaxIncentive']">
+                            <a-radio-group
+                                v-decorator="[
+                                    'isTaxIncentive',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'This field is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            >
                                 <a-radio value="1"> Yes </a-radio>
                                 <a-radio value="0"> No </a-radio>
                             </a-radio-group>
@@ -128,7 +177,7 @@
                                     {
                                         rules: [
                                             {
-                                                required: false,
+                                                required: true,
                                                 message:
                                                     'Last Name is required',
                                             },
@@ -145,7 +194,7 @@
                                     {
                                         rules: [
                                             {
-                                                required: false,
+                                                required: true,
                                                 message:
                                                     'First Name is required',
                                             },
@@ -179,7 +228,7 @@
                                     {
                                         rules: [
                                             {
-                                                required: false,
+                                                required: true,
                                                 message:
                                                     'Business Name is required',
                                             },
@@ -189,7 +238,20 @@
                             />
                         </a-form-item>
                         <a-form-item label="Trade name/Franchise">
-                            <a-input v-decorator="['taxPayerTname']" />
+                            <a-input
+                                v-decorator="[
+                                    'taxPayerTname',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Trade Name is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                     </a-col>
                     <p style="padding-left: 9px; font-weight: bold">
@@ -198,13 +260,35 @@
                     <a-col :span="8">
                         <a-form-item label="Last Name">
                             <a-input
-                                v-decorator="['taxPresidentLname']"
+                                v-decorator="[
+                                    'taxPresidentLname',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Tax Payor Last Name is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             /> </a-form-item
                     ></a-col>
                     <a-col :span="8">
                         <a-form-item label="First Name">
                             <a-input
-                                v-decorator="['taxPresidentFname']"
+                                v-decorator="[
+                                    'taxPresidentFname',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Tax Payor First Name is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             /> </a-form-item
                     ></a-col>
                     <a-col :span="8">
@@ -221,7 +305,20 @@
                             Business Address
                         </p>
                         <a-form-item label="House No./Bldg. No.">
-                            <a-input v-decorator="['BAddressHouseNo']" />
+                            <a-input
+                                v-decorator="[
+                                    'BAddressHouseNo',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Business No. is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="Building Name">
                             <a-input v-decorator="['BAddressBuildingName']" />
@@ -233,27 +330,84 @@
                             <a-input v-decorator="['BAddressStreet']" />
                         </a-form-item>
                         <a-form-item label="Barangay">
-                            <a-input v-decorator="['BAddressBarangay']" />
+                            <a-input
+                                v-decorator="[
+                                    'BAddressBarangay',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Barangay is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="Subdivision">
                             <a-input v-decorator="['BAddressSubd']" />
                         </a-form-item>
                         <a-form-item label="City/Municipality">
-                            <a-input v-decorator="['BAddressCity']" />
+                            <a-input
+                                v-decorator="[
+                                    'BAddressCity',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'City is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="Province">
-                            <a-input v-decorator="['BAddressProvince']" />
+                            <a-input
+                                v-decorator="[
+                                    'BAddressProvince',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Province is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="Tel. No.">
                             <a-input
                                 type="number"
-                                v-decorator="['BAddressTelNo']"
+                                v-decorator="[
+                                    'BAddressTelNo',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Telephone No. is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             />
                         </a-form-item>
                         <a-form-item label="Email Address">
                             <a-input
                                 type="email"
-                                v-decorator="['BAddressEmail']"
+                                v-decorator="[
+                                    'BAddressEmail',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Email is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             />
                         </a-form-item>
                     </a-col>
@@ -268,7 +422,20 @@
                             Owner's Address
                         </p>
                         <a-form-item label="House No./Bldg. No.">
-                            <a-input v-decorator="['OAddressHouseNo']" />
+                            <a-input
+                                v-decorator="[
+                                    'OAddressHouseNo',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'House No. is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="Building Name">
                             <a-input v-decorator="['OAddressBuildingName']" />
@@ -280,27 +447,84 @@
                             <a-input v-decorator="['OAddressStreet']" />
                         </a-form-item>
                         <a-form-item label="Barangay">
-                            <a-input v-decorator="['OAddressBarangay']" />
+                            <a-input
+                                v-decorator="[
+                                    'OAddressBarangay',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Barangay is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="Subdivision">
                             <a-input v-decorator="['OAddressSubd']" />
                         </a-form-item>
                         <a-form-item label="City/Municipality">
-                            <a-input v-decorator="['OAddressCity']" />
+                            <a-input
+                                v-decorator="[
+                                    'OAddressCity',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'City is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="Province">
-                            <a-input v-decorator="['OAddressProvince']" />
+                            <a-input
+                                v-decorator="[
+                                    'OAddressProvince',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Province is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="Tel. No.">
                             <a-input
                                 type="number"
-                                v-decorator="['OAddressTelNo']"
+                                v-decorator="[
+                                    'OAddressTelNo',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Telephone No. is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             />
                         </a-form-item>
                         <a-form-item label="Email Address">
                             <a-input
                                 type="email"
-                                v-decorator="['OAddressEmail']"
+                                v-decorator="[
+                                    'OAddressEmail',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Email is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             />
                         </a-form-item>
                     </a-col>
@@ -314,7 +538,18 @@
                         <a-form-item label="Business Area (in sq m)">
                             <a-input
                                 type="number"
-                                v-decorator="['BusinessArea']"
+                                v-decorator="[
+                                    'BusinessArea',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Business Area is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             />
                         </a-form-item>
                     </a-col>
@@ -336,18 +571,55 @@
                             />
                         </a-form-item>
                     </a-col>
-                    <p style="padding-left: 9px">
-                        if Place of Business is Rented, please identify the
-                        following: <b>Lessor's name</b>
-                    </p>
+                </a-row>
+
+                <p style="padding-left: 9px">
+                    <!-- if Place of Business is Rented, please identify the
+                        following: <b>Lessor's name</b> -->
+                    <a-form-item>
+                        <a-checkbox
+                            v-model="is_lessor"
+                            style="font-weight: bold"
+                            >Check if Place of Business is Rented, please
+                            identify the following</a-checkbox
+                        >
+                    </a-form-item>
+                </p>
+                <a-row v-if="is_lessor" :gutter="16">
                     <a-col span="6">
                         <a-form-item label="Last Name">
-                            <a-input v-decorator="['LessorLname']" />
+                            <a-input
+                                v-decorator="[
+                                    'LessorLname',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Lessor Last Name is Required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                     </a-col>
                     <a-col span="6">
                         <a-form-item label="First Name">
-                            <a-input v-decorator="['LessorFname']" />
+                            <a-input
+                                v-decorator="[
+                                    'LessorFname',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Lessor First Name is Required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                     </a-col>
                     <a-col span="6">
@@ -359,7 +631,18 @@
                         <a-form-item label="Monthly Rental">
                             <a-input
                                 type="number"
-                                v-decorator="['LessorMonthlyRental']"
+                                v-decorator="[
+                                    'LessorMonthlyRental',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Monthly Rental is Required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             />
                         </a-form-item>
                     </a-col>
@@ -370,18 +653,54 @@
 
                     <a-col span="12">
                         <a-form-item label="House No./Bldg. No.">
-                            <a-input v-decorator="['LAddressHouseNo']" />
+                            <a-input
+                                v-decorator="[
+                                    'LAddressHouseNo',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'House No. is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="Street">
                             <a-input v-decorator="['LAddressStreet']" />
                         </a-form-item>
                         <a-form-item label="Barangay">
-                            <a-input v-decorator="['LAddressBarangay']" />
+                            <a-input
+                                v-decorator="[
+                                    'LAddressBarangay',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Barangay is Required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
                         <a-form-item label="Tel. No.">
                             <a-input
                                 type="number"
-                                v-decorator="['LAddressTelNo']"
+                                v-decorator="[
+                                    'LAddressTelNo',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Telephone No. is Required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             />
                         </a-form-item>
                     </a-col>
@@ -390,17 +709,51 @@
                             <a-input v-decorator="['LAddressSubd']" />
                         </a-form-item>
                         <a-form-item label="City/Municipality">
-                            <a-input v-decorator="['LAddressCity']" />
+                            <a-input
+                                v-decorator="[
+                                    'LAddressCity',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'City is Required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
 
                         <a-form-item label="Province">
-                            <a-input v-decorator="['LAddressProvince']" />
+                            <a-input
+                                v-decorator="[
+                                    'LAddressProvince',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Province is Required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            />
                         </a-form-item>
 
                         <a-form-item label="Email Address">
                             <a-input
                                 type="email"
-                                v-decorator="['LAddressEmail']"
+                                v-decorator="[
+                                    'LAddressEmail',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Email is Required',
+                                            },
+                                        ],
+                                    },
+                                ]"
                             />
                         </a-form-item>
                     </a-col>
@@ -814,6 +1167,7 @@ export default {
             columns,
             fileLoading: false,
             modalFile: false,
+            is_lessor: false,
             file: {
                 barangay: false,
                 zoning: false,
@@ -834,6 +1188,7 @@ export default {
                 rpt: false,
                 // fireSafety: false,
             },
+
             fields: [
                 "typeOfBusienss",
                 "dateOfApplication",
@@ -1098,6 +1453,7 @@ export default {
                                     self.form.getFieldValue("OAddressUnitNo"),
                             },
                             lessorInformation: {
+                                is_lessor: self.is_lessor,
                                 LessorLname:
                                     self.form.getFieldValue("LessorLname"),
                                 LessorFname:
@@ -1394,6 +1750,11 @@ export default {
                 console.log(businessFiles);
                 this.dataBusinessActivity = businessActivities;
                 this.dataBusinessFiles = businessFiles;
+                console.log("data.lessorInformation");
+                console.log(data.lessorInformation);
+                console.log(data.lessorInformation.length);
+                this.is_lessor =
+                    data.lessorInformation.length == 0 ? false : true;
             }
         },
     },
