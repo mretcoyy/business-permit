@@ -1,7 +1,7 @@
 <template>
     <MainLayout>
         <a-card>
-            <h1>Sanitary Approval</h1>
+            <h1>BFP Approval</h1>
             <a-table
                 :columns="columns"
                 :data-source="data"

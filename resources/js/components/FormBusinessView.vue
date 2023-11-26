@@ -572,7 +572,14 @@
                             scrolling="auto"
                         ></iframe>
                     </div>
-                    <div v-else>
+                    <div
+                        v-else
+                        style="
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        "
+                    >
                         <img
                             v-bind:src="image_url"
                             id="image"

@@ -59,6 +59,11 @@ const columns = [
         key: "name",
     },
     {
+        title: "BIN",
+        dataIndex: "bin",
+        key: "bin",
+    },
+    {
         title: "Owner Name",
         dataIndex: "tax_payer",
         key: "tax_payer",
@@ -137,6 +142,7 @@ export default {
                 container.address = item.businessInformation.taxPayerFname;
                 container.Status = item.businessDetail.status;
                 container.business_id = item.businessDetail.business_id;
+                container.bin = item.businessDetail.bin;
                 return container;
             });
 

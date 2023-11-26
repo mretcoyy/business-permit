@@ -193,24 +193,7 @@ export default {
             });
             this.data = this.formatData(res.data.data);
         },
-        refreshTable() {
-            this.filters = {
-                business_status: 16,
-                status: 1,
-                search_keyword: "",
-            };
-            this.getData();
-            this.formModal = { show: false };
-        },
-        handleSubmit(e) {
-            this.filters = {
-                business_status: 16,
-                status: 1,
-                search_keyword: "",
-            };
-            this.getData();
-            this.formModal.show = e;
-        },
+
         formatData(data) {
             let map = data.map((item) => {
                 const container = {};
@@ -253,42 +236,6 @@ export default {
                 return container;
             });
             return map;
-        },
-        async getData() {
-            const res = await axios.get("/bplo/list", {
-                params: {
-                    filters: this.filters,
-                },
-            });
-            // .then(function (response) {})
-            // .catch(function (error) {});
-            this.data = this.formatData(res.data.data);
-        },
-        async onSearch() {
-            this.filters = {
-                search_keyword: this.search,
-                status: 1,
-                business_status: 16,
-            };
-            this.getData();
-        },
-        async select(business_id) {
-            this.form.resetFields();
-            this.filters = { business_id, status: "" };
-            const res = await axios.get("/bplo/list", {
-                params: {
-                    filters: this.filters,
-                },
-            });
-            let data = this.formatDataSelect(res.data.data);
-            this.formModal = { show: true, data };
-        },
-        async confirm(id, status) {
-            const res = await axios.patch("/bplo/changeStatus/" + id, {
-                status: status,
-            });
-            this.filters = { business_id: "", search_keyword: "" };
-            this.getData();
         },
     },
     computed: {

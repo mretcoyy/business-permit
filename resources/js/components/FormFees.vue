@@ -404,7 +404,7 @@ export default {
                 console.log(e);
                 console.log(e.message);
                 this.$error({
-                    title: "Something went wrong!",
+                    title: e.response.data.message,
                 });
             } finally {
             }

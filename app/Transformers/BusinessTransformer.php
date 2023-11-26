@@ -46,7 +46,7 @@ class BusinessTransformer extends TransformerAbstract
         foreach ($data as $datum) {
            $result = [
             'business_id' => $datum->business_id,
-            'bin' => 'test',
+            'bin' => $datum->bin,
             'date_renewed' => $datum->date_renewed,
             'status' => BusinessStatus::getDescription($datum->status),
             'business_status' => strtoupper(BusinessStatus::getDescription( (integer) $datum->business_status)),
