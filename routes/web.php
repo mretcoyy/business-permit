@@ -46,7 +46,7 @@ Route::post('/forgot-password', 'UserController@forgotPassword');
 Route::get('/password-reset', 'UserController@passwordReset')->name('password-reset');
 Route::post('/password-reset/save-password-reset', 'UserController@savePasswordReset');
 
-Route::middleware(['role:Admin,User'])->group(function () {
+Route::middleware(['role:Admin,User,BPLO,MENRO,MPDC,ENGR,SNTRY,BFP,TREASURER'])->group(function () {
     Route::get('/user/dashboard', 'UserController@viewDashboard');
     Route::get('/user/application', 'UserController@viewApplication');
     Route::get('/business-form', 'UserBusinessController@index');
