@@ -10,6 +10,7 @@ use App\Entities\BusinessInformation;
 use App\Entities\BusinessInformationDetail;
 use App\Entities\LessorInformation;
 use App\Entities\OwnerInformation;
+use App\Entities\User;
 use App\Enums\BusinessStatus;
 use App\Enums\TypeOfOrganization;
 use Carbon\Carbon;
@@ -208,13 +209,37 @@ class BusinessService implements BusinessServiceInterface
         $updateData = [
             'business_status' => $status
         ];
-        
 
         // $businessDetail = BusinessDetail::find($id);
         // $businessDetail->update($updateData);
 
-        StatusNotif::smsNotif(Auth::user()->contact_number, $status);
-        StatusNotif:: emailNotif(Auth::user()->email, $status);
+        $business = Business::where('id',$id)->with(['businessDetail','businessInformation', 'businessInformationDetail'])->first();
+        $business_detail =  $business->businessDetail;
+        $user = User::find($business->user_id);
+        if($user)
+        {
+            $bin = $business_detail[0]['bin'];
+            $business_status = $business_detail[0]['business_status'];
+            foreach ($business->businessInformation as $business_information) {
+                $business_name = $business_information->business_name;
+                $taxpayer = $business_information->fullname;
+            }
+
+            $email = $user->email;
+            $contact = $user->contact_number;
+
+            $email_data = [
+                'fullname' => $taxpayer,
+                'email' => $email,
+                'business_name' => $business_name,
+                'bin' => $bin,
+                'status' => $status,
+                'type' => $status == 6 ? BusinessStatus::getDescription($business_status + 1) :  BusinessStatus::getDescription($status),
+            ];
+    
+            StatusNotif::smsNotif($contact, $status);
+            StatusNotif:: emailNotif($email, $email_data);
+        }
 
         return 1;
     }
@@ -619,9 +644,11 @@ class BusinessService implements BusinessServiceInterface
         $f = $data['fees'];
         $filename = $d['bin'].Date('YmdHis');
         
-        $date_issued = Date('M/d/Y');
         $pdf = new Fpdi();
+        $pagesource = $pdf->setSourceFile(public_path("pdf/rec.pdf"));
+        $pageimport = $pdf->importPage($pagesource);
         $pdf->AddPage();
+        $pdf->useTemplate($pageimport, null, null, 215.6, 297 ,FALSE);
         $pdf->SetHeaderMargin(0);
         $pdf->SetFooterMargin(0);
 
@@ -634,66 +661,74 @@ class BusinessService implements BusinessServiceInterface
         $zoning_fee = ((isset($f['zoning_fee']) && is_numeric($f['zoning_fee'])) ? number_format($f['zoning_fee'], 2) : "0.00");
         $total_fee = ((isset($f['total_fee']) && is_numeric($f['total_fee'])) ? number_format($f['total_fee'], 2) : "0.00");
                 
-        $min5 = 5;
-        $pdf->Text(55,50  , date('Y-m-d'));
 
         // $pdf->Text(17,58 , 'City Government of Dolores');
         // $pdf->Text(77,58, 'Gr A');
 
         $payor = $f['payor'];
+        $x = 0;
+        $y = 5;
+        $label_y = 0;
 
+        $pdf->SetFont(''   , '', 23, '', 'false');
+        $or_number = ($f['or_number'] == null ? '0' : $f['or_number']);
+        $pdf->MultiCell(68,7, $or_number."\n", 0, 'R', 0, 1,15 + $x, 28 + $y, true, 0, false, true, 20, 'M', true);
+   
+        $pdf->SetFont(''   , '', 12, '', 'false');
+        $pdf->Text(55,49 +$y , date('Y-m-d'));
+        $pdf->SetFont(''   , '', 12, '', 'false');
         $pdf->setCellPaddings(2, 4, 6, 8);
-        $txt =($payor == null ? '0' : $payor);
-        $pdf->MultiCell(70,10, $txt."\n", 0, 'L', 0, 1,15, 60, true, 0, false, true, 20, 'M', true);
+        $txt = ($payor == null ? '0' : $payor);
+        $pdf->MultiCell(70,10, $txt."\n", 0, 'L', 0, 1,15 + $x, 59 + $y, true, 0, false, true, 20, 'M', true);
 
-        $pdf->Text(5,81  - $min5, 'Business Tax');
+        $pdf->Text(5,81  + $label_y, 'Business Tax');
         $pdf->setCellPaddings(2, 4, 6, 8);
         $txt =($business_tax == null ? '0' : $business_tax);
-        $pdf->MultiCell(68,7, $txt."\n", 0, 'R', 0, 1,32, 77, true, 0, false, true, 20, 'M', true);
+        $pdf->MultiCell(68,7, $txt."\n", 0, 'R', 0, 1,32 + $x, 77 + $y, true, 0, false, true, 20, 'M', true);
 
-        $pdf->Text(5,87 - $min5 , 'Mayors Permit');
+        $pdf->Text(5,87 + $label_y , 'Mayors Permit');
         $pdf->setCellPaddings(2, 4, 6, 8);
         $txt =($mayors_permit == null ? '0' : $mayors_permit);
-        $pdf->MultiCell(68,7, $txt."\n", 0, 'R', 0, 1,32, 82, true, 0, false, true, 20, 'M', true);
+        $pdf->MultiCell(68,7, $txt."\n", 0, 'R', 0, 1,32 + $x, 82 + $y, true, 0, false, true, 20, 'M', true);
 
-        $pdf->Text(5,92  - $min5, 'Occupational Permit');
+        $pdf->Text(5,92  + $label_y, 'Occupational Permit');
         $pdf->setCellPaddings(2, 4, 6, 8);
         $txt =($occupational_permit == null ? '0' : $occupational_permit);
-        $pdf->MultiCell(70,7, $txt."\n", 0, 'R', 0, 1,30, 87, true, 0, false, true, 20, 'M', true);
+        $pdf->MultiCell(70,7, $txt."\n", 0, 'R', 0, 1,30 + $x, 88 + $y, true, 0, false, true, 20, 'M', true);
 
-        $pdf->Text(5,97 - $min5 , 'Subscription and Other Fees');
+        $pdf->Text(5,98 + $label_y , 'Subscription and Other Fees');
         $pdf->setCellPaddings(2, 4, 6, 8);
         $txt =($subscription_other == null ? '0' : $subscription_other);
-        $pdf->MultiCell(55,7, $txt."\n", 0, 'R', 0, 1,45, 93, true, 0, false, true, 20, 'M', true);
+        $pdf->MultiCell(55,7, $txt."\n", 0, 'R', 0, 1, 45 + $x, 95 + $y, true, 0, false, true, 20, 'M', true);
 
 
-        $pdf->Text(5,102  - $min5, 'Environmental Clearance');
+        $pdf->Text(5,104  + $label_y, 'Environmental Clearance');
         $pdf->setCellPaddings(2, 4, 6, 8);
         $txt = ($environmental_clearance == null ? '0' : $environmental_clearance);
-        $pdf->MultiCell(50,7, $txt."\n", 0, 'R', 0, 1,50, 98, true, 0, false, true, 20, 'M', true);
+        $pdf->MultiCell(50,7, $txt."\n", 0, 'R', 0, 1,50 + $x, 100 + $y, true, 0, false, true, 20, 'M', true);
 
-        $pdf->Text(5,108  - $min5, 'Sanitary Fee');
+        $pdf->Text(5,110  + $label_y, 'Sanitary Fee');
         $pdf->setCellPaddings(2, 4, 6, 8);
         $txt = ($sanitary_permit_fee == null ? '0' : $sanitary_permit_fee);
-        $pdf->MultiCell(68,7, $txt."\n", 0, 'R', 0, 1,32, 103, true, 0, false, true, 21, 'M', true);
+        $pdf->MultiCell(68,7, $txt."\n", 0, 'R', 0, 1,32 + $x, 105 + $y, true, 0, false, true, 21, 'M', true);
 
-        $pdf->Text(5,113 - $min5 , 'Zoning Fee');
+        $pdf->Text(5,115 + $label_y , 'Zoning Fee');
         $pdf->setCellPaddings(2, 4, 6, 8);
         $txt = ($zoning_fee == null ? '0' : $zoning_fee);
-        $pdf->MultiCell(70,7, $txt."\n", 0, 'R', 0, 1,30, 108, true, 0, false, true, 21, 'M', true);
+        $pdf->MultiCell(70,7, $txt."\n", 0, 'R', 0, 1,30 + $x, 110 + $y, true, 0, false, true, 21, 'M', true);
 
-        $pdf->Text(7, 139 , 'x');
+        $pdf->Text(7, 143 + $y , 'x');
 
-        $pdf->Text(6,160, ($f['or_number'] == null ? '0' : $f['or_number']));
-        $pdf->Text(5,165, 'BIN: ' .$d['bin']);
+        $pdf->Text(6,167 + $y, ($f['or_number'] == null ? '0' : $f['or_number']));
+        $pdf->Text(5,172 + $y, 'BIN: ' .$d['bin']);
 
         $pdf->setCellPaddings(2, 4, 6, 8);
         $txt = ($total_fee == null ? '0' : $total_fee);
-        $pdf->MultiCell(40,7, $txt."\n", 0, 'R', 0, 1,60, 119, true, 0, false, true, 21, 'M', true);
+        $pdf->MultiCell(40,7, $txt."\n", 0, 'R', 0, 1,60 + $x, 123 + $y, true, 0, false, true, 21, 'M', true);
 
         $pdf->setCellPaddings(2, 4, 6, 8);
         $txt = ucwords($this->numberToWordsWithCentsInPesos( str_replace(',', '', $total_fee)));
-        $pdf->MultiCell(60,20, $txt."\n", 0, 'L', 0, 1,35, 128, true, 0, false, true, 24, 'M', true);
+        $pdf->MultiCell(60,20, $txt."\n", 0, 'L', 0, 1,35 + $x, 132 + $y, true, 0, false, true, 24, 'M', true);
 
         $pdf->Text(42,161, '');
         // $pdf->Text(42,165 , 'CITY TREASURER');

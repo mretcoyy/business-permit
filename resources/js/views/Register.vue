@@ -50,6 +50,32 @@
                         <a-input
                             size="large"
                             type="text"
+                            placeholder="Contact No."
+                            :disabled="loginBtn"
+                            v-decorator="[
+                                'contact_number',
+                                {
+                                    rules: [
+                                        {
+                                            required: true,
+                                            message:
+                                                'Contact Number is Required',
+                                        },
+                                    ],
+                                },
+                            ]"
+                        >
+                            <a-icon
+                                slot="prefix"
+                                type="phone"
+                                :style="{ color: '#1890FF' }"
+                            />
+                        </a-input>
+                    </a-form-item>
+                    <a-form-item>
+                        <a-input
+                            size="large"
+                            type="text"
                             placeholder="Email"
                             :disabled="loginBtn"
                             v-decorator="[
@@ -195,10 +221,13 @@ export default {
                     fullName: this.form.getFieldValue("fullName"),
                     email: this.form.getFieldValue("username"),
                     password: this.form.getFieldValue("password"),
+                    contact_number: this.form.getFieldValue("contact_number"),
                 },
             })
                 .then(function (response) {
-                    self.$message.success("Registered Successfully!...Redirecting!...");
+                    self.$message.success(
+                        "Registered Successfully!...Redirecting!..."
+                    );
                     self.form.resetFields();
                     setTimeout(() => {
                         window.location.href = "/";
