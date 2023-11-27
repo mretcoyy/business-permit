@@ -148,7 +148,8 @@ export default {
         };
     },
     created() {
-     this.sidebar = this.sidebar.filter(checkUserPermission);
+        console.log(this.$root.$children[0].user);
+    //  this.sidebar = this.sidebar.filter(checkUserPermission);
     },
     methods: {
         checkUserPermission(data) {

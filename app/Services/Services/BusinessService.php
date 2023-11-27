@@ -210,13 +210,13 @@ class BusinessService implements BusinessServiceInterface
         ];
         
 
-        $businessDetail = BusinessDetail::find($id);
-        $businessDetail->update($updateData);
+        // $businessDetail = BusinessDetail::find($id);
+        // $businessDetail->update($updateData);
 
         StatusNotif::smsNotif(Auth::user()->contact_number, $status);
         StatusNotif:: emailNotif(Auth::user()->email, $status);
 
-        return $businessDetail;
+        return 1;
     }
 
     public function changeStatus($id)
