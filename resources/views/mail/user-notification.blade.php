@@ -128,7 +128,7 @@
                     @if ($email_data['status'] != 6)
                     <tr>
                         <td bgcolor="#ffffff" align="left" style="padding: 10px 20px 0px 30px; color: #000000; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 300; line-height: 25px;">
-                            <p style="margin: 0px;color: #000000;">It is our pleasure to inform you that we have found them to be compliant and herewith granting you the approval of your business' {{ $email_data['type'] }}. </p>
+                            <p style="margin: 0px;color: #000000;">It is our pleasure to inform you that we have found them to be compliant and herewith granting you the approval of your business to {{ $email_data['type'] }}. </p>
                         </td>
                     </tr>
                     @else

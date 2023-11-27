@@ -210,8 +210,8 @@ class BusinessService implements BusinessServiceInterface
             'business_status' => $status
         ];
 
-        // $businessDetail = BusinessDetail::find($id);
-        // $businessDetail->update($updateData);
+        $businessDetail = BusinessDetail::find($id);
+        $businessDetail->update($updateData);
 
         $business = Business::where('id',$id)->with(['businessDetail','businessInformation', 'businessInformationDetail'])->first();
         $business_detail =  $business->businessDetail;
@@ -234,7 +234,7 @@ class BusinessService implements BusinessServiceInterface
                 'business_name' => $business_name,
                 'bin' => $bin,
                 'status' => $status,
-                'type' => $status == 6 ? BusinessStatus::getDescription($business_status + 1) :  BusinessStatus::getDescription($status),
+                'type' => ($status == 6 ? strtoupper(BusinessStatus::getDescription($business_status + 1)) :  strtoupper(BusinessStatus::getDescription($status))),
             ];
     
             StatusNotif::smsNotif($contact, $status);
