@@ -141,7 +141,7 @@ export default {
                     url: "/admin/user-management",
                     title: "User Management",
                     icon: "user",
-                    role: 3,
+                    role: 1,
                 },
             ],
         };
@@ -152,9 +152,14 @@ export default {
     methods: {
         checkUserPermission(data) {
             if (
-                data.role == this.$root.$children[0].user.role ||
                 this.$root.$children[0].user.role == 1
             ) {
+                console.log(this.$root.$children[0].user.role)
+                return data;
+            } else if (
+                data.role == this.$root.$children[0].user.role
+            ) {
+                console.log(this.$root.$children[0].user.role)
                 return data;
             }
         },
