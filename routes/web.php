@@ -135,13 +135,3 @@ Route::middleware(['role:Admin,BPLO'])->group(function () {
     Route::get('/admin/report', 'ReportController@index');
     Route::get('/report/list', 'ReportController@list');
 });
-
-
-Route::get('/menro', 'MENROController@index');
-Route::get('/mpdc', 'MPDCController@index');
-Route::get('/engineering', 'EngineeringController@index');
-Route::get('/sanitary', 'SanitaryController@index');
-Route::get('/admin/treasurer', 'TreasurerController@index');
-Route::get('/bfp', 'BFPController@index');
-Route::get('/mayors-office', 'MayorsOfficeController@index');
-Route::get('/bplo-releasing', 'BPLOReleasingController@index');
