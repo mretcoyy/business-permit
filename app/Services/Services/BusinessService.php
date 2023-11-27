@@ -18,9 +18,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\Traits\StatusNotif;
 use setasign\Fpdi\Tcpdf\Fpdi;
+
 class BusinessService implements BusinessServiceInterface
 {
+    use StatusNotif;
 
     public function store($data_field, $files)
     {
@@ -205,9 +208,13 @@ class BusinessService implements BusinessServiceInterface
         $updateData = [
             'business_status' => $status
         ];
+        
 
         $businessDetail = BusinessDetail::find($id);
         $businessDetail->update($updateData);
+
+        StatusNotif::smsNotif();
+        StatusNotif:: emailNotif();
 
         return $businessDetail;
     }

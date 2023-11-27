@@ -57,61 +57,91 @@ Route::middleware(['role:Admin,User'])->group(function () {
     Route::post('/user/bplo/view-requirement', 'BPLOController@viewRequirement');
 });
 
-Route::middleware(['role:Admin'])->group(function () {
+Route::middleware(['role:Admin,BPLO'])->group(function () {
 //BPLO
 Route::get('/bplo', 'BPLOController@index');
 //APPROVAL
 Route::patch('/bplo/changeStatus/{id}', 'BPLOController@changeStatus');
 Route::patch('/bplo/business-change-status/{id}', 'BPLOController@changeBusinessStatus');
 Route::patch('/bplo/update-gross/{id}', 'BPLOController@updateGross');
+});
 
 //APPROVAL
-Route::get('/admin/menro', 'MenroController@index');
-Route::patch('/bplo/menro-change-status/{id}', 'MenroController@changeBusinessStatus');
-Route::get('/admin/mpdc', 'MpdcController@index');
-Route::patch('/bplo/mpdc-change-status/{id}', 'MpdcController@changeBusinessStatus');
-Route::get('/admin/engineering', 'EngineeringController@index');
-Route::patch('/bplo/engineering-change-status/{id}', 'EngineeringController@changeBusinessStatus');
-Route::get('/admin/sanitary', 'SanitaryController@index');
-Route::patch('/bplo/sanitary-change-status/{id}', 'SanitaryController@changeBusinessStatus');
-Route::get('/admin/bfp', 'BFPController@index');
-Route::patch('/bplo/bfp-change-status/{id}', 'BFPController@changeBusinessStatus');
+Route::middleware(['role:Admin,MENRO'])->group(function () {
+    Route::get('/admin/menro', 'MenroController@index');
+    Route::patch('/bplo/menro-change-status/{id}', 'MenroController@changeBusinessStatus');
+});
+
+Route::middleware(['role:Admin,BPLO,MPDC'])->group(function () {
+    Route::get('/admin/mpdc', 'MpdcController@index');
+    Route::patch('/bplo/mpdc-change-status/{id}', 'MpdcController@changeBusinessStatus');
+});
+
+Route::middleware(['role:Admin,ENGR'])->group(function () {
+    Route::get('/admin/engineering', 'EngineeringController@index');
+    Route::patch('/bplo/engineering-change-status/{id}', 'EngineeringController@changeBusinessStatus');
+});
+
+Route::middleware(['role:Admin,SNTRY'])->group(function () {
+    Route::get('/admin/sanitary', 'SanitaryController@index');
+    Route::patch('/bplo/sanitary-change-status/{id}', 'SanitaryController@changeBusinessStatus');
+});
+
+Route::middleware(['role:Admin,BFP'])->group(function () {
+    Route::get('/admin/bfp', 'BFPController@index');
+    Route::patch('/bplo/bfp-change-status/{id}', 'BFPController@changeBusinessStatus');
+});
 
 //AMENDMENT
-Route::get('/admin/amendment', 'AmendmentController@index');
-Route::post('/amendment/update-data', 'AmendmentController@updateData');
+
+Route::middleware(['role:Admin,BPLO'])->group(function () {
+    Route::get('/admin/amendment', 'AmendmentController@index');
+    Route::post('/amendment/update-data', 'AmendmentController@updateData');
+});
 
 //TAX COMPUTATION
-Route::get('/admin/tax-computation', 'TaxComputationController@index');
-Route::post('/tax-computation/store', 'TaxComputationController@store');
-Route::post('/tax-computation/view-fees-form', 'TaxComputationController@viewFeesForm');
+Route::middleware(['role:Admin,TREASURER'])->group(function () {
+    Route::get('/admin/tax-computation', 'TaxComputationController@index');
+    Route::post('/tax-computation/store', 'TaxComputationController@store');
+    Route::post('/tax-computation/view-fees-form', 'TaxComputationController@viewFeesForm');
+});
 
 //MAYORS PERMIT
-Route::get('/admin/mayors-permit', 'MayorsPermitController@index');
-Route::post('/mayors-permit/view-mayors-permit', 'MayorsPermitController@view');
+Route::middleware(['role:Admin,BPLO'])->group(function () {
+    Route::get('/admin/mayors-permit', 'MayorsPermitController@index');
+    Route::post('/mayors-permit/view-mayors-permit', 'MayorsPermitController@view');
+});
+
+
+
+//User Management
+Route::middleware(['role:Admin'])->group(function () {
+    Route::get('/admin/user-management', 'UserController@viewUserManagement');
+    Route::get('/user/list', 'UserController@list');
+    Route::patch('/user/change-role/{id}', 'UserController@changeRole');
+    Route::patch('/user/link-business/{id}', 'UserController@linkBusiness');
+});
+
+// Application
+Route::middleware(['role:Admin,BPLO'])->group(function () {
+    Route::get('/admin/application', 'Application@index');
+    Route::get('/admin/new-application', 'Application@viewNewApplication');
+    Route::post('/admin/bplo/view-requirement', 'BPLOController@viewRequirement');
+    Route::get('/admin/dashboard', 'Application@viewDashboard');
+});
+
+//Report
+Route::middleware(['role:Admin,BPLO'])->group(function () {
+    Route::get('/admin/report', 'ReportController@index');
+    Route::get('/report/list', 'ReportController@list');
+});
+
 
 Route::get('/menro', 'MENROController@index');
 Route::get('/mpdc', 'MPDCController@index');
 Route::get('/engineering', 'EngineeringController@index');
 Route::get('/sanitary', 'SanitaryController@index');
-Route::get('/treasurer', 'TreasurerController@index');
+Route::get('/admin/treasurer', 'TreasurerController@index');
 Route::get('/bfp', 'BFPController@index');
 Route::get('/mayors-office', 'MayorsOfficeController@index');
 Route::get('/bplo-releasing', 'BPLOReleasingController@index');
-
-//User Management
-Route::get('/admin/user-management', 'UserController@viewUserManagement');
-Route::get('/user/list', 'UserController@list');
-Route::patch('/user/change-role/{id}', 'UserController@changeRole');
-Route::patch('/user/link-business/{id}', 'UserController@linkBusiness');
-
-// Application
-Route::get('/admin/application', 'Application@index');
-Route::get('/admin/new-application', 'Application@viewNewApplication');
-Route::post('/admin/bplo/view-requirement', 'BPLOController@viewRequirement');
-Route::get('/admin/dashboard', 'Application@viewDashboard');
-
-//Report
-Route::get('/admin/report', 'ReportController@index');
-Route::get('/report/list', 'ReportController@list');
-});

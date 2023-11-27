@@ -75,66 +75,88 @@ export default {
                     url: "/admin/new-application",
                     title: "New Application",
                     icon: "form",
+                    role: 3,
                 },
                 {
                     url: "/admin/application",
                     title: "BPLO Approval",
                     icon: "form",
+                    role: 3,
+                    
                 },
                 {
                     url: "/admin/menro",
                     title: "MENRO",
                     icon: "safety-certificate",
+                    role: 4,
                 },
                 {
                     url: "/admin/mpdc",
                     title: "MPDC",
                     icon: "safety-certificate",
+                    role: 5,
                 },
                 {
                     url: "/admin/engineering",
                     title: "Engineering",
                     icon: "safety-certificate",
+                    role: 6,
                 },
                 {
                     url: "/admin/sanitary",
                     title: "Sanitary",
                     icon: "safety-certificate",
+                    role: 7,
                 },
                 {
                     url: "/admin/bfp",
                     title: "BFP",
                     icon: "safety-certificate",
+                    role: 8,
                 },
                 {
                     url: "/admin/tax-computation",
                     title: "Payment",
                     icon: "money-collect",
+                    role: 9,
                 },
                 {
                     url: "/admin/mayors-permit",
                     title: "Mayor's Permit",
                     icon: "money-collect",
+                    role: 3,
                 },
                 {
                     url: "/admin/amendment",
                     title: "Amendments",
                     icon: "folder-open",
+                    role: 3,
                 },
                 {
                     url: "/admin/report",
                     title: "Report",
                     icon: "file",
+                    role: 3,
                 },
                 {
                     url: "/admin/user-management",
                     title: "User Management",
                     icon: "user",
+                    role: 3,
                 },
             ],
         };
     },
+    created() {
+     this.sidebar = this.sidebar.filter(checkUserPermission);
+    },
     methods: {
+        checkUserPermission(data) {
+            if (data.role == this.$root.$children[0].user.role || this.$root.$children[0].user.role == 1) {
+                return data;
+            }
+        },
+
         viewPage(url) {
             if (url) window.location.href = url;
         },

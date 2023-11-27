@@ -172,8 +172,17 @@ export default {
                 .then(function (response) {
                     console.log(response);
                     if (response.data.user != undefined) {
-                        if (response.data.user.role == 1) {
-                            window.location.href = "/admin/application";
+                        if (response.data.user.role != 2) {
+                            let url = '/admin/application';
+                            if (response.data.user.role == 3) { url = '/admin/application'} 
+                            else if (response.data.user.role == 4) { url = '/admin/menro' }
+                            else if (response.data.user.role == 5) { url = '/admin/mpdc' }
+                            else if (response.data.user.role == 6) { url = '/admin/engineering' }
+                            else if (response.data.user.role == 7) { url = '/admin/sanitary' }
+                            else if (response.data.user.role == 8) { url = '/admin/bfp' }
+                            else if (response.data.user.role == 9) { url = '/admin/tax-computation' }
+                            else { url = '/admin/application' }
+                            window.location.href = url;
                         } else {
                             window.location.href = "/user/dashboard";
                         }

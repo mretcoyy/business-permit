@@ -24,7 +24,7 @@ class Role
 
     public function handle($request, Closure $next, ...$roles)
     {
-        $roleIds = ['Admin' => 1, 'User' => 2];
+        $roleIds = ['Admin' => 1, 'User' => 2, 'BPLO' => 3, 'MENRO' => 4, 'MPDC' => 5, 'ENGR' => 6, 'SNTRY' => 7, 'BFP' => 8, 'TREASURER' => 9];
         $allowedRoleIds = [];
         foreach ($roles as $role)
         {
