@@ -540,6 +540,7 @@ class BusinessService implements BusinessServiceInterface
         else{
             $storeBusinessFees = [
                 'business_id' => $data['business_id'],
+                'payor' => $data['payor'], 
                 'or_number' => $data['or_number'],
                 'business_tax' => isset($data['business_tax']) ? $data['business_tax'] : 0,
                 'mayors_permit' => isset($data['mayors_permit']) ? $data['mayors_permit'] : 0,
@@ -623,88 +624,162 @@ class BusinessService implements BusinessServiceInterface
         $pdf->AddPage();
         $pdf->SetHeaderMargin(0);
         $pdf->SetFooterMargin(0);
-      
-        $html = '';
-        $html .= '<table border="0" cellspacing="0" cellpadding="3" >
-                    <tr>
-                        <td colspan="2" style="text-align:center; font-weight:bold">BUSINESS FEES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" >BIN: '.$d['bin'].'</td>
-                        <td colspan="2" >Date Issued: '.$date_issued.'</td>
-                    </tr>
-                    <tr>
-                        <td >Business Name: '.$d['business_name'].'</td>
-                        <td >Business Address: '.$d['business_address'].'</td>
-                    </tr>
-                    <tr>
-                        <td >Owners Name: '.$d['owner_name'].'</td>
-                        <td >Owners Address: '.$d['owner_address'].'</td>
-                    </tr>
-                    <tr>
-                        <td >Number of Employees: '.$d['number_of_employees'].'</td>
-                        <td >OR number: '.$f['or_number'].'</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" ></td>
-                    </tr>
 
-        </table>
-        ';
-                        // <td align="right">'.!empty($f['business_tax']) ? $f['business_tax'] : 0.00.'</td>
+        $business_tax = ((isset($f['business_tax']) && is_numeric($f['business_tax'])) ? number_format($f['business_tax'],2) : "0.00");
+        $mayors_permit = ((isset($f['mayors_permit']) && is_numeric($f['mayors_permit'])) ? number_format($f['mayors_permit'], 2) : "0.00");
+        $occupational_permit = ((isset($f['occupational_permit']) && is_numeric($f['occupational_permit'])) ? number_format($f['occupational_permit'], 2) : "0.00");
+        $subscription_other = ((isset($f['subscription_other']) && is_numeric($f['subscription_other'])) ? number_format($f['subscription_other'], 2) : "0.00");
+        $environmental_clearance = ((isset($f['environmental_clearance']) && is_numeric($f['environmental_clearance'])) ? number_format($f['environmental_clearance'], 2) : "0.00");
+        $sanitary_permit_fee = ((isset($f['sanitary_permit_fee']) && is_numeric($f['sanitary_permit_fee'])) ? number_format($f['sanitary_permit_fee'], 2) : "0.00");
+        $zoning_fee = ((isset($f['zoning_fee']) && is_numeric($f['zoning_fee'])) ? number_format($f['zoning_fee'], 2) : "0.00");
+        $total_fee = ((isset($f['total_fee']) && is_numeric($f['total_fee'])) ? number_format($f['total_fee'], 2) : "0.00");
+                
+        $min5 = 5;
+        $pdf->Text(55,50  , date('Y-m-d'));
 
-        $html .= '
-                <div style="display:flex; align-items:center; justify-content:center">
-                <table border="1" cellspacing="0" cellpadding="3" style="border:black  1px; width:60%">
-                    <tr style="border:0">
-                        <td >Business Tax:</td>
-                        <td align="right">'.((isset($f['business_tax']) && is_numeric($f['business_tax'])) ? number_format($f['business_tax'],2) : "0.00").'</td>
-                    </tr>
-                    <tr style="border:0">
-                        <td >Mayors Permit:</td>
-                        <td align="right">'.((isset($f['mayors_permit']) && is_numeric($f['mayors_permit'])) ? number_format($f['mayors_permit'], 2) : "0.00").'</td>
-                    </tr>
-                    <tr style="border:0">
-                        <td >Occupational Permit</td>
-                        <td align="right">'.((isset($f['occupational_permit']) && is_numeric($f['occupational_permit'])) ? number_format($f['occupational_permit'], 2) : "0.00").'</td>
-                    </tr>
-                    <tr style="border:0">
-                        <td >Subscription and Others</td>
-                        <td align="right">'.((isset($f['subscription_other']) && is_numeric($f['subscription_other'])) ? number_format($f['subscription_other'], 2) : "0.00").'</td>
-                    </tr>
-                    <tr style="border:0">
-                        <td >Environmental Clearance</td>
-                        <td align="right">'.((isset($f['environmental_clearance']) && is_numeric($f['environmental_clearance'])) ? number_format($f['environmental_clearance'], 2) : "0.00").'</td>
-                    </tr>
-                    <tr>
-                        <td >Sanitary Permit Fee</td>
-                        <td align="right">'.((isset($f['sanitary_permit_fee']) && is_numeric($f['sanitary_permit_fee'])) ? number_format($f['sanitary_permit_fee'], 2) : "0.00").'</td>
-                    </tr>
-                    <tr style="border:0">
-                        <td >Zoning Fee</td>
-                        <td align="right">'.((isset($f['zoning_fee']) && is_numeric($f['zoning_fee'])) ? number_format($f['zoning_fee'], 2) : "0.00").'</td>
-                    </tr>
-                    <tr style="border:0">
-                        <td >Total Fee</td>
-                        <td align="right">'.((isset($f['total_fee']) && is_numeric($f['total_fee'])) ? number_format($f['total_fee'], 2) : "0.00").'</td>
-                    </tr>
-                </table>
-                </div>
-        ';
-        $pdf->writeHTML($html, true, false, true, false, '');
+        // $pdf->Text(17,58 , 'City Government of Dolores');
+        // $pdf->Text(77,58, 'Gr A');
 
-      
-        // business_tax
-        // mayors_permit
-        // occupational_permit
-        // subscription_other
-        // environmental_clearance
-        // sanitary_permit_fee
-        // zoning_fee
-        // total_fee
+        $payor = $f['payor'];
+
+        $pdf->setCellPaddings(2, 4, 6, 8);
+        $txt =($payor == null ? '0' : $payor);
+        $pdf->MultiCell(70,10, $txt."\n", 0, 'L', 0, 1,15, 60, true, 0, false, true, 20, 'M', true);
+
+        $pdf->Text(5,81  - $min5, 'Business Tax');
+        $pdf->setCellPaddings(2, 4, 6, 8);
+        $txt =($business_tax == null ? '0' : $business_tax);
+        $pdf->MultiCell(68,7, $txt."\n", 0, 'R', 0, 1,32, 77, true, 0, false, true, 20, 'M', true);
+
+        $pdf->Text(5,87 - $min5 , 'Mayors Permit');
+        $pdf->setCellPaddings(2, 4, 6, 8);
+        $txt =($mayors_permit == null ? '0' : $mayors_permit);
+        $pdf->MultiCell(68,7, $txt."\n", 0, 'R', 0, 1,32, 82, true, 0, false, true, 20, 'M', true);
+
+        $pdf->Text(5,92  - $min5, 'Occupational Permit');
+        $pdf->setCellPaddings(2, 4, 6, 8);
+        $txt =($occupational_permit == null ? '0' : $occupational_permit);
+        $pdf->MultiCell(70,7, $txt."\n", 0, 'R', 0, 1,30, 87, true, 0, false, true, 20, 'M', true);
+
+        $pdf->Text(5,97 - $min5 , 'Subscription and Other Fees');
+        $pdf->setCellPaddings(2, 4, 6, 8);
+        $txt =($subscription_other == null ? '0' : $subscription_other);
+        $pdf->MultiCell(55,7, $txt."\n", 0, 'R', 0, 1,45, 93, true, 0, false, true, 20, 'M', true);
+
+
+        $pdf->Text(5,102  - $min5, 'Environmental Clearance');
+        $pdf->setCellPaddings(2, 4, 6, 8);
+        $txt = ($environmental_clearance == null ? '0' : $environmental_clearance);
+        $pdf->MultiCell(50,7, $txt."\n", 0, 'R', 0, 1,50, 98, true, 0, false, true, 20, 'M', true);
+
+        $pdf->Text(5,108  - $min5, 'Sanitary Fee');
+        $pdf->setCellPaddings(2, 4, 6, 8);
+        $txt = ($sanitary_permit_fee == null ? '0' : $sanitary_permit_fee);
+        $pdf->MultiCell(68,7, $txt."\n", 0, 'R', 0, 1,32, 103, true, 0, false, true, 21, 'M', true);
+
+        $pdf->Text(5,113 - $min5 , 'Zoning Fee');
+        $pdf->setCellPaddings(2, 4, 6, 8);
+        $txt = ($zoning_fee == null ? '0' : $zoning_fee);
+        $pdf->MultiCell(70,7, $txt."\n", 0, 'R', 0, 1,30, 108, true, 0, false, true, 21, 'M', true);
+
+        $pdf->Text(7, 139 , 'x');
+
+        $pdf->Text(6,160, ($f['or_number'] == null ? '0' : $f['or_number']));
+        $pdf->Text(5,165, 'BIN: ' .$d['bin']);
+
+        $pdf->setCellPaddings(2, 4, 6, 8);
+        $txt = ($total_fee == null ? '0' : $total_fee);
+        $pdf->MultiCell(40,7, $txt."\n", 0, 'R', 0, 1,60, 119, true, 0, false, true, 21, 'M', true);
+
+        $pdf->setCellPaddings(2, 4, 6, 8);
+        $txt = ucwords($this->numberToWordsWithCentsInPesos( str_replace(',', '', $total_fee)));
+        $pdf->MultiCell(60,20, $txt."\n", 0, 'L', 0, 1,35, 128, true, 0, false, true, 24, 'M', true);
+
+        $pdf->Text(42,161, '');
+        // $pdf->Text(42,165 , 'CITY TREASURER');
+
 
         $pdf->Output($filename, 'I');
         return $pdf;
     }
-    
+
+
+    private function numberToWords($number) {
+        $words = array(
+            0 => 'Zero',
+            1 => 'One',
+            2 => 'Two',
+            3 => 'Three',
+            4 => 'Four',
+            5 => 'Five',
+            6 => 'Six',
+            7 => 'Seven',
+            8 => 'Eight',
+            9 => 'Nine',
+            10 => 'Ten',
+            11 => 'Eleven',
+            12 => 'Twelve',
+            13 => 'Thirteen',
+            14 => 'Fourteen',
+            15 => 'Fifteen',
+            16 => 'Sixteen',
+            17 => 'Seventeen',
+            18 => 'Eighteen',
+            19 => 'Nineteen',
+            20 => 'Twenty',
+            30 => 'Thirty',
+            40 => 'Forty',
+            50 => 'Fifty',
+            60 => 'Sixty',
+            70 => 'Seventy',
+            80 => 'Eighty',
+            90 => 'Ninety'
+        );
+
+        if ($number < 20) {
+            return $words[$number];
+        }
+
+        if ($number < 100) {
+            $tens = $words[floor($number / 10) * 10];
+            $units = $number % 10;
+            return $tens . ($units > 0 ? '-' . $words[$units] : '');
+        }
+
+        if ($number < 1000) {
+            $hundreds = $words[floor($number / 100)] . ' Hundred';
+            $remainder = $number % 100;
+            return $hundreds . ($remainder > 0 ? ' and ' . $this->numberToWords($remainder) : '');
+        }
+
+        if ($number < 1000000) {
+            $thousands = $this->numberToWords(floor($number / 1000)) . ' Thousand';
+            $remainder = $number % 1000;
+            return $thousands . ($remainder > 0 ? ' ' . $this->numberToWords($remainder) : '');
+        }
+
+        if ($number < 1000000000) {
+            $millions = $this->numberToWords(floor($number / 1000000)) . ' Million';
+            $remainder = $number % 1000000;
+            return $millions . ($remainder > 0 ? ' ' . $this->numberToWords($remainder) : '');
+        }
+        
+        // Continue the pattern for millions and larger numbers...
+
+        return 'Out of range';
+    }
+
+    private function numberToWordsWithCentsInPesos($number) {
+
+        $wholePart = floor($number);
+        $decimalPart = round(($number - $wholePart) * 100);
+
+        $result = $this->numberToWords($wholePart) . ' ' . ($wholePart === 1 ? 'Peso' : 'Pesos');
+
+        if ($decimalPart > 0) {
+            $result .= ' and ' . $this->numberToWords($decimalPart) . ' ' . ($decimalPart === 1 ? 'Centavo' : 'Centavos');
+        }
+
+        return $result;
+    }
 }

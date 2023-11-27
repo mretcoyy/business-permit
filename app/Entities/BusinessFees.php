@@ -33,6 +33,7 @@ class BusinessFees extends Model implements Transformable
         'user_id',
         'status',
         'or_number',
+        'payor',
     ];
 
 }

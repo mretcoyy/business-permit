@@ -52,6 +52,24 @@
                 <a-card>
                     <a-row :gutter="12">
                         <a-col :span="8">
+                            <a-form-item label="Payor">
+                                <a-input
+                                    v-decorator="[
+                                        'payor',
+                                        {
+                                            rules: [
+                                                {
+                                                    required: true,
+                                                    message:
+                                                        'Payor is required',
+                                                },
+                                            ],
+                                        },
+                                    ]"
+                                    maxLength="7"
+                                /> </a-form-item
+                        ></a-col>
+                        <a-col :span="8">
                             <a-form-item label="OR number">
                                 <a-input
                                     v-decorator="[
@@ -365,6 +383,7 @@ export default {
                 if (!errors) {
                     var data = {
                         business_id: this.business_id,
+                        payor: self.form.getFieldValue("payor"),
                         or_number: self.form.getFieldValue("or_number"),
                         business_tax: self.form.getFieldValue("business_tax"),
                         mayors_permit: self.form.getFieldValue("mayors_permit"),
