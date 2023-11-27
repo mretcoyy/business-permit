@@ -1,7 +1,7 @@
 <template>
     <MainLayout>
         <a-card>
-            <h1>Tax Computations</h1>
+            <h1>Payment</h1>
             <a-row :gutter="16">
                 <a-col :span="8">
                     <a-input-search
