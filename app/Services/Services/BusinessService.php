@@ -10,6 +10,7 @@ use App\Entities\BusinessInformation;
 use App\Entities\BusinessInformationDetail;
 use App\Entities\LessorInformation;
 use App\Entities\OwnerInformation;
+use App\Entities\User;
 use App\Enums\BusinessStatus;
 use App\Enums\TypeOfOrganization;
 use Carbon\Carbon;
@@ -208,13 +209,37 @@ class BusinessService implements BusinessServiceInterface
         $updateData = [
             'business_status' => $status
         ];
-        
 
         // $businessDetail = BusinessDetail::find($id);
         // $businessDetail->update($updateData);
 
-        StatusNotif::smsNotif(Auth::user()->contact_number, $status);
-        StatusNotif:: emailNotif(Auth::user()->email, $status);
+        $business = Business::where('id',$id)->with(['businessDetail','businessInformation', 'businessInformationDetail'])->first();
+        $business_detail =  $business->businessDetail;
+        $user = User::find($business->user_id);
+        if($user)
+        {
+            $bin = $business_detail[0]['bin'];
+            $business_status = $business_detail[0]['business_status'];
+            foreach ($business->businessInformation as $business_information) {
+                $business_name = $business_information->business_name;
+                $taxpayer = $business_information->fullname;
+            }
+
+            $email = $user->email;
+            $contact = $user->contact_number;
+
+            $email_data = [
+                'fullname' => $taxpayer,
+                'email' => $email,
+                'business_name' => $business_name,
+                'bin' => $bin,
+                'status' => $status,
+                'type' => $status == 6 ? BusinessStatus::getDescription($business_status + 1) :  BusinessStatus::getDescription($status),
+            ];
+    
+            StatusNotif::smsNotif($contact, $status);
+            StatusNotif:: emailNotif($email, $email_data);
+        }
 
         return 1;
     }
