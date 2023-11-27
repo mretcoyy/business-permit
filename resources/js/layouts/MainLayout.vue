@@ -82,7 +82,6 @@ export default {
                     title: "BPLO Approval",
                     icon: "form",
                     role: 3,
-                    
                 },
                 {
                     url: "/admin/menro",
@@ -148,17 +147,17 @@ export default {
         };
     },
     created() {
-        console.log(this.$root.$children[0].user);
-    //  this.sidebar = this.sidebar.filter(checkUserPermission);
+        this.sidebar = this.sidebar.filter(this.checkUserPermission);
     },
     methods: {
         checkUserPermission(data) {
-            console.log(data);
-            if (data.role == this.$root.$children[0].user.role || this.$root.$children[0].user.role == 1) {
+            if (
+                data.role == this.$root.$children[0].user.role ||
+                this.$root.$children[0].user.role == 1
+            ) {
                 return data;
             }
         },
-
         viewPage(url) {
             if (url) window.location.href = url;
         },
