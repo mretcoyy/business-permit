@@ -21,7 +21,8 @@
         "prettus/l5-repository": "^2.9",
         "setasign/fpdf": "*",
         "setasign/fpdi": "*",
-        "spatie/laravel-fractal": "^5.8"
+        "spatie/laravel-fractal": "^5.8",
+        "twilio/sdk": "^7.12"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

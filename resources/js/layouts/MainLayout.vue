@@ -152,6 +152,7 @@ export default {
     },
     methods: {
         checkUserPermission(data) {
+            console.log(data);
             if (data.role == this.$root.$children[0].user.role || this.$root.$children[0].user.role == 1) {
                 return data;
             }
