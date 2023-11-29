@@ -72,6 +72,12 @@ export default {
             email: "",
             sidebar: [
                 {
+                    url: "/admin/dashboard",
+                    title: "Dashboard",
+                    icon: "form",
+                    role: 3,
+                },
+                {
                     url: "/admin/new-application",
                     title: "New Application",
                     icon: "form",
@@ -151,15 +157,11 @@ export default {
     },
     methods: {
         checkUserPermission(data) {
-            if (
-                this.$root.$children[0].user.role == 1
-            ) {
-                console.log(this.$root.$children[0].user.role)
+            if (this.$root.$children[0].user.role == 1) {
+                console.log(this.$root.$children[0].user.role);
                 return data;
-            } else if (
-                data.role == this.$root.$children[0].user.role
-            ) {
-                console.log(this.$root.$children[0].user.role)
+            } else if (data.role == this.$root.$children[0].user.role) {
+                console.log(this.$root.$children[0].user.role);
                 return data;
             }
         },
