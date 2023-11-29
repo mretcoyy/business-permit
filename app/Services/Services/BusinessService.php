@@ -817,4 +817,31 @@ class BusinessService implements BusinessServiceInterface
 
         return $result;
     }
+
+    public function fetchData(){
+         
+        $result = [];
+        $total_income_generated = BusinessFees::sum('total_fee');
+        $total_funds = BusinessFees::sum('business_tax');
+        $total_number_applicants = User::where('role' , 2)->count();
+        $number_pending_applicants = BusinessDetail::where('business_status', 10)->count();
+        $number_renewals = BusinessDetail::where('status', 2)->count();
+        $number_ongoing_applications = BusinessDetail::where('business_status','>', 10)
+        ->orWhere('business_status','<', 17)
+        ->count();
+        $number_approved_applications = BusinessDetail::where('business_status','>', 10)
+        ->count();
+     
+        $result = [
+            'total_income_generated' => number_format($total_income_generated, 2),
+            'total_funds' => number_format($total_funds, 2),
+            'total_number_applicants' => $total_number_applicants,
+            'number_pending_applicants' => $number_pending_applicants,
+            'number_renewals' => $number_renewals,
+            'number_ongoing_applications' => $number_ongoing_applications,
+            'number_approved_applications' => $number_approved_applications,
+        ];
+
+        return $result;
+    }
 }
