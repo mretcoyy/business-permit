@@ -74,7 +74,7 @@ export default {
                 {
                     url: "/admin/dashboard",
                     title: "Dashboard",
-                    icon: "form",
+                    icon: "dashboard",
                     role: 3,
                 },
                 {
@@ -128,7 +128,7 @@ export default {
                 {
                     url: "/admin/mayors-permit",
                     title: "Mayor's Permit",
-                    icon: "money-collect",
+                    icon: "file",
                     role: 3,
                 },
                 {
