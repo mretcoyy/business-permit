@@ -6,7 +6,7 @@
                     <img
                         src="/images/dolores.png"
                         alt="logo"
-                        style="height: 250px"
+                        style="height: 200px"
                     />
                 </div>
                 <div class="title">Business Permit</div>
@@ -173,15 +173,24 @@ export default {
                     console.log(response);
                     if (response.data.user != undefined) {
                         if (response.data.user.role != 2) {
-                            let url = '/admin/application';
-                            if (response.data.user.role == 3) { url = '/admin/application'} 
-                            else if (response.data.user.role == 4) { url = '/admin/menro' }
-                            else if (response.data.user.role == 5) { url = '/admin/mpdc' }
-                            else if (response.data.user.role == 6) { url = '/admin/engineering' }
-                            else if (response.data.user.role == 7) { url = '/admin/sanitary' }
-                            else if (response.data.user.role == 8) { url = '/admin/bfp' }
-                            else if (response.data.user.role == 9) { url = '/admin/tax-computation' }
-                            else { url = '/admin/application' }
+                            let url = "/admin/application";
+                            if (response.data.user.role == 3) {
+                                url = "/admin/application";
+                            } else if (response.data.user.role == 4) {
+                                url = "/admin/menro";
+                            } else if (response.data.user.role == 5) {
+                                url = "/admin/mpdc";
+                            } else if (response.data.user.role == 6) {
+                                url = "/admin/engineering";
+                            } else if (response.data.user.role == 7) {
+                                url = "/admin/sanitary";
+                            } else if (response.data.user.role == 8) {
+                                url = "/admin/bfp";
+                            } else if (response.data.user.role == 9) {
+                                url = "/admin/tax-computation";
+                            } else {
+                                url = "/admin/application";
+                            }
                             window.location.href = url;
                         } else {
                             window.location.href = "/user/dashboard";
@@ -197,6 +206,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title {
+    font-size: 2rem !important;
+}
+.user-layout-content {
+    background: white !important;
+    padding: 30px !important;
+    border-radius: 10px;
+    border: 2px solid #e5b98a;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+        rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
 .user-layout-login {
     label {
         font-size: 14px;
