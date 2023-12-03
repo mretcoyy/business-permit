@@ -26,9 +26,13 @@ class AuditTrailsRepositoryEloquent extends BaseRepository implements AuditTrail
         return AuditTrails::class;
     }
 
-    public function list($filters = [], $isForExport = false)
+    public function list($filters, $isForExport = false)
     {
+        $date_from = Date('Y-m-d', strtotime($filters->date_from)). ' 00:00:00';
+        $date_to = Date('Y-m-d', strtotime($filters->date_to)). ' 23:59:59';
+
         $this->model = $this->model
+            ->whereBetween('audit_trail.created_at', [$date_from, $date_to])
             ->select([
                 'audit_trail.type',
                 'audit_trail.status',
@@ -61,8 +65,9 @@ class AuditTrailsRepositoryEloquent extends BaseRepository implements AuditTrail
                 '=',
                 'users.id'
             );
+          
 
-            $this->pushCriteria(new AuditTrailCriteria($filters))->applyCriteria();
+            // $this->pushCriteria(new AuditTrailCriteria($filters))->applyCriteria();
 
             $result = $this->model->get();
 

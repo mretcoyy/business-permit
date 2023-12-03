@@ -118,7 +118,7 @@ export default {
                 },
             });
 
-            console.log(res.data.data);
+            console.log(res.data);
             this.data = this.formatData(res.data.data);
         },
         async handleSearch() {
@@ -126,16 +126,21 @@ export default {
             if (this.date_range) {
                 let d1 = this.date_range[0]._d;
                 let d2 = this.date_range[1]._d;
-                let date_from = `${d1.getMonth()}-${d1.getDate()}-${d1.getFullYear()}`;
-                let date_to = `${d2.getMonth()}-${d2.getDate()}-${d2.getFullYear()}`;
+                let date1 = d1.getDate().toString();
+                let date_from = `${d1.getFullYear()}-${
+                    d1.getMonth() + 1
+                }-${date1.padStart(2, "0")}`;
+                let date2 = d2.getDate().toString();
+                let date_to = `${d2.getFullYear()}-${
+                    d2.getMonth() + 1
+                }-${date2.padStart(2, "0")}`;
+
                 this.date_from = date_from;
                 this.date_to = date_to;
                 this.getData();
             }
         },
     },
-    mounted() {
-        this.getData();
-    },
+    mounted() {},
 };
 </script>
