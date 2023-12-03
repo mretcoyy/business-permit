@@ -32,7 +32,6 @@ Route::get('/login', 'UserController@index');
 //     return view('admin.Dashboard.list');
 // });
 
-Route::get('/admin/dashboard', 'AdminDashboardController@index');
 
 Route::get('/', 'UserController@index');
 
@@ -55,6 +54,13 @@ Route::middleware(['role:Admin,User,BPLO,MENRO,MPDC,ENGR,SNTRY,BFP,TREASURER'])-
     Route::post('/user/bplo/store', 'BPLOController@store');
     Route::post('/admin/bplo/store', 'BPLOController@store');
     Route::post('/user/bplo/view-requirement', 'BPLOController@viewRequirement');
+});
+
+Route::middleware(['role:Admin,BPLO,MENRO,MPDC,ENGR,SNTRY,BFP,TREASURER'])->group(function () {
+    Route::get('/admin/dashboard', 'AdminDashboardController@index');
+    Route::get('/bplo/dashboard', 'AdminDashboardController@fetchData');
+    Route::get('/admin/audit-trial', 'AuditTrailController@index');
+    Route::get('/bplo/audit-list', 'AuditTrailController@list');
 });
 
 Route::middleware(['role:Admin,BPLO'])->group(function () {

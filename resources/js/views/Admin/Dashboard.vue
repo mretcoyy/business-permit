@@ -1,131 +1,138 @@
 <template>
     <MainLayout>
-        <a-card>
-            <h1>My Application</h1>
-            <a-table
-                :columns="columns"
-                :data-source="data"
-                rowKey="business_id"
+        <div id="dashboard-card" style="padding: 30px">
+            <a-row :gutter="16" justify="space-between">
+                <a-col
+                    :xs="{ span: 5, offset: 1 }"
+                    :lg="{ span: 6, offset: 1 }"
+                >
+                    <a-card :bordered="true">
+                        <template #title>
+                            <a-icon type="money-collect" />
+                            Total Income Generated
+                        </template>
+                        <h1 class="text-data">
+                            {{ data.total_income_generated ?? "-" }}
+                        </h1>
+                    </a-card>
+                </a-col>
+                <a-col
+                    :xs="{ span: 5, offset: 1 }"
+                    :lg="{ span: 6, offset: 2 }"
+                >
+                    <a-card :bordered="true">
+                        <template #title>
+                            <a-icon type="money-collect" />
+                            Total Funds
+                        </template>
+                        <h1 class="text-data">
+                            {{ data.total_funds ?? "-" }}
+                        </h1>
+                    </a-card>
+                </a-col>
+                <a-col
+                    :xs="{ span: 5, offset: 1 }"
+                    :lg="{ span: 6, offset: 2 }"
+                >
+                    <a-card :bordered="true">
+                        <template #title>
+                            <a-icon type="user" />
+                            Total No. of Applicants
+                        </template>
+                        <h1 class="text-data">
+                            {{ data.total_number_applicants ?? "-" }}
+                        </h1>
+                    </a-card>
+                </a-col>
+            </a-row>
+            <a-row
+                :gutter="16"
+                style="margin-top: 10px"
+                justify="space-between"
             >
-                <span slot="Status" slot-scope="Status">
-                    <a-tag
-                        :color="
-                            Status === 'Approved'
-                                ? 'green'
-                                : Status === 'Forapproval'
-                                ? 'yellow'
-                                : Status === 'Declined'
-                                ? 'volcano'
-                                : 'blue'
-                        "
-                        >{{
-                            Status == "Forapproval" ? "For Approval" : Status
-                        }}</a-tag
-                    >
-                    <!-- <a-tag
-                        v-for="tag in Status"
-                        :key="tag"
-                        :color="
-                            tag === 'approval'
-                                ? 'volcano'
-                                : tag === 'for approval'
-                                ? 'geekblue'
-                                : 'green'
-                        "
-                    >
-                        {{ tag.toUpperCase() }}
-                    </a-tag> -->
-                </span>
-                <span slot="action" slot-scope="text, record">
-                    <a @click="view(text.business_id)">View </a>
-                </span>
-            </a-table>
-        </a-card>
-        <FormBusinessView :modal="formModal" @refresh="refreshTable" />
+                <a-col
+                    :xs="{ span: 5, offset: 1 }"
+                    :lg="{ span: 6, offset: 1 }"
+                >
+                    <a-card :bordered="true">
+                        <template #title>
+                            <a-icon type="folder-open" />
+                            No. of Pending Applicants
+                        </template>
+                        <h1 class="text-data">
+                            {{ data.number_pending_applicants ?? "-" }}
+                        </h1>
+                    </a-card>
+                </a-col>
+                <a-col
+                    :xs="{ span: 5, offset: 1 }"
+                    :lg="{ span: 6, offset: 2 }"
+                >
+                    <a-card :bordered="true">
+                        <template #title>
+                            <a-icon type="folder-open" />
+                            No. of Renewals
+                        </template>
+                        <h1 class="text-data">
+                            {{ data.number_renewals ?? "-" }}
+                        </h1>
+                    </a-card>
+                </a-col>
+                <a-col
+                    :xs="{ span: 5, offset: 1 }"
+                    :lg="{ span: 6, offset: 2 }"
+                >
+                    <a-card :bordered="true">
+                        <template #title>
+                            <a-icon type="file" />
+                            No. of Ongoing Applications
+                        </template>
+                        <h1 class="text-data">
+                            {{ data.number_ongoing_applications ?? "-" }}
+                        </h1>
+                    </a-card>
+                </a-col>
+            </a-row>
+            <a-row
+                :gutter="16"
+                style="margin-top: 10px"
+                justify="space-between"
+            >
+                <a-col
+                    :xs="{ span: 5, offset: 1 }"
+                    :lg="{ span: 6, offset: 1 }"
+                >
+                    <a-card :bordered="true">
+                        <template #title>
+                            <a-icon type="check" />
+                            No. of Approved Applications
+                        </template>
+                        <h1 class="text-data">
+                            {{ data.number_approved_applications ?? "-" }}
+                        </h1>
+                    </a-card>
+                </a-col>
+            </a-row>
+        </div>
     </MainLayout>
 </template>
 <script>
-import FormBusinessView from "../../components/FormBusinessView.vue";
 import MainLayout from "../../layouts/MainLayout";
-
-const columns = [
-    {
-        title: "Business Name",
-        dataIndex: "name",
-        key: "name",
-    },
-    {
-        title: "Address",
-        dataIndex: "address",
-        key: "address",
-    },
-    {
-        title: "Status",
-        key: "Status",
-        dataIndex: "Status",
-        scopedSlots: { customRender: "Status" },
-    },
-    {
-        title: "Action",
-        key: "action",
-        scopedSlots: { customRender: "action" },
-    },
-];
-
-const data = [];
 
 export default {
     data() {
         return {
-            data,
-            columns,
-            formModal: { show: false },
-            filters: {
-                business_id: "",
-                status: 1,
-            },
+            data: [],
         };
     },
 
     components: {
         MainLayout,
-        FormBusinessView,
     },
     methods: {
-        refreshTable() {
-            this.getData();
-            this.formModal = { show: false };
-        },
-        formatData(data) {
-            let map = data.map((item) => {
-                const container = {};
-                container.referenceNo = item.referenceNo;
-                container.name = item.businessInformation.taxPayerBname;
-                container.tax_payer = item.businessInformation.taxPayerFullname;
-                container.address = item.businessInformation.taxPayerFname;
-                container.Status = item.businessDetail.status;
-                container.business_id = item.businessDetail.business_id;
-                return container;
-            });
-            return map;
-        },
         async getData() {
-            const res = await axios.get("/bplo/list", {
-                params: {
-                    filters: this.filters,
-                },
-            });
-            this.data = this.formatData(res.data.data);
-        },
-        async view(business_id) {
-            this.filters.business_id = business_id;
-            const res = await axios.get("/bplo/list", {
-                params: {
-                    filters: this.filters,
-                },
-            });
-            let data = res.data.data;
-            this.formModal = { show: true, data };
+            const res = await axios.get("/bplo/dashboard");
+            this.data = res.data;
         },
     },
     mounted() {
@@ -133,3 +140,14 @@ export default {
     },
 };
 </script>
+
+<style>
+.text-data {
+    font-size: 1.5rem;
+}
+
+#dashboard-card .ant-card-head {
+    background-color: rgba(0, 21, 41, 0.85) !important;
+    color: white !important;
+}
+</style>

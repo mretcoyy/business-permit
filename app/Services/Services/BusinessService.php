@@ -2,6 +2,7 @@
 
 namespace App\Services\Services;
 
+use App\Entities\AuditTrails;
 use App\Entities\Business;
 use App\Entities\BusinessDetail;
 use App\Entities\BusinessFees;
@@ -175,6 +176,12 @@ class BusinessService implements BusinessServiceInterface
         ];
         $businessFiles = BusinessFiles::create($storeBusinessFiles);
 
+        AuditTrails::create([
+            'type' => "NEW",
+            'status' => 1,
+            'business_id' => $business->id,
+            'user_id' => Auth::user()->id,
+        ]);
 
         foreach ($businessInformationDetailData as $data) {
             $this->storeBusinessDetail($data, $business->id);
@@ -211,7 +218,7 @@ class BusinessService implements BusinessServiceInterface
         ];
 
         $businessDetail = BusinessDetail::find($id);
-        $businessDetail->update($updateData);
+
 
         $business = Business::where('id',$id)->with(['businessDetail','businessInformation', 'businessInformationDetail'])->first();
         $business_detail =  $business->businessDetail;
@@ -220,6 +227,15 @@ class BusinessService implements BusinessServiceInterface
         {
             $bin = $business_detail[0]['bin'];
             $business_status = $business_detail[0]['business_status'];
+
+            $type = ($status == 6 ? 'DECLINED': 'APPROVED');
+            AuditTrails::create([
+                'type' => $type,
+                'status' => $businessDetail->business_status,
+                'business_id' => $id,
+                'user_id' => Auth::user()->id,
+            ]);
+
             foreach ($business->businessInformation as $business_information) {
                 $business_name = $business_information->business_name;
                 $taxpayer = $business_information->fullname;
@@ -234,12 +250,13 @@ class BusinessService implements BusinessServiceInterface
                 'business_name' => $business_name,
                 'bin' => $bin,
                 'status' => $status,
-                'type' => ($status == 6 ? strtoupper(BusinessStatus::getDescription($business_status + 1)) :  strtoupper(BusinessStatus::getDescription($status))),
+                'type' => $type,
             ];
     
-            StatusNotif::smsNotif($contact, $status);
-            StatusNotif:: emailNotif($email, $email_data);
+            // StatusNotif::smsNotif($contact, $status);
+            // StatusNotif:: emailNotif($email, $email_data);
         }
+        $businessDetail->update($updateData);
 
         return 1;
     }
@@ -814,6 +831,33 @@ class BusinessService implements BusinessServiceInterface
         if ($decimalPart > 0) {
             $result .= ' and ' . $this->numberToWords($decimalPart) . ' ' . ($decimalPart === 1 ? 'Centavo' : 'Centavos');
         }
+
+        return $result;
+    }
+
+    public function fetchData(){
+         
+        $result = [];
+        $total_income_generated = BusinessFees::sum('total_fee');
+        $total_funds = BusinessFees::sum('business_tax');
+        $total_number_applicants = User::where('role' , 2)->count();
+        $number_pending_applicants = BusinessDetail::where('business_status', 10)->count();
+        $number_renewals = BusinessDetail::where('status', 2)->count();
+        $number_ongoing_applications = BusinessDetail::where('business_status','>', 10)
+        ->orWhere('business_status','<', 17)
+        ->count();
+        $number_approved_applications = BusinessDetail::where('business_status','>', 10)
+        ->count();
+     
+        $result = [
+            'total_income_generated' => number_format($total_income_generated, 2),
+            'total_funds' => number_format($total_funds, 2),
+            'total_number_applicants' => $total_number_applicants,
+            'number_pending_applicants' => $number_pending_applicants,
+            'number_renewals' => $number_renewals,
+            'number_ongoing_applications' => $number_ongoing_applications,
+            'number_approved_applications' => $number_approved_applications,
+        ];
 
         return $result;
     }
