@@ -100,7 +100,7 @@ export default {
                 container.name = item.businessInformation.taxPayerBname;
                 container.bin = item.businessDetail.bin;
                 container.type = item.type;
-                container.status = item.status;
+                container.status = item.status_label;
                 container.user_name = item.user.name;
                 return container;
             });

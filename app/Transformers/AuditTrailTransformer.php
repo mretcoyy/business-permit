@@ -23,7 +23,7 @@ class AuditTrailTransformer extends TransformerAbstract
             'type' => $model->type,
             'status' => $model->status,
             'business_id' => $model->business_id,
-            'status_label' => BusinessStatus::getDescription($model->status),
+            'status_label' => BusinessStatus::getDescription((int)$model->status),
             'user_id' => $model->user_id,
             'createdAt' => $model->created_at,
             'updatedAt' => $model->updated_at,
