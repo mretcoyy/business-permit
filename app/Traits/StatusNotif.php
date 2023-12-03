@@ -13,9 +13,10 @@ trait StatusNotif
     public static function smsNotif($recipients, $message)
     {
         log::info('testSmS');
-        $account_sid = getenv("TWILIO_SID");
-        $auth_token = getenv("TWILIO_AUTH_TOKEN");
-        $twilio_number = getenv("TWILIO_NUMBER");
+        $account_sid = env("TWILIO_SID", "AC89629d97fdfec64144d80c1ce050e5c0");
+        $auth_token = env("TWILIO_AUTH_TOKEN", "95c519456bddaf356f6bf2da5f393676");
+        $twilio_number = env("TWILIO_NUMBER", "+19253018760");
+        log::info($account_sid);
         $client = new Client($account_sid, $auth_token);
         $client->messages->create($recipients, 
             ['from' => $twilio_number, 'body' => $message] );
