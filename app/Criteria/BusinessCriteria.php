@@ -72,7 +72,14 @@ class BusinessCriteria implements CriteriaInterface
             $model->whereYear('date_renewed', $filters->year)
             ->where('business_detail.status', $filters->business_type);
         }
-
+       
+        if (isset($filters->date_from) && isset($filters->date_to)) {
+            $date_from = Date('Y-m-d', strtotime($filters->date_from)). ' 00:00:00';
+            $date_to = Date('Y-m-d', strtotime($filters->date_to)). ' 23:59:59';
+          
+            $model->where('audit_trail.created_at','>=', $date_from)
+            ->orWhere('audit_trail.created_at','<=', $date_to);
+        }
         return $model;
     }
 }

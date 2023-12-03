@@ -2,6 +2,7 @@
 
 namespace App\Services\Services;
 
+use App\Entities\AuditTrails;
 use App\Entities\Business;
 use App\Entities\BusinessDetail;
 use App\Entities\BusinessFees;
@@ -175,6 +176,12 @@ class BusinessService implements BusinessServiceInterface
         ];
         $businessFiles = BusinessFiles::create($storeBusinessFiles);
 
+        AuditTrails::create([
+            'type' => "NEW",
+            'status' => 1,
+            'business_id' => $business->id,
+            'user_id' => Auth::user()->id,
+        ]);
 
         foreach ($businessInformationDetailData as $data) {
             $this->storeBusinessDetail($data, $business->id);
@@ -211,7 +218,7 @@ class BusinessService implements BusinessServiceInterface
         ];
 
         $businessDetail = BusinessDetail::find($id);
-        $businessDetail->update($updateData);
+
 
         $business = Business::where('id',$id)->with(['businessDetail','businessInformation', 'businessInformationDetail'])->first();
         $business_detail =  $business->businessDetail;
@@ -220,6 +227,15 @@ class BusinessService implements BusinessServiceInterface
         {
             $bin = $business_detail[0]['bin'];
             $business_status = $business_detail[0]['business_status'];
+
+            $type = ($status == 6 ? 'DECLINED': 'APPROVED');
+            AuditTrails::create([
+                'type' => $type,
+                'status' => $businessDetail->business_status,
+                'business_id' => $id,
+                'user_id' => Auth::user()->id,
+            ]);
+
             foreach ($business->businessInformation as $business_information) {
                 $business_name = $business_information->business_name;
                 $taxpayer = $business_information->fullname;
@@ -234,12 +250,13 @@ class BusinessService implements BusinessServiceInterface
                 'business_name' => $business_name,
                 'bin' => $bin,
                 'status' => $status,
-                'type' => ($status == 6 ? strtoupper(BusinessStatus::getDescription($business_status + 1)) :  strtoupper(BusinessStatus::getDescription($status))),
+                'type' => $type,
             ];
     
-            StatusNotif::smsNotif($contact, $status);
-            StatusNotif:: emailNotif($email, $email_data);
+            // StatusNotif::smsNotif($contact, $status);
+            // StatusNotif:: emailNotif($email, $email_data);
         }
+        $businessDetail->update($updateData);
 
         return 1;
     }

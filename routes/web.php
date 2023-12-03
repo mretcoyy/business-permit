@@ -59,6 +59,8 @@ Route::middleware(['role:Admin,User,BPLO,MENRO,MPDC,ENGR,SNTRY,BFP,TREASURER'])-
 Route::middleware(['role:Admin,BPLO,MENRO,MPDC,ENGR,SNTRY,BFP,TREASURER'])->group(function () {
     Route::get('/admin/dashboard', 'AdminDashboardController@index');
     Route::get('/bplo/dashboard', 'AdminDashboardController@fetchData');
+    Route::get('/admin/audit-trial', 'AuditTrailController@index');
+    Route::get('/bplo/audit-list', 'AuditTrailController@list');
 });
 
 Route::middleware(['role:Admin,BPLO'])->group(function () {

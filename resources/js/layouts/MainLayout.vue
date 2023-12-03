@@ -144,6 +144,12 @@ export default {
                     role: 3,
                 },
                 {
+                    url: "/admin/audit-trial",
+                    title: "Audit Trail",
+                    icon: "history",
+                    role: 3,
+                },
+                {
                     url: "/admin/user-management",
                     title: "User Management",
                     icon: "user",
