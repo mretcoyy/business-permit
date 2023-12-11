@@ -40,7 +40,8 @@ export default {
         height: 100vh;
         min-height: 100%;
         background: #f0f2f5 url(../assets/login.jpg) no-repeat 50%;
-        background-size: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
         //padding: 50px 0 84px;
         position: relative;
         display: flex;
