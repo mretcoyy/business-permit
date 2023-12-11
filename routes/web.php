@@ -39,6 +39,7 @@ Route::get('/', 'UserController@index');
 Route::get('/register', 'UserController@registration');
 Route::post('/user/login', 'UserController@login');
 Route::post('/user/store', 'UserController@register');
+Route::post('/user/update', 'UserController@update');
 Route::post('/user/logout', 'UserController@logout');
 Route::get('/user/get-user', 'UserController@getUser');
 Route::post('/forgot-password', 'UserController@forgotPassword');

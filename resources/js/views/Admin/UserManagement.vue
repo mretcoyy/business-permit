@@ -12,11 +12,18 @@
                         @search="onSearch"
                     />
                 </a-col>
+
+                <a-col :span="8">
+                    <a-button type="primary" @click="createUser" size="large"
+                        >Create user</a-button
+                    >
+                </a-col>
             </a-row>
+
             <br />
             <a-table :columns="columns" :data-source="data" rowKey="id">
                 <span slot="action" slot-scope="text, record">
-                    <!-- <a @click="select(text.id)">Edit</a> | -->
+                    <a @click="select(text.id)">Edit</a> |
                     <a @click="viewChangeRole(text.id)" v-if="text.role == 1"
                         >Change Role</a
                     >
@@ -138,7 +145,7 @@ export default {
                 },
             });
             let data = res.data;
-            this.formModal = { show: true, data };
+            this.formModal = { show: true, data, action: "UPDATE" };
         },
         async viewChangeRole(user_id) {
             this.filters.user_id = user_id;
@@ -182,6 +189,9 @@ export default {
                 status: status,
             });
             this.getData();
+        },
+        createUser() {
+            this.formModal = { show: true, action: "CREATE", data: [] };
         },
     },
     mounted() {

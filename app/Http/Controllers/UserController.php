@@ -59,6 +59,15 @@ class UserController extends Controller
         return $store;
     }
 
+    public function update(Request $request, UserService $service)
+    {
+        $data = $request->all();
+
+        $store = $service->update($data);
+
+        return $store;
+    }
+
     public function changeRole(Request $request, $id, UserService $service)
     {
         $data = $request->post('role');

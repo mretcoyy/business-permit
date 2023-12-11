@@ -26,6 +26,27 @@ class UserService implements UserServiceInterface
         return $user;
     }
 
+    public function update($data)
+    {
+        $user = User::find($data['id']);
+        $user->name = $data['fullName'];
+        $user->email = $data['email'];
+        $user->contact_number = $data['contact_number'];
+        if(isset($data->role))
+        {
+          $user->role = $data['role'];
+        }
+        if(isset($data->is_change_pass))
+        {
+          if($data->is_change_pass)
+          {
+            $user->password = Hash::make($data['password']);
+          }
+        }
+        $user->save();
+        return $user;
+    }
+
     public function forgotPassword($email)
     {
         set_time_limit(0);

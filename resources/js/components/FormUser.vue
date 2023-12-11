@@ -20,10 +20,10 @@
             <a-form :form="form">
                 <a-row>
                     <a-col :span="24">
-                        <a-form-item label="User">
+                        <a-form-item label="Name">
                             <a-input
                                 v-decorator="[
-                                    'name',
+                                    'fullName',
                                     {
                                         rules: [
                                             {
@@ -56,29 +56,29 @@
                             <a-form-item label="Barangay">
                                 <a-input v-decorator="['barangay']"></a-input>
                             </a-form-item>
-                        </a-col>
-                        <a-col :span="8">
-                            <a-form-item label="Contact Number">
-                                <a-input
-                                    v-decorator="[
-                                        'contact_number',
-                                        {
-                                            rules: [
-                                                {
-                                                    required: false,
-                                                    message:
-                                                        'Contact Number is required',
-                                                },
-                                            ],
-                                        },
-                                    ]"
-                                /> </a-form-item
-                        ></a-col> -->
+                        </a-col>-->
+                    <a-col :span="24">
+                        <a-form-item label="Contact Number">
+                            <a-input
+                                v-decorator="[
+                                    'contact_number',
+                                    {
+                                        rules: [
+                                            {
+                                                required: false,
+                                                message:
+                                                    'Contact Number is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            /> </a-form-item
+                    ></a-col>
                     <a-col :span="24">
                         <a-form-item label="Email">
                             <a-input v-decorator="['email']" /> </a-form-item
                     ></a-col>
-                    <a-col :span="24">
+                    <a-col :span="24" v-if="display_role">
                         <a-form-item label="Role" :disabled="true">
                             <a-radio-group v-decorator="['role']">
                                 <a-radio-button value="1">
@@ -90,13 +90,13 @@
                             </a-radio-group>
                         </a-form-item>
                     </a-col>
-                    <a-col :span="24">
+                    <a-col :span="24" v-if="action == 'UPDATE'">
                         <a-checkbox v-model="is_change_pass"
                             >Change Password</a-checkbox
                         >
                         <br />
                     </a-col>
-                    <a-col :span="24">
+                    <a-col :span="24" v-if="is_change_pass">
                         <a-form-item>
                             <a-input-password
                                 size="large"
@@ -127,7 +127,7 @@
                             </a-input-password>
                         </a-form-item>
                     </a-col>
-                    <a-col :span="24">
+                    <a-col :span="24" v-if="is_change_pass">
                         <a-form-item>
                             <a-input-password
                                 size="large"
@@ -180,8 +180,17 @@ export default {
             selectedIndex: null,
             selectedId: null,
             is_change_pass: false,
-            fields: ["name", "email", "role", "password", "repeatPassword"],
+            fields: [
+                "fullName",
+                "email",
+                "role",
+                "password",
+                "repeatPassword",
+                "contact_number",
+            ],
             info: {},
+            action: "",
+            display_role: false,
         };
     },
     methods: {
@@ -203,36 +212,62 @@ export default {
         closeModal() {
             this.form.resetFields();
         },
-        handleSubmit(e) {
-            e.preventDefault();
+        handleSubmit() {
             this.form.validateFields(
                 (err, values) => !err && this.submitData()
             );
         },
 
-        async submitData(data) {
-            // await axios({
-            //     method: "POST",
-            //     url: "/tax-computation/store",
-            //     data: data,
-            // });
-            // this.$emit("onSubmit", false);
-            // this.$message.success("Submit Succesfully");
+        async submitData() {
+            let url = "";
+            if (this.action == "CREATE") {
+                url = "store";
+            } else {
+                url = "update";
+            }
+            await axios({
+                method: "POST",
+                url: `/user/${url}`,
+                data: {
+                    id: this.user_id,
+                    fullName: this.form.getFieldValue("fullName"),
+                    email: this.form.getFieldValue("email"),
+                    contact_number: this.form.getFieldValue("contact_number"),
+                    role: this.form.getFieldValue("role"),
+                    password: this.form.getFieldValue("password"),
+                    is_change_pass: this.form.getFieldValue("is_change_pass"),
+                },
+            });
+            this.$emit("onSubmit", false);
+            this.$message.success("Submit Succesfully");
         },
     },
     watch: {
         modal(params) {
             let data = {};
             if (params.show) {
-                data = params.data[0];
-                this.fields.forEach((v) => this.form.getFieldDecorator(v));
-                this.user_id = data.id;
-                console.log(data);
-                this.form.setFieldsValue({
-                    name: data.name,
-                    email: data.email,
-                    role: data.role.toString(),
-                });
+                this.action = params.action;
+                if (this.action == "CREATE") {
+                    this.is_change_pass = true;
+                    this.display_role = true;
+                } else {
+                    data = params.data[0];
+                    this.fields.forEach((v) => this.form.getFieldDecorator(v));
+                    this.user_id = data.id;
+                    console.log(data);
+                    this.form.setFieldsValue({
+                        fullName: data.name,
+                        email: data.email,
+                        contact_number: data.contact_number,
+                        role: data.role.toString(),
+                    });
+                    if (data.role == 1) {
+                        this.display_role = true;
+                    } else {
+                        this.display_role = false;
+                    }
+                    this.is_change_pass = false;
+                }
             }
         },
     },
