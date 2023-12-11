@@ -848,6 +848,24 @@ class BusinessService implements BusinessServiceInterface
         ->count();
         $number_approved_applications = BusinessDetail::where('business_status','>', 10)
         ->count();
+
+
+        $jan = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 1)->whereYear('created_at', Date('Y'))->count();
+        $feb = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 2)->whereYear('created_at', Date('Y'))->count();
+        $mar = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 3)->whereYear('created_at', Date('Y'))->count();
+        $apr = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 4)->whereYear('created_at', Date('Y'))->count();
+        $may = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 5)->whereYear('created_at', Date('Y'))->count();
+        $jun = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 6)->whereYear('created_at', Date('Y'))->count();
+        $jul = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 7)->whereYear('created_at', Date('Y'))->count();
+        $aug = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 8)->whereYear('created_at', Date('Y'))->count();
+        $sep = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 9)->whereYear('created_at', Date('Y'))->count();
+        $oct = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 10)->whereYear('created_at', Date('Y'))->count();
+        $nov = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 11)->whereYear('created_at', Date('Y'))->count();
+        $dec = AuditTrails::where('type', 'NEW')->whereMonth('created_at', 12)->whereYear('created_at', Date('Y'))->count();
+
+        $graph = [
+            $jan,$feb,$mar,$apr,$may,$jun,$jul,$aug,$sep,$oct,$nov,$dec
+        ];
      
         $result = [
             'total_income_generated' => number_format($total_income_generated, 2),
@@ -857,6 +875,7 @@ class BusinessService implements BusinessServiceInterface
             'number_renewals' => $number_renewals,
             'number_ongoing_applications' => $number_ongoing_applications,
             'number_approved_applications' => $number_approved_applications,
+            'graph' => $graph
         ];
 
         return $result;
