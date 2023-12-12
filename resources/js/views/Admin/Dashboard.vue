@@ -1,5 +1,16 @@
 <template>
     <MainLayout>
+        <div
+            style="
+                display: flex;
+                justify-content: center;
+                max-height: 300px;
+                margin-bottom: 60px;
+            "
+        >
+            <Bar :data="chartData" />
+        </div>
+
         <div id="dashboard-card" style="padding: 30px">
             <a-row :gutter="16" justify="space-between">
                 <a-col
@@ -118,15 +129,26 @@
 </template>
 <script>
 import MainLayout from "../../layouts/MainLayout";
+import Bar from "../../components/Chart/Bar";
 
 export default {
     data() {
         return {
             data: [],
+            chartData: {
+                labels: ["January", "February", "March"],
+                datasets: [
+                    {
+                        label: "No title",
+                        data: [40, 20, 12],
+                        backgroundColor: "#f87979",
+                    },
+                ],
+            },
         };
     },
-
     components: {
+        Bar,
         MainLayout,
     },
     methods: {
