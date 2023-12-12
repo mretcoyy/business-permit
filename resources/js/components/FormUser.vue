@@ -27,7 +27,7 @@
                                     {
                                         rules: [
                                             {
-                                                required: false,
+                                                required: true,
                                                 message: 'Name is required',
                                             },
                                         ],
@@ -65,7 +65,7 @@
                                     {
                                         rules: [
                                             {
-                                                required: false,
+                                                required: true,
                                                 message:
                                                     'Contact Number is required',
                                             },
@@ -76,7 +76,19 @@
                     ></a-col>
                     <a-col :span="24">
                         <a-form-item label="Email">
-                            <a-input v-decorator="['email']" /> </a-form-item
+                            <a-input
+                                v-decorator="[
+                                    'email',
+                                    {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Email is required',
+                                            },
+                                        ],
+                                    },
+                                ]"
+                            /> </a-form-item
                     ></a-col>
                     <a-col :span="24" v-if="display_role">
                         <a-form-item label="Role" :disabled="true">
@@ -225,21 +237,30 @@ export default {
             } else {
                 url = "update";
             }
-            await axios({
-                method: "POST",
-                url: `/user/${url}`,
-                data: {
-                    id: this.user_id,
-                    fullName: this.form.getFieldValue("fullName"),
-                    email: this.form.getFieldValue("email"),
-                    contact_number: this.form.getFieldValue("contact_number"),
-                    role: this.form.getFieldValue("role"),
-                    password: this.form.getFieldValue("password"),
-                    is_change_pass: this.form.getFieldValue("is_change_pass"),
-                },
-            });
-            this.$emit("onSubmit", false);
-            this.$message.success("Submit Succesfully");
+            try {
+                const res = await axios({
+                    method: "POST",
+                    url: `/user/${url}`,
+                    data: {
+                        id: this.user_id,
+                        fullName: this.form.getFieldValue("fullName"),
+                        email: this.form.getFieldValue("email"),
+                        contact_number:
+                            this.form.getFieldValue("contact_number"),
+                        role: this.form.getFieldValue("role"),
+                        password: this.form.getFieldValue("password"),
+                        is_change_pass:
+                            this.form.getFieldValue("is_change_pass"),
+                    },
+                });
+                this.$emit("onSubmit", false);
+                this.$message.success("Submit Succesfully");
+            } catch (e) {
+                console.error(e.response);
+                if (typeof e.response.data.errors.email[0] !== undefined) {
+                    this.$message.error(e.response.data.errors.email[0]);
+                }
+            }
         },
     },
     watch: {

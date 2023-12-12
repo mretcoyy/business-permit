@@ -7,6 +7,7 @@
                 max-height: 300px;
                 margin-bottom: 60px;
             "
+            v-if="data.length !== 0"
         >
             <Bar :data="chartData" />
         </div>
@@ -136,11 +137,24 @@ export default {
         return {
             data: [],
             chartData: {
-                labels: ["January", "February", "March"],
+                labels: [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                ],
                 datasets: [
                     {
-                        label: "No title",
-                        data: [40, 20, 12],
+                        label: "Number of New Business Per Month",
+                        data: null,
                         backgroundColor: "#f87979",
                     },
                 ],
@@ -153,10 +167,17 @@ export default {
     },
     methods: {
         async getData() {
-            const res = await axios.get("/bplo/dashboard");
-            this.data = res.data;
+            console.log(this.data.length === 0);
+            try {
+                const res = await axios.get("/bplo/dashboard");
+                this.data = res.data;
+                this.chartData.datasets[0]["data"] = this.data.graph;
+            } catch (e) {
+                console.error(e);
+            }
         },
     },
+
     mounted() {
         this.getData();
     },

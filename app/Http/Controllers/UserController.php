@@ -54,6 +54,12 @@ class UserController extends Controller
     {
         $data = $request->all();
 
+        $rules =
+        [
+            'email' => 'required|unique:users,email',
+        ];
+        $request->validate($rules);
+
         $store = $service->store($data);
 
         return $store;
@@ -63,6 +69,11 @@ class UserController extends Controller
     {
         $data = $request->all();
 
+        $rules =
+        [
+            'email' => 'required|unique:users,email,' . $data['id'] . ',id,email,' . $data['email'],
+        ];
+        $request->validate($rules);
         $store = $service->update($data);
 
         return $store;
