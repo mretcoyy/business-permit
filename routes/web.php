@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BPLOController;
 use App\Http\Controllers\BFPController;
 use App\Http\Controllers\MayorsOfficeController;
-use App\Http\Controllers\MenroController;
+use App\Http\Controllers\MENROController;
 use App\Http\Controllers\MpdcController;
 use App\Http\Controllers\EngineeringController;
 use App\Http\Controllers\SanitaryController;
@@ -75,8 +75,8 @@ Route::patch('/bplo/update-gross/{id}', 'BPLOController@updateGross');
 
 //APPROVAL
 Route::middleware(['role:Admin,MENRO'])->group(function () {
-    Route::get('/admin/menro', 'MenroController@index');
-    Route::patch('/bplo/menro-change-status/{id}', 'MenroController@changeBusinessStatus');
+    Route::get('/admin/menro', 'MENROController@index');
+    Route::patch('/bplo/menro-change-status/{id}', 'MENROController@changeBusinessStatus');
 });
 
 Route::middleware(['role:Admin,BPLO,MPDC'])->group(function () {

@@ -7,7 +7,7 @@ use App\Services\Services\BusinessService;
 use Illuminate\Support\Facades\Log;
 use App\Enums\BusinessStatus;
 
-class MenroController extends Controller
+class MENROController extends Controller
 {
     public function index()
     {
