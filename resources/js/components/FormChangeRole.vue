@@ -17,17 +17,19 @@
         >
             <a-form :form="form">
                 <div
-                    style="
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    "
+                  
                 >
                     <a-form-item label="Role">
-                        <a-radio-group v-decorator="['role']" size="large">
+                        <!-- <a-radio-group v-decorator="['role']" size="large">
                             <a-radio-button value="1"> Admin </a-radio-button>
                             <a-radio-button value="2"> User </a-radio-button>
-                        </a-radio-group>
+                        </a-radio-group> -->
+                        <a-select  size="large"
+                            v-decorator="['role']"
+                            style="width: 100%"
+                            placeholder="Role"
+                            :options="roles"
+                        ></a-select>
                     </a-form-item>
                 </div>
             </a-form>
@@ -35,6 +37,46 @@
     </a-modal>
 </template>
 <script>
+
+const roles = [
+    {
+        label:'Admin',
+        value:1,
+    },
+    {
+        label:'User',
+        value:2,
+    },
+    {
+        label:'BPLO',
+        value:3,
+    },
+    {
+        label:'MENRO',
+        value:4,
+    },
+    {
+        label:'MPDC',
+        value:5,
+    },
+    {
+        label:'ENGINEERING',
+        value:6,
+    },
+    {
+        label:'SANITARY',
+        value:7,
+    },
+    {
+        label:'BFP',
+        value:8,
+    },
+    {
+        label:'TREASURER',
+        value:9,
+    }
+   
+];
 export default {
     props: {
         modal: { type: Object, default: () => ({ show: false }) },
@@ -48,6 +90,7 @@ export default {
             is_change_pass: false,
             fields: ["role"],
             info: {},
+            roles: roles,
         };
     },
     methods: {
@@ -78,7 +121,7 @@ export default {
                 data = params.data[0];
                 this.user_id = data.id;
                 console.log(this.user_id);
-                this.form.setFieldsValue({ role: data.role.toString() });
+                this.form.setFieldsValue({ role: data.role_label.toString() });
                 console.log(data);
             }
         },
