@@ -19,6 +19,7 @@ class UserService implements UserServiceInterface
         $user = User::create([
             'name' => $data['fullName'],
             'email' => $data['email'],
+            'role' => isset($data['role']) ? $data['role'] : 2,
             'contact_number' => $data['contact_number'],
             'password' => Hash::make($data['password']),
         ]);

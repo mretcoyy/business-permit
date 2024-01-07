@@ -91,15 +91,14 @@
                             /> </a-form-item
                     ></a-col>
                     <a-col :span="24" v-if="display_role">
-                        <a-form-item label="Role" :disabled="true">
-                            <a-radio-group v-decorator="['role']">
-                                <a-radio-button value="1">
-                                    Admin
-                                </a-radio-button>
-                                <a-radio-button value="2">
-                                    User
-                                </a-radio-button>
-                            </a-radio-group>
+                        <a-form-item label="Role:" :disabled="true">
+                            <a-select
+                                v-decorator="['role']"
+                                style="width: 100%"
+                                placeholder="Role"
+                                :options="roles"
+                            >
+                            </a-select>
                         </a-form-item>
                     </a-col>
                     <a-col :span="24" v-if="action == 'UPDATE'">
@@ -177,6 +176,46 @@
     </a-modal>
 </template>
 <script>
+
+const roles = [
+    {
+        label:'Admin',
+        value:1,
+    },
+    {
+        label:'User',
+        value:2,
+    },
+    {
+        label:'BPLO',
+        value:3,
+    },
+    {
+        label:'MENRO',
+        value:4,
+    },
+    {
+        label:'MPDC',
+        value:5,
+    },
+    {
+        label:'ENGINEERING',
+        value:6,
+    },
+    {
+        label:'SANITARY',
+        value:7,
+    },
+    {
+        label:'BFP',
+        value:8,
+    },
+    {
+        label:'TREASURER',
+        value:9,
+    }
+   
+]
 export default {
     props: {
         modal: { type: Object, default: () => ({ show: false }) },
@@ -203,6 +242,7 @@ export default {
             info: {},
             action: "",
             display_role: false,
+            roles: roles,
         };
     },
     methods: {
