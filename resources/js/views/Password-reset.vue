@@ -2,7 +2,7 @@
     <Default>
         <div class="user-layout-content">
             <div class="top">
-                <div class="title">Password Reset</div>
+                <div class="title "style="color:#FFFFFF">Password Reset</div>
             </div>
             <div class="main">
                 <a-form

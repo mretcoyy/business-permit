@@ -5,7 +5,7 @@ use App\Http\Controllers\BPLOController;
 use App\Http\Controllers\BFPController;
 use App\Http\Controllers\MayorsOfficeController;
 use App\Http\Controllers\MENROController;
-use App\Http\Controllers\MpdcController;
+use App\Http\Controllers\MPDCController;
 use App\Http\Controllers\EngineeringController;
 use App\Http\Controllers\SanitaryController;
 use App\Http\Controllers\BPLOReleasingController;
@@ -80,8 +80,8 @@ Route::middleware(['role:Admin,MENRO'])->group(function () {
 });
 
 Route::middleware(['role:Admin,BPLO,MPDC'])->group(function () {
-    Route::get('/admin/mpdc', 'MpdcController@index');
-    Route::patch('/bplo/mpdc-change-status/{id}', 'MpdcController@changeBusinessStatus');
+    Route::get('/admin/mpdc', 'MPDCController@index');
+    Route::patch('/bplo/mpdc-change-status/{id}', 'MPDCController@changeBusinessStatus');
 });
 
 Route::middleware(['role:Admin,ENGR'])->group(function () {

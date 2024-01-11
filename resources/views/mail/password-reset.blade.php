@@ -105,7 +105,7 @@
 <body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
-            <td bgcolor="#f4f4f4" align="center" style="padding: 20px 10px 0px 10px;">
+            <td bgcolor="#f4f4f4" align="center" style="padding: 20px 10px 20px 10px;">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                         <td bgcolor="#ffffff" align="center">
