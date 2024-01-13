@@ -55,15 +55,24 @@ class BusinessInformation extends Model implements Transformable
 
     protected function getAddressAttribute()
     {
+        $business_number = $this->business_number == null ? '' : $this->business_number;
+        $building_name = $this->building_name == null ? '' : $this->building_name;
+        $unit_no = $this->unit_no == null ? '' : $this->unit_no; 
+        $street = $this->street == null ? '' : $this->street; 
+        $barangay = $this->barangay == null ? '' : $this->barangay; 
+        $subdivision = $this->subdivision == null ? '' : $this->subdivision; 
+        $city = $this->city == null ? '' : $this->city; 
+        $province = $this->province == null ? '' : $this->province;
+
         return
-        ($this->business_number == null ? '' : $this->business_number. " ") 
-        . ($this->building_name == null ? '' : $this->building_name. " ") 
-        . ($this->unit_no == null ? '' : $this->unit_no. " ") 
-        . ($this->street == null ? '' : $this->street. " ") 
-        . ($this->barangay == null ? '' : $this->barangay. " ") 
-        . ($this->subdivision == null ? '' : $this->subdivision. " ") 
-        . ($this->city == null ? '' : $this->city. " ") 
-        . ($this->province == null ? '' : $this->province. " ");
+        ($building_name == null ? $business_number : $business_number. ", ") 
+        . ($unit_no == null ? $building_name : $building_name. ", ") 
+        . ($street == null ? $unit_no : $unit_no. ", ") 
+        . ($barangay == null ? $street : $street. ", ") 
+        . ($subdivision == null ? $barangay : $barangay. ", ") 
+        . ($city == null ? $subdivision : $subdivision. ", ") 
+        . ($province == null ? $city : $city. ", ") 
+        . ($province == null ? '' : $province);
     }
 
 
