@@ -253,8 +253,8 @@ class BusinessService implements BusinessServiceInterface
                 'type' => $type,
             ];
     
-            StatusNotif::smsNotif($contact, $status);
-            StatusNotif:: emailNotif($email, $email_data);
+            // StatusNotif::smsNotif($contact, $status);
+            StatusNotif::emailNotif($email, $email_data);
         }
         $businessDetail->update($updateData);
 
