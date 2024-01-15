@@ -14,6 +14,11 @@ return [
     |
     */
 
+    'http_sms' => [
+        'from' => env("HTTP_SMS_FROM", "+639615537090"),
+        'api_key' => env("HTTP_SMS_KEY", "Q8J2bBxuX4_ZFGaVmVcsCv96pyQoER5-WqPMflq7t-vivA6GrPSdC7mH_Al6aDYI")
+    ],
+
     'twillio' => [
         'sid' => env("TWILIO_SID", "AC89629d97fdfec64144d80c1ce050e5c0"),
         'auth_token' => env("TWILIO_AUTH_TOKEN", "b41608f530ad12ce7d789b15c2e4570d"),
