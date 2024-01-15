@@ -242,7 +242,7 @@ class BusinessService implements BusinessServiceInterface
             }
 
             $email = $user->email;
-            $contact = $user->contact_number;
+            $contact = "+63" . ltrim('0', (string) $user->contact_number);
 
             $email_data = [
                 'fullname' => $taxpayer,
@@ -253,8 +253,8 @@ class BusinessService implements BusinessServiceInterface
                 'type' => $type,
             ];
     
-            // StatusNotif::smsNotif($contact, $status);
-            // StatusNotif:: emailNotif($email, $email_data);
+            StatusNotif::smsNotif($contact, $status);
+            StatusNotif:: emailNotif($email, $email_data);
         }
         $businessDetail->update($updateData);
 

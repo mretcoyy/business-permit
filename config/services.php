@@ -14,6 +14,12 @@ return [
     |
     */
 
+    'twillio' => [
+        'sid' => env("TWILIO_SID", "AC89629d97fdfec64144d80c1ce050e5c0"),
+        'auth_token' => env("TWILIO_AUTH_TOKEN", "b41608f530ad12ce7d789b15c2e4570d"),
+        'number' => env("TWILIO_NUMBER", "+19253018760"),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

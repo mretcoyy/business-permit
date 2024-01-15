@@ -12,11 +12,9 @@ trait StatusNotif
 
     public static function smsNotif($recipients, $message)
     {
-        log::info('testSmS');
-        $account_sid = env("TWILIO_SID", "AC89629d97fdfec64144d80c1ce050e5c0");
-        $auth_token = env("TWILIO_AUTH_TOKEN", "95c519456bddaf356f6bf2da5f393676");
-        $twilio_number = env("TWILIO_NUMBER", "+19253018760");
-        log::info($account_sid);
+        $account_sid = config("services.twillio.sid");
+        $auth_token = config("services.twillio.auth_token");
+        $twilio_number = config("services.twillio.number");
         $client = new Client($account_sid, $auth_token);
         $client->messages->create($recipients, 
             ['from' => $twilio_number, 'body' => $message] );
@@ -24,7 +22,6 @@ trait StatusNotif
 
     public static function emailNotif($email, $email_data)
     {
-        log::info('testEmail');
         Mail::to($email)->send(new UserNotifEmail($email_data));
         if (Mail::failures()) {
             return ['message'=> "Mail not Sent"];
