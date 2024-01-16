@@ -242,7 +242,7 @@ class BusinessService implements BusinessServiceInterface
             }
 
             $email = $user->email;
-            $contact = "+63" . ltrim('0', (string) $user->contact_number);
+         
 
             $email_data = [
                 'fullname' => $taxpayer,
@@ -252,13 +252,28 @@ class BusinessService implements BusinessServiceInterface
                 'status' => $status,
                 'type' => $type,
             ];
-    
-            // StatusNotif::smsNotif($contact, $status);
+
+            if($user->contact != null)
+            {
+                if($this->isValidPhoneNumber($user->contact_number))
+                {
+                    $contact = "+63" . ltrim('0', (string) $user->contact_number);
+                    StatusNotif::smsNotif($contact, $status);
+                }
+            }
             StatusNotif::emailNotif($email, $email_data);
         }
         $businessDetail->update($updateData);
 
         return 1;
+    }
+    public function isValidPhoneNumber($phoneNumber) {
+        $phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
+        if (strlen($phoneNumber) === 11) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function changeStatus($id)

@@ -57,6 +57,7 @@ class UserController extends Controller
         $rules =
         [
             'email' => 'required|unique:users,email',
+            'contact_number' => 'numeric|min:11',
         ];
         $request->validate($rules);
 
@@ -72,6 +73,7 @@ class UserController extends Controller
         $rules =
         [
             'email' => 'required|unique:users,email,' . $data['id'] . ',id,email,' . $data['email'],
+            'contact_number' => 'numeric|min:11',
         ];
         $request->validate($rules);
         $store = $service->update($data);
