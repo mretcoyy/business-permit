@@ -252,12 +252,13 @@ class BusinessService implements BusinessServiceInterface
                 'status' => $status,
                 'type' => $type,
             ];
-
-            if($user->contact != null)
+            
+            if($user->contact_number != null)
             {
                 if($this->isValidPhoneNumber($user->contact_number))
                 {
-                    $contact = "+63" . ltrim('0', (string) $user->contact_number);
+                    // $contact = "+63" . ltrim('0', (string) $user->contact_number);
+                    $contact = "+63" . substr($user->contact_number, 1);
                     StatusNotif::smsNotif($contact, $status);
                 }
             }
