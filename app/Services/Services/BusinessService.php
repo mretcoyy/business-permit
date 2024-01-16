@@ -248,6 +248,7 @@ class BusinessService implements BusinessServiceInterface
                 'fullname' => $taxpayer,
                 'email' => $email,
                 'business_name' => $business_name,
+                'business_status' => $business_status,
                 'bin' => $bin,
                 'status' => $status,
                 'type' => $type,
@@ -257,9 +258,8 @@ class BusinessService implements BusinessServiceInterface
             {
                 if($this->isValidPhoneNumber($user->contact_number))
                 {
-                    // $contact = "+63" . ltrim('0', (string) $user->contact_number);
                     $contact = "+63" . substr($user->contact_number, 1);
-                    StatusNotif::smsNotif($contact, $status);
+                    StatusNotif::smsNotif($contact, $email_data);
                 }
             }
             StatusNotif::emailNotif($email, $email_data);
