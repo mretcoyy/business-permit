@@ -3,11 +3,11 @@
         :title="
             modal.action === 'edit'
                 ? 'Edit Business Activity'
-                : 'Add Bussiness Activity'
+                : 'Add Business Activity'
         "
         v-model="modal.show"
         :width="600"
-        :okText="modal.action === 'edit' ? 'Edit Business' : 'Add Bussiness'"
+        :okText="modal.action === 'edit' ? 'Edit Business' : 'Add Business'"
         @cancel="closeModal()"
         @ok="handleSubmit()"
         :maskClosable="false"
