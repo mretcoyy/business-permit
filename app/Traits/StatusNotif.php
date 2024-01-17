@@ -11,12 +11,15 @@ use GuzzleHttp\Client;
 trait StatusNotif
 {
 
-    public static function smsNotif($recipients, $message)
+    public static function smsNotif($recipients, $smsData)
     {
         $client = new Client();
 
         $apiKey = config("services.http_sms.api_key");
 
+        $message = "This is reference to your business with BIN ".$smsData['bid'].", ".
+            BusinessStatus::getDescription($smsData['business_status'])." ".$status;
+        
         $res = $client->request('POST', 'https://api.httpsms.com/v1/messages/send', [
         'headers' => [
             'x-api-key' => $apiKey,
