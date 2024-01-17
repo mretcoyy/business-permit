@@ -69,7 +69,7 @@ const columns = [
         key: "tax_payer",
     },
     {
-        title: "Address",
+        title: "Business Address",
         dataIndex: "address",
         key: "address",
     },
@@ -127,7 +127,7 @@ export default {
                 container.referenceNo = item.referenceNo;
                 container.name = item.businessInformation.taxPayerBname;
                 container.tax_payer = item.businessInformation.taxPayerFullname;
-                container.address = item.businessInformation.taxPayerFname;
+                container.address = item.businessInformation.BAddress;
                 container.Status = item.businessDetail.status;
                 container.business_id = item.businessDetail.business_id;
                 return container;

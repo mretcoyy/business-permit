@@ -61,7 +61,7 @@ const columns = [
         key: "tax_payer",
     },
     {
-        title: "Address",
+        title: "Business Address",
         dataIndex: "address",
         key: "address",
     },

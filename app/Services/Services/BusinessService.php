@@ -854,15 +854,15 @@ class BusinessService implements BusinessServiceInterface
     public function fetchData(){
          
         $result = [];
-        $total_income_generated = BusinessFees::sum('total_fee');
-        $total_funds = BusinessFees::sum('business_tax');
-        $total_number_applicants = User::where('role' , 2)->count();
-        $number_pending_applicants = BusinessDetail::where('business_status', 10)->count();
-        $number_renewals = BusinessDetail::where('status', 2)->count();
-        $number_ongoing_applications = BusinessDetail::where('business_status','>', 10)
+        $total_income_generated = BusinessFees::whereYear('created_at', Date('Y'))->sum('total_fee');
+        $total_funds = BusinessFees::whereYear('created_at', Date('Y'))->sum('business_tax');
+        $total_number_applicants = User::where('role' , 2)->whereYear('created_at', Date('Y'))->count();
+        $number_pending_applicants = BusinessDetail::where('business_status', 10)->whereYear('created_at', Date('Y'))->count();
+        $number_renewals = BusinessDetail::where('status', 2)->whereYear('created_at', Date('Y'))->count();
+        $number_ongoing_applications = BusinessDetail::whereYear('created_at', Date('Y'))->where('business_status','>', 10)
         ->orWhere('business_status','<', 17)
         ->count();
-        $number_approved_applications = BusinessDetail::where('business_status','>', 10)
+        $number_approved_applications = BusinessDetail::whereYear('created_at', Date('Y'))->where('business_status','>', 10)
         ->count();
 
 
