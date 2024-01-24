@@ -859,9 +859,11 @@ class BusinessService implements BusinessServiceInterface
         $total_number_applicants = User::where('role' , 2)->whereYear('created_at', Date('Y'))->count();
         $number_pending_applicants = BusinessDetail::where('business_status', 10)->whereYear('created_at', Date('Y'))->count();
         $number_renewals = BusinessDetail::where('status', 2)->whereYear('created_at', Date('Y'))->count();
-        $number_ongoing_applications = BusinessDetail::whereYear('created_at', Date('Y'))->where('business_status','>', 10)
-        ->orWhere('business_status','<', 17)
-        ->count();
+        $number_pending_renewals = BusinessDetail::where('status', 2)->where('business_status', 10)->whereYear('created_at', Date('Y'))->count();
+        $number_of_accounts = User::count();
+        // $number_of_accounts = BusinessDetail::whereYear('created_at', Date('Y'))->where('business_status','>', 10)
+        // ->orWhere('business_status','<', 17)
+        // ->count();
         $number_approved_applications = BusinessDetail::whereYear('created_at', Date('Y'))->where('business_status','>', 10)
         ->count();
 
@@ -889,7 +891,8 @@ class BusinessService implements BusinessServiceInterface
             'total_number_applicants' => $total_number_applicants,
             'number_pending_applicants' => $number_pending_applicants,
             'number_renewals' => $number_renewals,
-            'number_ongoing_applications' => $number_ongoing_applications,
+            'number_of_accounts' => $number_of_accounts,
+            'number_pending_renewals' => $number_pending_renewals,
             'number_approved_applications' => $number_approved_applications,
             'graph' => $graph
         ];

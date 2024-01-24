@@ -97,10 +97,10 @@
                     <a-card :bordered="true">
                         <template #title>
                             <a-icon type="file" />
-                            No. of Ongoing Applications
+                            Total Users/Accounts
                         </template>
                         <h1 class="text-data">
-                            {{ data.number_ongoing_applications ?? "-" }}
+                            {{ data.number_of_accounts ?? "-" }}
                         </h1>
                     </a-card>
                 </a-col>
@@ -116,6 +116,21 @@
                 >
                     <a-card :bordered="true">
                         <template #title>
+                            <a-icon type="folder-open" />
+                            No. of Pending Renewals
+                        </template>
+                        <h1 class="text-data">
+                            {{ data.number_pending_renewals ?? "-" }}
+                        </h1>
+                    </a-card>
+                </a-col>
+              
+                <a-col
+                :xs="{ span: 5, offset: 1 }"
+                    :lg="{ span: 6, offset: 2 }"
+                >
+                    <a-card :bordered="true">
+                        <template #title>
                             <a-icon type="check" />
                             No. of Approved Applications
                         </template>
@@ -125,6 +140,7 @@
                     </a-card>
                 </a-col>
             </a-row>
+          
         </div>
     </MainLayout>
 </template>
