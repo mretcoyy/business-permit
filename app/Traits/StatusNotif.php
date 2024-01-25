@@ -33,6 +33,26 @@ trait StatusNotif
 
         return ['message'=> "SMS Sent"];
     }
+
+    public static function smsAnnouncement($recipients, $message)
+    {
+        $client = new Client();
+
+        $apiKey = config("services.http_sms.api_key");
+        
+        $res = $client->request('POST', 'https://api.httpsms.com/v1/messages/send', [
+        'headers' => [
+            'x-api-key' => $apiKey,
+        ],
+        'json'    => [
+            'content' => $message,
+            'from'    => config("services.http_sms.from"),
+            'to'      => $recipients,
+        ]
+        ]);
+
+        return ['message'=> "SMS Sent"];
+    }
     // public static function smsNotif($recipients, $message)
     // {
     //     $account_sid = config("services.twillio.sid");

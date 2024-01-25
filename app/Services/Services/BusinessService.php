@@ -268,6 +268,7 @@ class BusinessService implements BusinessServiceInterface
 
         return 1;
     }
+
     public function isValidPhoneNumber($phoneNumber) {
         $phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
         if (strlen($phoneNumber) === 11) {
@@ -275,6 +276,19 @@ class BusinessService implements BusinessServiceInterface
         } else {
             return false;
         }
+    }
+
+    public function sendAnnouncement($message, $users)
+    {
+        foreach ($users as $user) {
+            $user = (object) $user;
+            if (isset($user->contact_number) && $this->isValidPhoneNumber($user->contact_number)) {
+                $contact = "+63" . substr($user->contact_number, 1);
+                StatusNotif::smsAnnouncement($contact, $message);
+            }
+        }
+
+        return true;
     }
 
     public function changeStatus($id)

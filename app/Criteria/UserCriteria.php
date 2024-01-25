@@ -5,6 +5,7 @@ namespace App\Criteria;
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 use App\Entities\User;
+use App\Enums\UserRole;
 
 /**
  * Class UserCriteria.
@@ -38,9 +39,13 @@ class UserCriteria implements CriteriaInterface
 
         if (isset($filters->search_keyword) && $filters->search_keyword != '') {
             $model->where('name', 'LIKE', '%'.$filters->search_keyword.'%')
-            ->orWhere('contact_number', 'LIKE',  '%'.$filters->search_keyword.'%')
-            ->orWhere('full_address', 'LIKE',  '%'.$filters->search_keyword.'%')
-            ->orWhere('email', 'LIKE',  '%'.$filters->search_keyword.'%');
+                ->orWhere('contact_number', 'LIKE',  '%'.$filters->search_keyword.'%')
+                ->orWhere('full_address', 'LIKE',  '%'.$filters->search_keyword.'%')
+                ->orWhere('email', 'LIKE',  '%'.$filters->search_keyword.'%');
+        }
+
+        if (isset($filters->role) && $filters->role != '') {
+            $model->where('role', $filters->role);
         }
 
         return $model;
