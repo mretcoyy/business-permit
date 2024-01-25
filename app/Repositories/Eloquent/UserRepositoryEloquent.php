@@ -9,6 +9,7 @@ use App\Entities\User;
 use App\Validators\UserValidator;
 use Illuminate\Support\Facades\DB;
 use App\Criteria\UserCriteria;
+use App\Enums\UserRole;
 
 /**
  * Class UserRepositoryEloquent.
@@ -36,6 +37,19 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
 
         $this->pushCriteria(new UserCriteria($filters))->applyCriteria();
 
+        $result = $this->model->get();
+
+        return $result;
+    }
+
+    public function userList()
+    {
+        $this->model = $this->model
+            ->select([
+                '*'
+            ])
+            ->where('role', UserRole::USER);
+            
         $result = $this->model->get();
 
         return $result;

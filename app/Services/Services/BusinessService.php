@@ -278,7 +278,7 @@ class BusinessService implements BusinessServiceInterface
         }
     }
 
-    public function sendAnnouncement($message, $users)
+    public function sendAnnouncement($users, $message)
     {
         foreach ($users as $user) {
             $user = (object) $user;

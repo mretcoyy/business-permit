@@ -18,10 +18,9 @@ class AnnouncementController extends Controller
     {
         ini_set('max_execution_time', -1);
 
-        $message = $request->post('data');
-        $filters->role = UserRole::USER;
-        return $message;
-        $userList = app()->make(UserRepositoryEloquent::class)->list($filters);
+        $message = $request->post('message');
+
+        $userList = app()->make(UserRepositoryEloquent::class)->userList();
 
         $service = $service->sendAnnouncement($userList, $message);
 

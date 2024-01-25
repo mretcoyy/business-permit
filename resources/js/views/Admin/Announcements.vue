@@ -3,7 +3,7 @@
         <a-card>
             <h1>Announcements</h1>
           
-            <a-textarea v-model="message" :rows="4" value="" allow-clear large/>
+            <a-textarea v-model="data.message" :rows="4" value="" allow-clear large/>
             <div style="display:flex; justify-content: end;">
                 <a-button
                     size='large'
@@ -26,7 +26,9 @@ const data = [];
 export default {
     data() {
         return {
-            message: '',
+            data: {
+                message: ''
+            },
         };
     },
     components: {
@@ -35,13 +37,12 @@ export default {
     methods: {
         async sendNotification() {
             try {
-                await axios(
+                return await axios(
                     {
                         method: "POST",
-                        url: "admin/send-announcement",
-                        data: this.message,
+                        url: "/admin/send-announcement",
+                        data: this.data,
                     },
-                    config
                 );
                 this.emitDone();
 
