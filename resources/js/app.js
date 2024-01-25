@@ -121,6 +121,10 @@ Vue.component(
     "view-admin-audit-trail",
     require("./views/Admin/AuditTrail.vue").default
 );
+Vue.component(
+    "view-admin-announcements",
+    require("./views/Admin/Announcements.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

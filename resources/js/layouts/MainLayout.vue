@@ -150,6 +150,12 @@ export default {
                     role: 3,
                 },
                 {
+                    url: "/admin/announcements",
+                    title: "Announcements",
+                    icon: "history",
+                    role: 3,
+                },
+                {
                     url: "/admin/user-management",
                     title: "User Management",
                     icon: "user",

@@ -124,6 +124,8 @@ Route::middleware(['role:Admin,BPLO'])->group(function () {
 //User Management
 Route::middleware(['role:Admin'])->group(function () {
     Route::get('/admin/user-management', 'UserController@viewUserManagement');
+    Route::get('/admin/announcements', 'AnnouncementController@index');
+
     Route::get('/user/list', 'UserController@list');
     Route::patch('/user/change-role/{id}', 'UserController@changeRole');
     Route::patch('/user/link-business/{id}', 'UserController@linkBusiness');
