@@ -27,7 +27,8 @@ export default {
     data() {
         return {
             data: {
-                message: ''
+                message: '',
+                success_message: '',
             },
         };
     },
@@ -37,7 +38,7 @@ export default {
     methods: {
         async sendNotification() {
             try {
-                return await axios(
+                await axios(
                     {
                         method: "POST",
                         url: "/admin/send-announcement",
@@ -55,7 +56,12 @@ export default {
                 this.isLoading = false;
             }
            
-        }
+        },
+
+        emitDone() {
+            this.data.message = '';
+            this.$message.success("Succesfully Sent!");
+        },
     },
     mounted() {
     },
